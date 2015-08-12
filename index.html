@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html class="body" ng-app="rerum">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>RERUM</title>
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" media="all">
+        <link rel="stylesheet" href="app/lib/loading-bar.css" media="screen">
+        <link rel="stylesheet" href="app/lib/hotkeys.min.css" media="screen">
+        <link rel="stylesheet" href="assets/fonts.css" media="screen">
+        <link rel="stylesheet" href="app/app.css" media="screen">
+        <!--        <base href="rerum/">-->
+    </head>
+    <body class="container" ng-controller="mainController">
+        <header>
+            <pre class="title">
+██████╗&nbsp;███████╗██████╗&nbsp;██╗&nbsp;&nbsp;&nbsp;██╗███╗&nbsp;&nbsp;&nbsp;███╗
+██╔══██╗██╔════╝██╔══██╗██║&nbsp;&nbsp;&nbsp;██║████╗&nbsp;████║
+██████╔╝█████╗&nbsp;&nbsp;██████╔╝██║&nbsp;&nbsp;&nbsp;██║██╔████╔██║
+██╔══██╗██╔══╝&nbsp;&nbsp;██╔══██╗██║&nbsp;&nbsp;&nbsp;██║██║╚██╔╝██║
+██║&nbsp;&nbsp;██║███████╗██║&nbsp;&nbsp;██║╚██████╔╝██║&nbsp;╚═╝&nbsp;██║
+╚═╝&nbsp;&nbsp;╚═╝╚══════╝╚═╝&nbsp;&nbsp;╚═╝&nbsp;╚═════╝&nbsp;╚═╝&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;╚═╝ v0.5
+        </pre>
+            <small>reconditorium eximium rerum universalium mutabiliumque</small>
+        </header>
+    <ng-view></ng-view>
+    <footer>
+        <a ng-repeat="hotkey in hotkeys.get()" ng-hide="hotkey.combo[0]==='?'"
+           ng-click="hotkey.callback($event)">
+            <span class="btn-invert">{{symbolize(hotkey.combo)}}</span>
+            {{hotkey.description}}</a>
+        <a class="btn-block text-center" href='mailto:digitalhumanities@slu.edu'
+           tabindex="-1">
+            digitalhumanities@slu.edu
+        </a>
+    </footer>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-route.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.12.1/ui-bootstrap.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.12.1/ui-bootstrap-tpls.js"></script>
+    <script type="text/javascript" src="app/lib/loading-bar.js"></script>
+    <script type="text/javascript" src="app/lib/hotkeys.min.js"></script>
+    <script type="text/javascript" src="app/app.js"></script>
+    <script type="text/javascript" src="app/registration/registration.js"></script>
+</body>
+</html>

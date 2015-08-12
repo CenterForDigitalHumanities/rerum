@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+    <include file="struts-notification.xml" />
+    <constant name="struts.i18n.reload" value="false" />
+    <constant name="struts.devMode" value="false" />
+    <constant name="struts.objectFactory" value="spring" />
+    <constant name="struts.multipart.saveDir" value="/tmp"></constant>
+    
+    <package name="default" extends="struts-default"></package>
+    
+    <package name="getAnnotation" extends="default" namespace="/annotation">
+        <!-- INTERCEPTOR -->
+        <interceptors>
+            <interceptor name="responseEncoding" class="edu.slu.filter.ResponseEncoding"></interceptor>
+            <interceptor-stack name="myDefault">
+                <interceptor-ref name="responseEncoding" />
+                <interceptor-ref name="defaultStack" />
+            </interceptor-stack>
+        </interceptors>
+        <default-interceptor-ref name="myDefault" />
+        
+        <action name="getAnnotationByObjectID" class="annotationAction" method="getAnnotationByObjectID"></action>
+    </package>
+    
+    <!-- ANNOTATION -->
+    <package name="anno" extends="default" namespace="/anno">
+        <!-- INTERCEPTOR -->
+        <interceptors>
+            <interceptor name="requestServerAuthenticationFilter" class="edu.slu.filter.RequestServerAuthenticationFilter"></interceptor>
+            <interceptor name="responseEncoding" class="edu.slu.filter.ResponseEncoding"></interceptor>
+            <interceptor-stack name="myDefault">
+                <interceptor-ref name="responseEncoding" />
+                <interceptor-ref name="requestServerAuthenticationFilter" />
+                <interceptor-ref name="defaultStack" />
+            </interceptor-stack>
+        </interceptors>
+        <default-interceptor-ref name="myDefault" />
+        
+        <action name="getAnnotationByProperties" class="annotationAction" method="getAnnotationByProperties"></action>
+        <action name="getAnnotationByObjectID" class="annotationAction" method="getAnnotationByObjectID"></action>
+        <action name="getAllMyAnnotations" class="annotationAction" method="getAllMyAnnotations"></action>
+        <action name="getAllVersionsOfAnnotationByObjectID" class="annotationAction" method="getAllVersionsOfAnnotationByObjectID"></action>
+        <action name="getAllVersionsOfAnnotationByOriginalAnnoID" class="annotationAction" method="getAllVersionsOfAnnotationByOriginalAnnoID"></action>
+        <action name="getAnnoByResourceOutterRelativeNamespace" class="annotationAction" method="getAnnoByResourceOutterRelativeNamespace"></action>
+        <action name="saveNewAnnotation" class="annotationAction" method="saveNewAnnotation"></action>
+        <action name="updateAnnotation" class="annotationAction" method="updateAnnotation"></action>
+        <action name="saveNewVersionOfAnnotation" class="annotationAction" method="saveNewVersionOfAnnotation"></action>
+        <action name="deleteAnnotationByObjectID" class="annotationAction" method="deleteAnnotationByObjectID"></action>
+        <action name="deleteAnnotationByAtID" class="annotationAction" method="deleteAnnotationByAtID"></action>
+        <action name="forkAnnotation" class="annotationAction" method="forkAnnotation"></action>
+        <action name="saveForkAnnotation" class="annotationAction" method="saveForkAnnotation"></action>
+    </package>
+    
+    <!-- ACCEPTED SERVER -->
+    <package name="acceptedServer" extends="default" namespace="/acceptedServer">
+        <!-- INTERCEPTOR -->
+        <interceptors>
+            <interceptor name="responseEncoding" class="edu.slu.filter.ResponseEncoding"></interceptor>
+            <interceptor-stack name="myDefault">
+                <interceptor-ref name="responseEncoding" />
+                <interceptor-ref name="defaultStack" />
+            </interceptor-stack>
+        </interceptors>
+        <default-interceptor-ref name="myDefault" />
+        
+        <action name="saveNewServer" class="serverAction" method="saveNewServer"></action>
+        <action name="updateServerByObjectID" class="serverAction" method="updateServerByObjectID"></action>
+        <action name="getServerByIp" class="serverAction" method="getServerByIp"></action>
+    </package>
+    
+</struts>
+

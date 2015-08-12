@@ -1,0 +1,12 @@
+@font-face {
+    font-family: 'PRNumber3';
+    src: url('PRNumber3.eot?#iefix') format('embedded-opentype'),  url('PRNumber3.woff') format('woff'), url('PRNumber3.ttf')  format('truetype'), url('PRNumber3.svg#PRNumber3') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'PrintChar21';
+    src: url('PrintChar21.eot?#iefix') format('embedded-opentype'),  url('PrintChar21.woff') format('woff'), url('PrintChar21.ttf')  format('truetype'), url('PrintChar21.svg#PrintChar21') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}

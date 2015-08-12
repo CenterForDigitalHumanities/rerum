@@ -1,0 +1,28 @@
+<div>
+    <h3 class='title'>Server Registration</h3>
+    <p>RERUM authenticates only with a whitelist of application servers which
+        in turn are expected to verify their own contributions. The provenance of
+        each new annotation or object is marked with the server from which it came.
+        You must have a static IP for your application. If using several, please
+        complete this form several times.</p>
+    <form name="serverRegistration" ng-submit="submitRegistration({name:label,ip:ip,contact:contact})" ng-controller="registrationController">
+        <p class="invert {{msg.type}}">{{msg.text}}</p>
+        <div class="form-group">
+            <label>Server Label:</label>
+        <div class="positioned">
+            <input type="text" required ng-model="label" maxlength="50" /><i></i>
+        </div>
+        <label>Application Server IP (v4 please):</label>
+        <div class="positioned">
+            <input type="text" required ng-model="ip" maxlength="20" /><i></i>
+        </div>
+        <label>human contact electronic address:</label>
+        <div class="positioned">
+            <input type="email" ng-model="contact" maxlength="50" /><i></i>
+        </div>
+        </div>
+        <div class="positioned">
+            <input type="submit" value=" Submit " /><i></i>
+        </div>
+    </form>
+</div>
