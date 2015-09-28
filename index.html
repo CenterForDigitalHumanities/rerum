@@ -11,24 +11,27 @@
         <link rel="stylesheet" href="app/app.css" media="screen">
         <!--        <base href="rerum/">-->
     </head>
-    <body class="container" ng-controller="mainController">
+    <body class="container" ng-controller="mainController" ng-class="{terminal:terminal}">
         <header>
-            <pre class="title">
+            <pre class="title" ng-if="terminal">
 ██████╗&nbsp;███████╗██████╗&nbsp;██╗&nbsp;&nbsp;&nbsp;██╗███╗&nbsp;&nbsp;&nbsp;███╗
 ██╔══██╗██╔════╝██╔══██╗██║&nbsp;&nbsp;&nbsp;██║████╗&nbsp;████║
 ██████╔╝█████╗&nbsp;&nbsp;██████╔╝██║&nbsp;&nbsp;&nbsp;██║██╔████╔██║
 ██╔══██╗██╔══╝&nbsp;&nbsp;██╔══██╗██║&nbsp;&nbsp;&nbsp;██║██║╚██╔╝██║
 ██║&nbsp;&nbsp;██║███████╗██║&nbsp;&nbsp;██║╚██████╔╝██║&nbsp;╚═╝&nbsp;██║
 ╚═╝&nbsp;&nbsp;╚═╝╚══════╝╚═╝&nbsp;&nbsp;╚═╝&nbsp;╚═════╝&nbsp;╚═╝&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;╚═╝ v0.5
-        </pre>
+            </pre>
+            <h1 ng-if="!terminal">RERUM</h1>
             <small>reconditorium eximium rerum universalium mutabiliumque</small>
         </header>
     <ng-view></ng-view>
     <footer>
-        <a ng-repeat="hotkey in hotkeys.get()" ng-hide="hotkey.combo[0]==='?'"
+        <span ng-if="terminal">
+            <a ng-repeat="hotkey in hotkeys.get()" ng-hide="hotkey.combo[0]==='?'"
            ng-click="hotkey.callback($event)">
             <span class="btn-invert">{{symbolize(hotkey.combo)}}</span>
             {{hotkey.description}}</a>
+        </span>
         <a class="btn-block text-center" href='mailto:digitalhumanities@slu.edu'
            tabindex="-1">
             digitalhumanities@slu.edu
@@ -42,5 +45,6 @@
     <script type="text/javascript" src="app/lib/hotkeys.min.js"></script>
     <script type="text/javascript" src="app/app.js"></script>
     <script type="text/javascript" src="app/registration/registration.js"></script>
+    <script type="text/javascript" src="app/tools/buildManifest.js"></script>
 </body>
 </html>

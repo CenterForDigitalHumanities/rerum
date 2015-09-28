@@ -1,0 +1,54 @@
+<div>
+	<h3>Build out IIIF compliant manifest</h3>
+	<label>Loaded Manifest</label> {{obj.label || obj['@id'] || 'none'}}
+	<div ng-if="!obj.label" class="form-group">
+		<label>Brand New:</label>
+		<div class="positioned">
+		<input type="text" ng-model="obj.label" ng-model-options="{ updateOn: 'blur' }"
+			placeholder="Label for a new Manifest"><i></i>
+		</div>
+		<label>File:</label>
+		<div class="btn-block">
+		<div class="fileUpload positioned btn">
+		    <span>Upload</span>
+			<input type="file" ng-model="obj" ng-change="obj['@id']='new'"
+				class="upload" placeholder="Manifest JSON"><i></i>
+		</div>
+		{{obj['@id']}}
+	</div>
+		<label>URI:</label>
+		<div class="positioned">
+		<input type="text" ng-model="uri" ng-blur="resolve(uri,obj)" class="btn-block"
+			placeholder="URI for this remote Manifest"><i></i>
+		</div>
+		<label>JSON:</label>
+		<div class="positioned">
+		<textarea ng-model="json" class="btn-block" rows="4"
+			placeholder="Type or paste the JSON for this new Manifest"></textarea><i></i>
+		</div>
+	</div>
+	<div ng-show="obj.label">
+		<form class="col-sm-6">
+			<property for="obj" is="k" ng-repeat="(k,v) in obj"></property>
+			<div class="well">
+				<h4>+New Property</h4>
+				<label>New Label:</label>
+				<div class="positioned">
+				<input type="text" ng-model="newProp">
+				<select class="btn btn-default" ng-options="t for t in types" ng-model="newType"></select>
+				<button class="btn btn-default btn-sm" type="button" ng-click="obj[newProp]={'@type':newType};newProp='';">+</button>
+				</div>
+			</div>
+		</form>
+		<div class="col-sm-6">
+			<div class="form-group">
+				<label>@id</label>
+				<span>{{obj['@id']}}</span>
+			</div>
+			<label>Manifest</label>
+			<pre class="pre-scrollable">{{obj|json}}</pre>
+			<label>Context</label>
+			<pre class="pre-scrollable">{{context|json}}</pre>
+		</div>
+	</div>
+</div>

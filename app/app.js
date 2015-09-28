@@ -19,8 +19,9 @@ rerum.config(['$routeProvider', '$locationProvider',
                     templateUrl: 'app/about/about.html'
                 })
                 .otherwise(({redirectTo: '/welcome'}));
-        }]);
-rerum.controller('mainController', function ($scope, $location, hotkeys) {
+    }]);
+rerum.value('Terminal', true);
+rerum.controller('mainController', function ($scope, $location, hotkeys, Terminal) {
     // welcome functions
     hotkeys.add({
         combo: 'home',
@@ -30,6 +31,7 @@ rerum.controller('mainController', function ($scope, $location, hotkeys) {
             $location.path('/welcome');
         }
     });
+    $scope.terminal = Terminal;
     $scope.hotkeys = hotkeys;
     function tabTo (step) {
         var elem = document.getElementsByClassName('focused')[0];
@@ -75,6 +77,14 @@ rerum.controller('mainController', function ($scope, $location, hotkeys) {
         }
         return combo.join(' + ');
     };
+    hotkeys.add({
+        combo: 'T',
+        description: 'Term',
+        allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
+        callback: function () {
+            $scope.terminal = !$scope.terminal;
+        }
+    });
     hotkeys.add({
         combo: 'down',
         description: 'Next',
