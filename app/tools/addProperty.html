@@ -1,0 +1,9 @@
+<div class="well">
+	<h4>+New Property</h4>
+	<label>New Label:</label>
+	<div class="positioned">
+	<input type="text" ng-model="newProp">
+	<select class="btn btn-default" ng-options="t for t in types" ng-model="newType"></select>
+	<button class="btn btn-default btn-sm" type="button" ng-click="addProp(newProp,newType)">+</button>
+	</div>
+</div>

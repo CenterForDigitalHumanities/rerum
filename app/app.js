@@ -20,7 +20,7 @@ rerum.config(['$routeProvider', '$locationProvider',
                 })
                 .otherwise(({redirectTo: '/welcome'}));
     }]);
-rerum.value('Terminal', true);
+rerum.value('Terminal', false); // set Apple IIe style
 rerum.controller('mainController', function ($scope, $location, hotkeys, Terminal) {
     // welcome functions
     hotkeys.add({
