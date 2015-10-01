@@ -1,7 +1,7 @@
 rerum.config(['$routeProvider',
     function ($routeProvider, $locationProvider, Edition) {
         $routeProvider
-            .when('/build', {
+            .when('/edit', {
                 templateUrl: 'app/tools/buildManifest.html',
                 controller: 'buildManifestController',
                 resolve: {
@@ -9,7 +9,23 @@ rerum.config(['$routeProvider',
                         return Context.getJSON.success(function (c) {
                             // cached for later consumption
                         });
+                    },
+                    obj: function(Knowns){
+                        return Knowns.obj;
+                        // TODO: preload a known manifest from the URL or memory
                     }
+                }
+            })
+            .when('/build', {
+                templateUrl: 'app/tools/manifestFromImages.html',
+                controller: 'buildManifestController',
+                resolve: {
+                    context: function (Context) {
+                        return Context.getJSON.success(function (c) {
+                            // cached for later consumption
+                        });
+                    },
+                    obj: function(){return false;}
                 }
             });
     }]);
@@ -140,11 +156,27 @@ rerum.value('Knowns',{
         }
     }
 });
-rerum.controller('buildManifestController', function ($scope, $modal, Context, Knowns) {
+
+rerum.service('RERUM', function($http,$q){
+    var self = this;
+    this.resolve = function(uri){
+        if(angular.isArray(uri)){
+            return $q.all(uri.map(self.resolve));
+        }
+        return $http.get(uri)
+            .success(function(res){
+                return res;
+            }).error(function(err){
+                return err;
+            });
+    };
+});
+
+rerum.controller('buildManifestController', function ($scope, $modal, Context, Knowns, RERUM, obj) {
     Context.getJSON.success(function (c) {
         $scope.context = c['@context'][0];
     });
-    $scope.obj = Knowns.obj;
+    $scope.obj = obj || Knowns.obj;
     $scope.types = Knowns.type;
     $scope.adding = Knowns.adding;
 
@@ -170,7 +202,56 @@ rerum.controller('buildManifestController', function ($scope, $modal, Context, K
             }
         });
     };
+
+/**
+ * create manifest from comma separated list of img urls
+ **/
+    $scope.loadImages = function(imgStr){
+        $scope.msg = {
+            type:"success",
+            text:"That was easy! Looks like we did it."
+        };
+        $scope.canvases = imgStr.split(",").map(function(src){
+            return {
+                src:src
+            };
+        });
+        if(!$scope.canvases.length){
+            $scope.msg = {
+                type:"error",
+                text:"The string didn't seem to have any content."
+            };
+        }
+    };
+    $scope.defaultCanvas = function(index,event){
+        var img = event.target;
+        $scope.canvases[index] = {
+            src:img.src,
+            label:img.src.substring(img.src.lastIndexOf("/")+1),
+            width:img.naturalWidth,
+            height:img.naturalHeight
+        };
+    };
 });
+
+rerum.directive('ngLoad', function($parse){
+        return {
+            restrict: 'A',
+            compile: function($element, attr) {
+                var fn = $parse(attr['ngLoad']);
+                return function(scope, element, attr) {
+                    element.on('load', function(event) {
+                        scope.$apply(function() {
+                            fn(scope, {$event:event});
+                        });
+                    });
+                };
+
+            }
+        };
+
+    });
+
 
 rerum.directive('addProperty',function(){
     return {
