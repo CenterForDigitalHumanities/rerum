@@ -16,7 +16,7 @@
 </form>
 <figure class="col-sm-3" ng-repeat="c in canvases">
 	<figcaption>{{c.label.substring(0,10)}}</figcaption>
-	<figcaption>{{c.width}} x {{c.height}}</figcaption>
 	<img ng-src="{{c.src}}" width="100%" ng-load="defaultCanvas($index,$event)">
+	<small>{{c.width}} x {{c.height}}</small>
 </figure>
 </div>

@@ -225,12 +225,11 @@ rerum.controller('buildManifestController', function ($scope, $modal, Context, K
     };
     $scope.defaultCanvas = function(index,event){
         var img = event.target;
-        $scope.canvases[index] = {
-            src:img.src,
+        angular.extend($scope.canvases[index],{
             label:img.src.substring(img.src.lastIndexOf("/")+1),
             width:img.naturalWidth,
             height:img.naturalHeight
-        };
+        });
     };
 });
 
