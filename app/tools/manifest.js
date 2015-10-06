@@ -170,6 +170,10 @@ rerum.service('RERUM', function($http,$q){
                 return err;
             });
     };
+    this.save = function(obj){
+        var url = "http://rerum.io/saveNewAnnotation";
+        return $http.post(url,{content:obj});
+    };
 });
 
 rerum.controller('buildManifestController', function ($scope, $modal, Context, Knowns, RERUM, obj) {
@@ -250,6 +254,8 @@ rerum.controller('buildManifestController', function ($scope, $modal, Context, K
             height: $scope.cHeight
         });
     };
+
+    $scope.saveManifest = RERUM.save;
 });
 
 rerum.directive('ngLoad', function($parse){
