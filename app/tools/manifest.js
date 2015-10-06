@@ -2,7 +2,7 @@ rerum.config(['$routeProvider',
     function ($routeProvider, $locationProvider, Edition) {
         $routeProvider
             .when('/edit', {
-                templateUrl: 'app/tools/buildManifest.html',
+                templateUrl: 'app/tools/editManifest.html',
                 controller: 'buildManifestController',
                 resolve: {
                     context: function (Context) {
@@ -179,6 +179,7 @@ rerum.controller('buildManifestController', function ($scope, $modal, Context, K
     $scope.obj = obj || Knowns.obj;
     $scope.types = Knowns.type;
     $scope.adding = Knowns.adding;
+    $scope.cHeight = 1000;
 
     $scope.editList = function (parent,prop) {
         var self = this;
@@ -206,16 +207,22 @@ rerum.controller('buildManifestController', function ($scope, $modal, Context, K
 /**
  * create manifest from comma separated list of img urls
  **/
-    $scope.loadImages = function(imgStr){
+    $scope.loadImages = function (imgStr, height) {
+        if (!$scope.cHeight) {
+            $scope.cHeight = height;
+        }
         $scope.msg = {
             type:"success",
             text:"That was easy! Looks like we did it."
         };
         $scope.canvases = imgStr.split(",").map(function(src){
             return {
-                src:src
+                src: src,
+                height: height
             };
         });
+        Knowns.obj.label = "New Manifest";
+        Knowns.obj.sequences[0].canvases = $scope.canvases;
         if(!$scope.canvases.length){
             $scope.msg = {
                 type:"error",
@@ -223,12 +230,24 @@ rerum.controller('buildManifestController', function ($scope, $modal, Context, K
             };
         }
     };
+
     $scope.defaultCanvas = function(index,event){
         var img = event.target;
         angular.extend($scope.canvases[index],{
-            label:img.src.substring(img.src.lastIndexOf("/")+1),
-            width:img.naturalWidth,
-            height:img.naturalHeight
+            label: img.src.substring(img.src.lastIndexOf("/") + 1),
+            images: [{
+                    '@type': "oa:Annotation",
+                    motivation: "sc:painting",
+                    resource: {
+                        '@id': $scope.canvases[index].src,
+                        width: img.naturalWidth,
+                        height: img.naturalHeight
+                    }
+//                    ,
+//                    on:""
+                }],
+            width: (0.5 + $scope.cHeight * img.naturalWidth / img.naturalHeight) | 0,
+            height: $scope.cHeight
         });
     };
 });
@@ -296,7 +315,7 @@ rerum.directive('property', function ($compile) {
             case 'memo' :
                 input = '<textarea ng-model="for[is]"></textarea>';
                 break;
-            case 'pairs' : 
+            case 'pairs' :
                 input = '<button class="btn btn-xs btn-default" type="button" ng-click="editList(for,is)">'
                     + '<i class="fa fa-list-ol"></i> edit</button>'
                     + '<dl class="dl-horizontal"><dt title="{{item.label}}" ng-repeat-start="item in for[is]">{{item.label}}</dt>'
@@ -354,7 +373,7 @@ rerum.directive('property', function ($compile) {
                 scope.$watchCollection('for[is]',function(newVal,oldVal){
                     if(newVal && newVal.length){
                         // maybe just a k-v pair setup, like metadata
-                        if (angular.isDefined(scope.for[scope.is].length 
+                        if (angular.isDefined(scope.for[scope.is].length
                             && !scope.for[scope.is][0]['@id']
                             && scope.for[scope.is][0].label
                             && scope.for[scope.is][0]['@value'])) {

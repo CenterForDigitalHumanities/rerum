@@ -1,21 +1,31 @@
 <div>
-<form ng-submit="loadImages(imgString)">
-	<div class="form-group">
-		<label class="control-label">Images</label>
-		<input class="form-control" type="text" ng-model="imgString" 
-			ng-model-options="{ updateOn: 'blur' }">
-		<p class="help-block">
-			Enter a list of URLs to available images, separated by a comma(","). Any
-			images that we cannot resolve will result in unannotated Canvases. The 
-			SharedCanvas Manifest that you create is editable. By default, the image
-			names will be used as Canvas labels and they will be sequenced in the 
-			order they are input.
-		</p>
-		<button type="submit" class="btn btn-default">Create Manifest</button>
-	</div>
-</form>
-<figure class="col-sm-3" ng-repeat="c in canvases">
-	<figcaption>{{c.label.substring(0,10)}}</figcaption>
+    <form ng-submit="loadImages(imgString,cHeight)">
+        <div class="form-group">
+        <label class="control-label">Images</label>
+        <input class="form-control" type="text" ng-model="imgString"
+               ng-model-options="{ updateOn: 'blur' }">
+        <p class="help-block">
+            Enter a list of URLs to available images, separated by a comma(","). Any
+            images that we cannot resolve will result in unannotated Canvases. The
+            SharedCanvas Manifest that you create is editable. By default, the image
+            names will be used as Canvas labels and they will be sequenced in the
+            order they are input.
+        </p>
+    </div>
+    <div class="form-group">
+        <label class="control-label">Canvas Dimensions</label>
+        <input class="form-control" type="number" ng-model="cHeight"
+               ng-model-options="{ updateOn: 'blur' }">
+        <p class="help-block">
+            Incoming images will be scaled to the height set and the initial width will
+            be based off the natural ratio of the full image.
+        </p>
+    </div>
+        <button type="submit" class="btn btn-default">Create Manifest</button>
+        <a ng-show="canvases.length" class="btn btn-link" href="#/edit">Edit this manifest</a>
+    </form>
+    <figure class="col-sm-3" ng-repeat="c in canvases">
+        <figcaption>{{c.label.substring(0,10)}}</figcaption>
 	<img ng-src="{{c.src}}" width="100%" ng-load="defaultCanvas($index,$event)">
 	<small>{{c.width}} x {{c.height}}</small>
 </figure>
