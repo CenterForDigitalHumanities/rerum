@@ -22,11 +22,13 @@
         </p>
     </div>
         <button type="submit" class="btn btn-default">Create Manifest</button>
-        <a ng-show="canvases.length" class="btn btn-link" href="#/edit">Edit this manifest</a>
+        <a ng-show="canvases.length" class="btn btn-link" href="#/edit">
+            Edit this manifest ({{canvases.length}} canvas{{(canvases.length===1)&&""||"es"}})
+        </a>
     </form>
-    <figure class="col-sm-3" ng-repeat="c in canvases">
-        <figcaption>{{c.label.substring(0,10)}}</figcaption>
-	<img ng-src="{{c.src}}" width="100%" ng-load="defaultCanvas($index,$event)">
-	<small>{{c.width}} x {{c.height}}</small>
-</figure>
+    <figure class="col-sm-3" ng-repeat="c in ::canvases">
+        <figcaption>{{::c.label.substring(0,10)}}</figcaption>
+        <img ng-src="{{::c.images[0].resource['@id']||c.images[0]}}" ng-load="defaultCanvas($index,$event)">
+        <small class="help-block">{{c.width}} x {{c.height}}</small>
+    </figure>
 </div>

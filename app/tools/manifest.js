@@ -1,3 +1,5 @@
+/* global angular, rerum */
+
 rerum.config(['$routeProvider',
     function ($routeProvider, $locationProvider, Edition) {
         $routeProvider
@@ -39,7 +41,7 @@ rerum.service('Context', function ($http, $q) {
 });
 rerum.value('Knowns',{
     obj : {
-        "@id": "new (save to mint a new URI)",
+//        "@id": "",
         "@context": "http://iiif.io/api/presentation/2/context.json",
         "@type": "sc:Manifest",
         "label": "",
@@ -51,7 +53,7 @@ rerum.value('Knowns',{
                 "canvases": []
             }]
     },
-    types : ['number', 'string', 'memo', 'list', 'object'],
+    types: ['number', 'string', 'memo', 'list', 'object', 'canvas'],
     adding : {
         sequences: {
             item: 'sequences',
@@ -221,8 +223,13 @@ rerum.controller('buildManifestController', function ($scope, $modal, Context, K
         };
         $scope.canvases = imgStr.split(",").map(function(src){
             return {
-                src: src,
-                height: height
+                //src: src, // prevent digest by holding this in an unchanging prop
+                height: height,
+                images: [{
+                        resource: {
+                            '@id': src
+                        }
+                    }]
             };
         });
         Knowns.obj.label = "New Manifest";
@@ -237,22 +244,44 @@ rerum.controller('buildManifestController', function ($scope, $modal, Context, K
 
     $scope.defaultCanvas = function(index,event){
         var img = event.target;
-        angular.extend($scope.canvases[index],{
-            label: img.src.substring(img.src.lastIndexOf("/") + 1),
-            images: [{
-                    '@type': "oa:Annotation",
-                    motivation: "sc:painting",
-                    resource: {
-                        '@id': $scope.canvases[index].src,
-                        width: img.naturalWidth,
-                        height: img.naturalHeight
-                    }
+        // {} to preserve original inits
+        // .merge is EXPENSIVE! TODO: consider alternatives that don't know what is incoming
+//        $scope.canvases[index] = angular.merge({}, $scope.adding.canvases.init, $scope.canvases[index]
+//            , {
+//            label: img.src.substring(img.src.lastIndexOf("/") + 1),
+//            images: [{
+//                    '@type': "oa:Annotation",
+//                    motivation: "sc:painting",
+//                    resource: {
+//                        '@type': "dcTypes:Image",
+//                        width: img.naturalWidth,
+//                        height: img.naturalHeight
+//                    }
+////                    ,
+////                    on:""
+//                }],
+//            width: (0.5 + $scope.cHeight * img.naturalWidth / img.naturalHeight) | 0,
+//            height: $scope.cHeight
+//        });
+        var src = $scope.canvases[index].images[0].resource['@id'];
+        $scope.canvases[index] = angular.extend({}, $scope.adding.canvases.init, $scope.canvases[index]
+            , {
+                label: img.src.substring(img.src.lastIndexOf("/") + 1),
+                images: [{
+                        '@type': "oa:Annotation",
+                        motivation: "sc:painting",
+                        resource: {
+                            '@id': src,
+                            '@type': "dcTypes:Image",
+                            width: img.naturalWidth,
+                            height: img.naturalHeight
+                        }
 //                    ,
 //                    on:""
-                }],
-            width: (0.5 + $scope.cHeight * img.naturalWidth / img.naturalHeight) | 0,
-            height: $scope.cHeight
-        });
+                    }],
+                width: (0.5 + $scope.cHeight * img.naturalWidth / img.naturalHeight) | 0,
+                height: $scope.cHeight
+            });
     };
 
     $scope.saveManifest = RERUM.save;
@@ -302,11 +331,12 @@ rerum.directive('addProperty',function(){
     };
 });
 rerum.directive('property', function ($compile) {
-    var getTemplate = function (type) {
+    var getTemplate = function (type, insert) {
         var tmpl = ['<div class="form-group">'
                 + '<label class="{{labelClass}}" title="{{context[is][\'@id\']||context[is]}}"><span ng-show="context[is]">'
                 + '<i class="fa fa-check"></i></span> {{is}}:</label>',
             null,
+            insert,
             '</div>'];
         var input;
         switch (type) {
@@ -331,7 +361,8 @@ rerum.directive('property', function ($compile) {
             case 'list'  :
                 input = '<button class="btn btn-xs btn-default" type="button" ng-click="editList(for,is)">'
                     + '<i class="fa fa-list-ol"></i> edit</button>'
-                    + '<ol ng-show="for[is].length"><li ng-repeat="item in for[is]">{{item["@id"]||item}}</li></ol>';
+                    + '<ol ng-show="for[is].length"><li ng-repeat="item in for[is]">'
+                    + '{{item.label||item["@id"]||item["@value"]||item["@type"]||item}}</li></ol>';
                 break;
             case 'image' :
                 input = '[image placeholder]';
@@ -357,8 +388,6 @@ rerum.directive('property', function ($compile) {
         "rdfs:label": 'string',
         'label': 'string',
         "dc:description": 'memo',
-        'sc:Sequence': 'object',
-        'sc:Canvas': 'object',
         '@id': 'string',
         '@type': 'string',
         '@value':'string',
@@ -366,18 +395,22 @@ rerum.directive('property', function ($compile) {
         'xsd:integer': 'number',
         'exif:height': 'number',
         'exif:width': 'number',
+        'dcTypes:Image': 'image'
     };
 
     var linker = function (scope, el, attrs) {
-        var type = (scope.types.indexOf(scope.for[scope.is]&&scope.for[scope.is]['@type'])>-1) && scope.for[scope.is]['@type']
+        var type = props[scope.for['@type']]
+            || (scope.types.indexOf(scope.for[scope.is] && scope.for[scope.is]['@type']) > -1) && scope.for[scope.is]['@type']
             || (scope.context[scope.is] && scope.context[scope.is]['@container'])
             || (scope.context[scope.is] && scope.context[scope.is]['@type'])
             || (scope.context[scope.for[scope.is]] && scope.context[scope.for[scope.is]]['@type'])
             || props[scope.is]
+            || props[scope.for[scope.is]]
+            || angular.isObject(scope.is) && 'object'
             || 'unknown';
             if(type.indexOf('list')>-1){
                 scope.$watchCollection('for[is]',function(newVal,oldVal){
-                    if(newVal && newVal.length){
+                if (newVal && newVal.length) {
                         // maybe just a k-v pair setup, like metadata
                         if (angular.isDefined(scope.for[scope.is].length
                             && !scope.for[scope.is][0]['@id']
@@ -391,7 +424,13 @@ rerum.directive('property', function ($compile) {
                 });
             }
         scope.labelClass = attrs.labelClass;
-        el.html(getTemplate(type)); //.show();
+        if (scope.is === '@id' && scope.for['@type'] === 'sc:Canvas') {
+            var insert = '<figure class="pull-right">'
+                + '<figcaption>{{::for.label.substring(0,10)||"no label"}}</figcaption>'
+                + '<img ng-src="{{::for.images[0].resource[\'@id\']||for.images[0]}}" ng-load="defaultCanvas($index,$event)">'
+                + '</figure>';
+        }
+        el.html(getTemplate(type, insert)); //.show();
         $compile(el.contents())(scope);
     };
     return {

@@ -1,18 +1,20 @@
 <div>
-	<alert type="info" close="close">
+    <alert type="info" close="close">
 		{{list.length}} {{list.length!==1&&(adding[prop].item||'items')||(adding[prop].single||'item')}} in this list.
 		<div class="btn-group">
 			<button class="btn btn-default" ng-click="addItem(adding[prop].init,parent,list,adding[prop].build)">+ {{adding[prop].single||'item'}}</button>
 		</div>
-	</alert>
-	<ol>
-		<li ng-repeat="item in list track by $index" ng-class-odd="'bg-info'">
-			<ul class="list-unstyled">
+    </alert>
+    <div class="modal-body">
+        <ol>
+        <li ng-repeat="item in list track by $index" ng-class-odd="'bg-info'">
+                <ul class="list-unstyled">
 				<li ng-repeat="(k,v) in item">
 					<property for="item" is="k" label-class="col-sm-3"></property>
 				</li>
 				<!-- <add-property obj="item"></add-property> -->
 			</ul>
 		</li>
-	</ol>
+    </ol>
+    </div>
 </div>
