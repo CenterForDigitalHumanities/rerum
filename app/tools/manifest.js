@@ -240,6 +240,7 @@ rerum.controller('buildManifestController', function ($scope, $modal, Context, K
                 text:"The string didn't seem to have any content."
             };
         }
+        $scope.imgStr = "";
     };
 
     $scope.defaultCanvas = function(index,event){
@@ -293,9 +294,10 @@ rerum.directive('ngLoad', function($parse){
             compile: function($element, attr) {
                 var fn = $parse(attr['ngLoad']);
                 return function(scope, element, attr) {
-                    element.on('load', function(event) {
+                element.on('load', function (event) {
                         scope.$apply(function() {
-                            fn(scope, {$event:event});
+                        fn(scope, {$event: event});
+
                         });
                     });
                 };

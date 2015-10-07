@@ -14,11 +14,14 @@ rerum.config(['$routeProvider', '$locationProvider',
                 })
                 .when('/objects', {
                     templateUrl: 'app/objects/objects.html'
-                })
-                .when('/about', {
-                    templateUrl: 'app/about/about.html'
-                })
-                .otherwise(({redirectTo: '/welcome'}));
+            })
+            .when('/tools', {
+                templateUrl: 'app/tools/tools.html'
+            })
+            .when('/about', {
+                templateUrl: 'app/about/about.html'
+            })
+            .otherwise(({redirectTo: '/welcome'}));
     }]);
 rerum.value('Terminal', false); // set Apple IIe style
 rerum.controller('mainController', function ($scope, $location, hotkeys, Terminal) {
@@ -127,6 +130,13 @@ rerum.controller('welcomeController', function ($scope, $location, hotkeys) {
         })
         .add({
             combo: '4',
+            description: 'Tools',
+            callback: function () {
+                $location.path('/tools');
+            }
+        })
+        .add({
+            combo: '5',
             description: 'About us / Contact',
             callback: function () {
                 $location.path('/about');

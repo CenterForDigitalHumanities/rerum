@@ -26,7 +26,7 @@
             Edit this manifest ({{canvases.length}} canvas{{(canvases.length===1)&&""||"es"}})
         </a>
     </form>
-    <figure class="col-sm-3" ng-repeat="c in ::canvases">
+    <figure class="col-sm-3" ng-repeat="c in ::canvases track by c.images[0].resource['@id']">
         <figcaption>{{::c.label.substring(0,10)}}</figcaption>
         <img ng-src="{{::c.images[0].resource['@id']||c.images[0]}}" ng-load="defaultCanvas($index,$event)">
         <small class="help-block">{{c.width}} x {{c.height}}</small>
