@@ -347,7 +347,7 @@ rerum.directive('property', function ($compile) {
                 input = '<input type="number" min=0 step=1 ng-pattern="\'\d+\'" ng-model="for[is]">';
                 break;
             case 'object' :
-                input = '<ul ng-show="for[is].length"><li ng-repeat="(k,v) in for[is]" ng-show="angular.isDefined(k)">'
+                input = '<ul ng-show="Object(for[is]).keys.length"><li ng-repeat="(k,v) in for[is]" ng-show="angular.isDefined(k)">'
                     + '<property for="for[is]" is="k"></property></li></ul>';
                 break;
             case 'memo' :
@@ -404,11 +404,12 @@ rerum.directive('property', function ($compile) {
         var type = props[scope.for['@type']]
             || (scope.types.indexOf(scope.for[scope.is] && scope.for[scope.is]['@type']) > -1) && scope.for[scope.is]['@type']
             || (scope.context[scope.is] && scope.context[scope.is]['@container'])
+            || angular.isObject(scope.is) && 'object'
+            || angular.isObject(scope.for[scope.is]) && 'object'
             || (scope.context[scope.is] && scope.context[scope.is]['@type'])
             || (scope.context[scope.for[scope.is]] && scope.context[scope.for[scope.is]]['@type'])
             || props[scope.is]
             || props[scope.for[scope.is]]
-            || angular.isObject(scope.is) && 'object'
             || 'unknown';
             if(type.indexOf('list')>-1){
                 scope.$watchCollection('for[is]',function(newVal,oldVal){
