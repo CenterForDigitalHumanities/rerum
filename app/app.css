@@ -35,7 +35,13 @@ body.terminal::before {
     pointer-events: none;
     border-radius: 40%;
 }
-
+.terminal dd {
+    text-transform: none;
+    padding-left: 3rem;
+}
+.terminal figure img {
+    mix-blend-mode: difference;
+}
 figure img {
     max-width:100%;
     max-height: 100%;
@@ -101,7 +107,7 @@ a[href],a[ng-click]{
     position:relative;
 }
 .terminal input[type='button'],.terminal input[type='submit'],.btn-invert,.invert,
-.terminal select, .terminal button, .terminal .btn {
+.terminal select, .terminal button, .terminal .btn, .terminal code {
     background-color: rgba(0,255,0,.7);
     color:rgba(0,0,0,.7);
     border: none;
