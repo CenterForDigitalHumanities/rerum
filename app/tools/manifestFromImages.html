@@ -1,9 +1,11 @@
 <div>
     <form ng-submit="loadImages(imgString,cHeight)">
         <div class="form-group">
-        <label class="control-label">Images</label>
-        <input class="form-control" type="text" ng-model="imgString"
-               ng-model-options="{ updateOn: 'blur' }">
+            <label class="control-label">Images</label>
+            <div class="positioned">
+                <input class="form-control" type="text" ng-model="imgString"
+               ng-model-options="{ updateOn: 'blur' }"><i></i>
+        </div>
         <p class="help-block">
             Enter a list of URLs to available images, separated by a comma(","). Any
             images that we cannot resolve will result in unannotated Canvases. The
@@ -14,9 +16,11 @@
     </div>
     <div class="form-group">
         <label class="control-label">Canvas Dimensions</label>
-        <input class="form-control" type="number" ng-model="cHeight"
-               ng-model-options="{ updateOn: 'blur' }">
-        <p class="help-block">
+        <div class="positioned">
+            <input class="form-control" type="number" ng-model="cHeight"
+       ng-model-options="{ updateOn: 'blur' }"><i></i>
+                </div>
+                <p class="help-block">
             Incoming images will be scaled to the height set and the initial width will
             be based off the natural ratio of the full image.
         </p>
@@ -25,6 +29,10 @@
         <a ng-show="canvases.length" class="btn btn-link" href="#/edit">
             Edit this manifest ({{canvases.length}} canvas{{(canvases.length===1)&&""||"es"}})
         </a>
+        <button type="button" ng-show="canvases.length" class="btn btn-link"
+                ng-click="saveManifest(obj)">
+            Save this manifest
+        </button>
     </form>
     <figure class="col-sm-3" ng-repeat="c in ::canvases track by c.images[0].resource['@id']">
         <figcaption>{{::c.label.substring(0,10)}}</figcaption>

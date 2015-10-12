@@ -147,10 +147,13 @@ a[href],a[ng-click]{
 }
 .terminal input[type='text'],
 .terminal input[type='email'],
+.terminal input[type='number'],
 .terminal input[type='text']:focus,
 .terminal input[type='email']:focus,
+.terminal input[type='number']:focus,
 .terminal input[type='email']:hover,
 .terminal input[type='text']:hover,
+.terminal input[type='number']:hover,
 .terminal input:-webkit-autofill,
 .terminal textarea:-webkit-autofill,
 .terminal select:-webkit-autofill{
@@ -163,6 +166,7 @@ a[href],a[ng-click]{
 }
 .terminal input[type='text']:focus,
 .terminal input[type='email']:focus,
+.terminal input[type='number']:focus,
 .terminal textarea:focus,
 .terminal a:focus{
     background: rgba(0,255,0,.3);

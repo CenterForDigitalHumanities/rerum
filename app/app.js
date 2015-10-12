@@ -23,7 +23,7 @@ rerum.config(['$routeProvider', '$locationProvider',
             })
             .otherwise(({redirectTo: '/welcome'}));
     }]);
-rerum.value('Terminal', false); // set Apple IIe style
+rerum.value('Terminal', true); // set Apple IIe style
 rerum.controller('mainController', function ($scope, $location, hotkeys, Terminal) {
     // welcome functions
     hotkeys.add({
@@ -37,18 +37,25 @@ rerum.controller('mainController', function ($scope, $location, hotkeys, Termina
     $scope.terminal = Terminal;
     $scope.hotkeys = hotkeys;
     function tabTo (step) {
-        var elem = document.getElementsByClassName('focused')[0];
+//        var elem = document.getElementsByClassName('focused')[0];
+        var elem = event.target || window;
+        if (elem.type === "number") {
+            return elem;
+        }
         var list = [].filter.call(document.querySelectorAll('input, button, select, textarea, a[href]'), function (item) {
-            angular.element(item).removeClass('focused');
+//            angular.element(item).removeClass('focused');
             return item.tabIndex >= "0";
         });
         var index = list.indexOf(elem);
         if (index + step < 0) {
             elem = list.pop();
         } else {
-            elem = list[index + step] || list[0];
+            do {
+                elem = list[index + step] || list[0];
+                index += step;
+            } while (angular.element(elem).hasClass('ng-hide'))
         }
-        angular.element(elem).addClass('focused');
+//        angular.element(elem).addClass('focused');
         return elem;
     };
     /**

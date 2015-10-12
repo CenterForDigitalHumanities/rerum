@@ -173,8 +173,11 @@ rerum.service('RERUM', function($http,$q){
             });
     };
     this.save = function(obj){
-        var url = "http://rerum.io/saveNewAnnotation";
-        return $http.post(url,{content:obj});
+        var url = obj['@id']
+            ? "http://165.134.241.141/annotationstore/anno/updateAnnotation.action"
+            : "http://165.134.241.141/annotationstore/anno/saveNewAnnotation.action";
+//        var url = "api/res/"+obj['@id']; // live server test
+        return $http.post(url, {content: obj});
     };
 });
 
