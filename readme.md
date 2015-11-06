@@ -32,10 +32,10 @@ knowledge into the Interwebs.
 RERUM Install Information<br>
 To use your own instance RERUM, here are a few things to know:
 
-   - RERUM will work with any server, we have implemented on a Linux system with RedHat. 
-   - Java 6+
-   - The datbasing software used in MongoDB since all entries in the DB are JSON blobs.
-   - min 3GB HD space
-   - RERUM uses HTTP protocols to do CRUD operations from the client.  
-   - HTTP GET requests must be open on port 80
+   - RERUM is written in Java. 
+   - RERUM supports Java 1.6 and above. 
+   - RERUM uses MongoDB as its database. 
+   - RERUM uses HTTP protocol to do CRUD operations from the client. 
+   - RERUM doesn't support cross domain AJAX call, so the call must be initialized from a registered server. 
+   - HTTP requests must be open on port 80. 
    
