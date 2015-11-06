@@ -34,7 +34,7 @@ To use your own instance RERUM, here are a few things to know:
 
    - RERUM is written in Java. 
    - RERUM supports Java 1.6 and above. 
-   - RERUM uses MongoDB as its database. 
+   - RERUM uses MongoDB as its database. We are curretly using MongoDB 2.6.11. 
    - RERUM uses HTTP protocol to do CRUD operations from the client. 
    - RERUM doesn't support cross domain AJAX call, so the call must be initialized from a registered server. 
    - HTTP requests must be open on port 80. 
