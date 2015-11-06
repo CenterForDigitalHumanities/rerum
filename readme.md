@@ -29,7 +29,7 @@ projects, applications in development, or because of funding requirements, we
 hope that your machine enjoys talking to others and releases its gnats of
 knowledge into the Interwebs.
 
-RERUM Install Information
+RERUM Install Information<br>
 To use your own instance RERUM, here are a few things to know:
 
    - RERUM will work with any server, we have implemented on a Linux system with RedHat. 
