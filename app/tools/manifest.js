@@ -13,7 +13,7 @@ rerum.config(['$routeProvider',
                         });
                     },
                     obj: function(Knowns){
-                        return Knowns.obj;
+                        return Knowns.manifest;
                         // TODO: preload a known manifest from the URL or memory
                     }
                 }
@@ -40,7 +40,7 @@ rerum.service('Context', function ($http, $q) {
     });
 });
 rerum.value('Knowns',{
-    obj : {
+    manifest: {
 //        "@id": "",
         "@context": "http://iiif.io/api/presentation/2/context.json",
         "@type": "sc:Manifest",
@@ -52,6 +52,19 @@ rerum.value('Knowns',{
                 "@type": "sc:Sequence",
                 "canvases": []
             }]
+    },
+    essay: {
+//        "@id" : "",
+        "@context": "http://iiif.io/api/presentation/2/context.json",
+        "@type": "Essay",
+        "label": "",
+        "metadataResources": [],
+        "sections": [],
+        "footnotes": [],
+        "endnotes": [],
+        "indices": [],
+        "comments": [],
+        "otherContent": []
     },
     types: ['number', 'string', 'memo', 'list', 'object', 'canvas'],
     adding : {
@@ -121,10 +134,70 @@ rerum.value('Knowns',{
             item: 'lists',
             single: 'list',
             init: {
-                '@id':"",
-                '@type':"sc:AnnotationList",
-                label:"",
-                resources:[]
+                '@id': "",
+                '@type': "sc:AnnotationList",
+                label: "",
+                resources: []
+            }
+        },
+        sections: {
+            item: 'lists',
+            single: 'list',
+            init: {
+                '@id': "",
+                '@type': "sc:AnnotationList",
+                label: "",
+                resources: []
+            }
+        },
+        metadataResources: {
+            item: 'lists',
+            single: 'list',
+            init: {
+                '@id': "",
+                '@type': "sc:AnnotationList",
+                label: "",
+                resources: []
+            }
+        },
+        footnotes: {
+            item: 'lists',
+            single: 'list',
+            init: {
+                '@id': "",
+                '@type': "sc:AnnotationList",
+                label: "",
+                resources: []
+            }
+        },
+        endnotes: {
+            item: 'lists',
+            single: 'list',
+            init: {
+                '@id': "",
+                '@type': "sc:AnnotationList",
+                label: "",
+                resources: []
+            }
+        },
+        indices: {
+            item: 'lists',
+            single: 'list',
+            init: {
+                '@id': "",
+                '@type': "sc:AnnotationList",
+                label: "",
+                resources: []
+            }
+        },
+        comments: {
+            item: 'lists',
+            single: 'list',
+            init: {
+                '@id': "",
+                '@type': "sc:AnnotationList",
+                label: "",
+                resources: []
             }
         },
         structures: {
@@ -159,33 +232,11 @@ rerum.value('Knowns',{
     }
 });
 
-rerum.service('RERUM', function($http,$q){
-    var self = this;
-    this.resolve = function(uri){
-        if(angular.isArray(uri)){
-            return $q.all(uri.map(self.resolve));
-        }
-        return $http.get(uri)
-            .success(function(res){
-                return res;
-            }).error(function(err){
-                return err;
-            });
-    };
-    this.save = function(obj){
-        var url = obj['@id']
-            ? "http://165.134.241.141/annotationstore/anno/updateAnnotation.action"
-            : "http://165.134.241.141/annotationstore/anno/saveNewAnnotation.action";
-//        var url = "api/res/"+obj['@id']; // live server test
-        return $http.post(url, {content: obj});
-    };
-});
-
-rerum.controller('buildManifestController', function ($scope, $modal, Context, Knowns, RERUM, obj) {
+rerum.controller('buildManifestController', function ($scope, $modal, Context, Knowns, rerumService, obj) {
     Context.getJSON.success(function (c) {
         $scope.context = c['@context'][0];
     });
-    $scope.obj = obj || Knowns.obj;
+    $scope.obj = obj || Knowns.manifest;
     $scope.types = Knowns.type;
     $scope.adding = Knowns.adding;
     $scope.cHeight = 1000;
@@ -224,9 +275,11 @@ rerum.controller('buildManifestController', function ($scope, $modal, Context, K
             type:"success",
             text:"That was easy! Looks like we did it."
         };
-        $scope.canvases = imgStr.split(",").map(function(src){
+        $scope.canvases = imgStr.split(",").map(function (src, index) {
             return {
                 //src: src, // prevent digest by holding this in an unchanging prop
+                label: "canvas " + index,
+                "@id": "canvas " + index,
                 height: height,
                 images: [{
                         resource: {
@@ -235,8 +288,8 @@ rerum.controller('buildManifestController', function ($scope, $modal, Context, K
                     }]
             };
         });
-        Knowns.obj.label = "New Manifest";
-        Knowns.obj.sequences[0].canvases = $scope.canvases;
+        Knowns.manifest.label = "New Manifest";
+        Knowns.manifest.sequences[0].canvases = $scope.canvases;
         if(!$scope.canvases.length){
             $scope.msg = {
                 type:"error",
@@ -288,7 +341,7 @@ rerum.controller('buildManifestController', function ($scope, $modal, Context, K
             });
     };
 
-    $scope.saveManifest = RERUM.save;
+    $scope.saveManifest = rerumService.save;
 });
 
 rerum.directive('ngLoad', function($parse){

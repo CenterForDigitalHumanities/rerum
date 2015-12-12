@@ -1,0 +1,49 @@
+<div>
+    <h3>Build out RERUM Essay</h3>
+    <label>Loaded Essay</label> {{obj.label|| obj['@id'] || 'none'}}
+    <button class="btn btn-default" type="button" ng-click="saveEssay(obj)">
+        {{(obj['@id'].indexOf('new') === 0) && 'Save Essay' || 'Update'}}
+    </button>
+	<div ng-if="!obj.label" class="form-group">
+		<label>Brand New:</label>
+		<div class="positioned">
+		<input type="text" ng-model="obj.label" ng-model-options="{ updateOn: 'blur' }"
+                       placeholder="Label for a new Essay"><i></i>
+                </div>
+		<label>File:</label>
+		<div class="btn-block">
+		<div class="fileUpload positioned btn">
+		    <span>Upload</span>
+			<input type="file" ng-model="obj" ng-change="obj['@id']='new'"
+                               class="upload" placeholder="Essay JSON"><i></i>
+                </div>
+		{{obj['@id']}}
+	</div>
+		<label>URI:</label>
+		<div class="positioned">
+		<input type="text" ng-model="uri" ng-blur="resolve(uri,obj)" class="btn-block"
+                       placeholder="URI for this remote Essay"><i></i>
+                </div>
+		<label>JSON:</label>
+		<div class="positioned">
+		<textarea ng-model="json" class="btn-block" rows="4"
+                          placeholder="Type or paste the JSON for this new Essay"></textarea><i></i>
+                </div>
+	</div>
+	<div ng-show="obj.label">
+		<form class="col-sm-6">
+			<property for="obj" is="k" ng-repeat="(k,v) in obj"></property>
+<!-- 			<add-property obj="obj"></add-property> -->
+		</form>
+		<div class="col-sm-6">
+			<div class="form-group">
+				<label>@id</label>
+				<span>{{obj['@id']}}</span>
+			</div>
+                    <label>Essay</label>
+                    <pre class="pre-scrollable">{{obj|json}}</pre>
+			<label>Context</label>
+			<pre class="pre-scrollable">{{context|json}}</pre>
+		</div>
+	</div>
+</div>
