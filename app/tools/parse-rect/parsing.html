@@ -1,18 +1,18 @@
 <div ng-class="{fullscreen:config.fullscreen}" class="parsing">
     <div class="parseButtons btn-group" ng-controller="drawBoxController">
-        <button ng-click="dbs.action = 'create'" class="btn bg-default" ng-class="{active:dbs.action === 'create'}" ng-show="dbs.activeList.resources">
+        <button ng-click="setAction('create')" class="btn bg-default" ng-class="{active:dbs.action === 'create'}" ng-show="dbs.activeList.resources">
             <i class="fa fa-plus-circle"></i>
         </button>
-        <button ng-click="dbs.action = 'destroy'" class="btn bg-default" ng-class="{active:dbs.action === 'destroy'}" ng-show="dbs.activeList.resources">
+        <button ng-click="setAction('destroy')" class="btn bg-default" ng-class="{active:dbs.action === 'destroy'}" ng-show="dbs.activeList.resources">
             <i class="fa fa-minus-circle"></i>
         </button>
-        <button ng-click="dbs.action = 'select'" class="btn bg-default" ng-class="{active:dbs.action === 'select'}" ng-show="dbs.activeList.resources">
+        <button ng-click="setAction('select')" class="btn bg-default" ng-class="{active:dbs.action === 'select'}" ng-show="dbs.activeList.resources">
             <i class="fa fa-mouse-pointer"></i>
         </button>
         <button ng-click="saveAnno()" ng-if="dbs.newBox[0]" class="btn bg-primary" ng-show="dbs.activeList.resources">
             <i class="fa fa-save"></i>
         </button>
-        <div class="btn-group" uib-dropdown ng-show="canvas.otherContent">
+        <div class="btn-group" uib-dropdown ng-show="canvas.otherContent" uib-tooltip="Annotation Groups" tooltip-placement="left">
             <button type="button" class="btn btn-default" uib-dropdown-toggle id="choose-list">
             {{dbs.activeList.label||dbs.activeList.motivation||dbs.activeList['@id']||'Lists'}}
             <span class="caret" ng-show="canvas.otherContent.length > 1"></span>

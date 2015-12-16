@@ -85,6 +85,10 @@ rerum.controller('parsingController', function ($scope, $rootScope, rerumService
         }
         return motivations;
     };
+    $scope.setAction = function (set) {
+        drawBoxService.action = set === drawBoxService.action ? "" : set;
+    };
+
     $rootScope.$on('change-canvas', function () {
         motivations = [];
         config.currentCanvas = $scope.canvas; // TODO: remove once the jump list is $location linked
@@ -195,6 +199,7 @@ rerum.directive('drawBox', function (drawBoxService, $compile, $rootScope) {
 
             // variable that decides if something should be drawn on mousemove
             var drawing = false;
+            var moving = false;
 
             // the last coordinates before the current move
             var centerX;
@@ -213,7 +218,11 @@ rerum.directive('drawBox', function (drawBoxService, $compile, $rootScope) {
                 ctx.stroke();
             }
             element.bind('mousemove', function (event) {
-                if (drawBoxService.action === "create" && drawing) {
+                if (moving) {
+                    var container = document.getElementById('parseContainer');
+                    container.scrollLeft += centerX - event.offsetX;
+                    container.scrollTop += centerY - event.offsetY;
+                } else if (drawBoxService.action === "create" && drawing) {
                     clearTools();
                             // get current mouse position
                             var currentX = pixelToUnit(event.offsetX);
@@ -256,16 +265,21 @@ rerum.directive('drawBox', function (drawBoxService, $compile, $rootScope) {
                 });
                 return list;
             };
-            element.bind('click', function (event) {
+            element.bind('click', function (event, overEvent) {
+                if (overEvent)
+                    event = overEvent;
                 var xTap = pixelToUnit(event.offsetX);
                 var yTap = pixelToUnit(event.offsetY);
                 var l = drawBoxService.activeList;
                 var boxes = annotationsAt([xTap, yTap], l.resources);
                 if (boxes.length === 0) {
+                    if (!drawBoxService.newBox.length)
+                        clearTools();
                     return false;
                 }
                 switch (drawBoxService.action) {
                     case "select":
+                        drawBoxService.newBox = "";
                         if (boxes) {
                             drawBoxes(boxes, drawBoxService.restrictMotivations, addTools);
                         }
@@ -273,10 +287,12 @@ rerum.directive('drawBox', function (drawBoxService, $compile, $rootScope) {
                     case "destroy":
                         if (boxes.length === 1) {
                             l.resources.splice(l.resources.indexOf(boxes[0]), 1);
+                            clearTools();
                             $rootScope.$broadcast('destroy-annotation');
                         } else {
-                            alert("Multiple selection not allowed yet.");
-                            // TODO: disambiguate selection
+                            drawBoxService.action = "select";
+                            element.triggerHandler("click", event);
+                            drawBoxService.action = "destroy";
                         }
                         break;
                 }
@@ -286,7 +302,7 @@ rerum.directive('drawBox', function (drawBoxService, $compile, $rootScope) {
                 var l = drawBoxService.activeList;
                 l.resources.splice(l.resources.indexOf(box), 1);
                 } else {
-                    drawBoxService.newBox = {};
+                    drawBoxService.newBox = "";
                 }
                 $rootScope.$broadcast('destroy-annotation');
                 clearTools();
@@ -297,6 +313,7 @@ rerum.directive('drawBox', function (drawBoxService, $compile, $rootScope) {
                     addTools([centerX, centerY]);
                     drawing = false;
                 }
+                moving = false;
 
                 // let the view know there is a new box
                 scope.$apply();
@@ -313,10 +330,19 @@ rerum.directive('drawBox', function (drawBoxService, $compile, $rootScope) {
                 if (!multiple) {
                     clearTools();
                 }
+                var box;
+                if (!angular.isArray(pos) && box.on) {
+                    box = pos;
+                    pos = box.on.split(",").map(function (a) {
+                        return parseFloat(a);
+                    });
+                }
                 var toolbar = document.createElement('div');
-                angular.element(toolbar).addClass("parse-toolbar")
-                    .append('<button ng-click="saveAnno()" class="btn btn-primary"><i class="fa fa-save"></i></button>')
-                    .append('<button ng-click="deleteAnno(null)" class="btn btn-danger"><i class="fa fa-trash"></i></button>')
+                var $t = angular.element(toolbar).addClass("parse-toolbar");
+                if (drawBoxService.newBox.length) {
+                    $t.append('<button ng-click="saveAnno()" class="btn btn-primary"><i class="fa fa-save"></i></button>');
+                }
+                $t.append('<button ng-click="deleteAnno(' + box + ')" class="btn btn-danger"><i class="fa fa-trash"></i></button>')
                     .css({
                         position: "absolute",
                         left: pos[0] / scope.canvas.width * 100 + "%",
@@ -332,10 +358,16 @@ rerum.directive('drawBox', function (drawBoxService, $compile, $rootScope) {
             }
             function draw (startX, startY, currentX, currentY) {
                 reset();
-                var sizeX = currentX - startX;
-                var sizeY = currentY - startY;
-                drawBoxService.newBox = [startX, startY, sizeX, sizeY].join(",");
-                rect(startX, startY, sizeX, sizeY);
+                var w = currentX - startX;
+                var h = currentY - startY;
+                if (w * w < 100) {
+                    w = 10;
+                }
+                if (h * h < 100) {
+                    h = 10;
+                }
+                drawBoxService.newBox = [startX, startY, w, h].join(",");
+                rect(startX, startY, w, h);
             }
             element.bind('mousedown', function (event) {
                 centerX = pixelToUnit(event.offsetX);
@@ -354,6 +386,7 @@ rerum.directive('drawBox', function (drawBoxService, $compile, $rootScope) {
                     default : // move image
                         centerX = event.offsetX;
                         centerY = event.offsetY;
+                        moving = true;
                 }
                 scope.canvasElement = document.getElementById('parseImage').children[1];
                 element.attr({
@@ -391,13 +424,15 @@ rerum.controller('drawBoxController', function ($scope, parsingService, drawBoxS
         }
         parsingService.saveAnnotation(pos.join(","), $scope.canvas || drawBoxService.canvas);
         // TODO: on success
-        drawBoxService.newBox = {};
+        drawBoxService.newBox = "";
+        angular.element(document.getElementsByClassName('parse-toolbar')).remove(); // clearTools()
     };
     drawBoxService.action = ""; // select, destroy
     if (!drawBoxService.pinch) {
         drawBoxService.pinch = 0;
     }
     $scope.rePinch = function (i) {
+        // TODO: Right now, this is not a true zoom, since it clips the left at <0 values.
         drawBoxService.pinch -= i * 5;
         if (drawBoxService.pinch > 40) {
             drawBoxService.pinch = 40;
@@ -420,7 +455,7 @@ rerum.controller('drawBoxController', function ($scope, parsingService, drawBoxS
         }
     });
 
-    if (!drawBoxService.activeList['@id']) {
+    if (!drawBoxService.activeList['@id'] && drawBoxService.canvas.otherContent) {
         drawBoxService.activeList = drawBoxService.canvas.otherContent[0];
     }
 });

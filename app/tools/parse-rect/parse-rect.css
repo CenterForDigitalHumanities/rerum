@@ -18,6 +18,11 @@ and open the template in the editor.
     height: 80vh;
     overflow: hidden;
 }
+body {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+}
 .parseButtons {
     position:fixed;
     top:5px;
