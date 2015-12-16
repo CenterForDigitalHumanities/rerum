@@ -37,6 +37,9 @@
         </div>
     </div>
     <div class="modal-footer">
+        <ul class="pull-left list-unstyled text-left">
+            <li ng-repeat="L in canvas.otherContent">{{L.label}}</li>
+        </ul>
         <button class="btn btn-primary" type="button" ng-click="pushList()">
             <i class="fa fa-plus"></i>
         </button>
