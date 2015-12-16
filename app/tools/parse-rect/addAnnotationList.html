@@ -1,0 +1,45 @@
+<div>
+    <div class="modal-header">
+        <h3 class="modal-title">Add a List of Annotations
+            <button type="button" class="btn btn-default pull-right" ng-click="showHelp = !showHelp">
+                <i class="fa fa-question"></i>
+            </button>
+        </h3>
+    </div>
+    <div class="modal-body">
+        <p collapse="!showHelp">
+            Each annotation list groups annotations together into a layer on
+            this canvas for different purposes. Each list must be labeled and
+            may be described further.
+            <a target="_blank" href="http://iiif.io/api/presentation/2#AnnotationList">
+                <i class="fa fa-external-link"></i> sc:AnnotationList
+            </a>
+        </p>
+        <div class="form-group">
+            <label>Label for group</label>
+            <input type="text" class="form-control" ng-model="list.label" />
+            <p class="help-block" collapse="!showHelp">
+                This is a human-readable label for convenience. It will be
+                encoded as <code>rdfs:label</code>. This string does not
+                have any data value beyond human reading.
+            </p>
+        </div>
+        <div class="form-group">
+            <label>Motivation for grouping</label>
+            <input type="text" class="form-control" ng-model="list.motivation" />
+            <p class="help-block" collapse="!showHelp">
+                This will be encoded as <code>oa:Motivation</code>. This string
+                may just be a string, but may be a uri to a defined motivation
+                such as <code>http://www.w3.org/ns/oa#commenting</code>. These
+                same motivations may be applied to the individual annotations
+                as well.
+            </p>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" type="button" ng-click="pushList()">
+            <i class="fa fa-plus"></i>
+        </button>
+        <button class="btn btn-default" type="button" ng-click="modal.close()">Cancel</button>
+    </div>
+</div>

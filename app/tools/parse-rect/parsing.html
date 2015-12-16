@@ -1,9 +1,17 @@
 <div ng-class="{fullscreen:config.fullscreen}" class="parsing">
     <div class="parseButtons btn-group" ng-controller="drawBoxController">
-        <button ng-click="setAction('create')" class="btn bg-default" ng-class="{active:dbs.action === 'create'}" ng-show="dbs.activeList.resources">
+        <button ng-click="setAction('create')" class="btn bg-default"
+                ng-class="{active:dbs.action === 'create'}"
+                ng-show="dbs.activeList.resources"
+                tooltip-append-to-body="true"
+                uib-tooltip="Add Column" tooltip-placement="bottom">
             <i class="fa fa-plus-circle"></i>
         </button>
-        <button ng-click="setAction('destroy')" class="btn bg-default" ng-class="{active:dbs.action === 'destroy'}" ng-show="dbs.activeList.resources">
+        <button ng-click="setAction('destroy')" class="btn bg-default"
+                ng-class="{active:dbs.action === 'destroy'}"
+                ng-show="dbs.activeList.resources"
+                tooltip-append-to-body="true"
+                uib-tooltip="Destroy Column" tooltip-placement="bottom">
             <i class="fa fa-minus-circle"></i>
         </button>
         <button ng-click="setAction('select')" class="btn bg-default" ng-class="{active:dbs.action === 'select'}" ng-show="dbs.activeList.resources">
@@ -18,21 +26,13 @@
             <span class="caret" ng-show="canvas.otherContent.length > 1"></span>
             </button>
         <ul class="uib-dropdown-menu" role="menu" aria-labelledby="choose-list">
-            <li role="menuitem" ng-hide="dbs.activeList === l"
+            <li role="menuitem" ng-hide="dbs.activeList === L"
                 ng-click="dbs.activeList = l"
-                ng-repeat="l in canvas.otherContent">{{l.label||l.motivation||l.on||l['@id']}}</li>
+                ng-repeat="L in canvas.otherContent">{{L.label||L.motivation||L.on||L['@id']}}</li>
             <li class="divider" ng-show="canvas.otherContent.length > 1"></li>
             <li role="menuitem" ng-click="addList()">Create New List</li>
         </ul>
     </div>
-        <button ng-if="!canvas.otherContent" class="btn btn-warning"
-                ng-click="addList()"
-                tooltip-placement="left"
-                tooltip-is-open="true"
-                            tooltip-append-to-body="true"
-                            uib-tooltip="This canvas has no annotation lists - click to add.">
-            <i class="fa fa-warning"></i>
-    </button>
         <div class="btn-group" uib-dropdown ng-show="getMotivations(dbs.activeList).length > 1">
             <button type="button" class="btn btn-default" uib-dropdown-toggle id="motive-list">
             {{getMotivations(dbs.activeList) || "Restrict to"}} <span class="caret"></span>
@@ -44,12 +44,20 @@
                 ng-repeat="m in getMotivations(dbs.activeList)">{{m}}</li>
         </ul>
         </div>
+        <button ng-if="!canvas.otherContent.length" class="btn btn-warning"
+                ng-click="addList()"
+                tooltip-placement="left"
+                tooltip-is-open="true"
+                tooltip-append-to-body="true"
+                uib-tooltip="This canvas has no annotation lists - click to add.">
+            <i class="fa fa-warning"></i>
+        </button>
     </div>
     <div class="col-sm-8">
         <uib-alert ng-repeat="m in messages" type="{{m.type}}">{{m.text}}</uib-alert>
     </div>
     <div id="parseContainer">
-        <div id="parseImage" style="position:relative;margin-bottom: 6rem;margin-left: {{dbs.pinch}}.0%;margin-right: {{dbs.pinch}}.0%"
+        <div id="parseImage" style="position:relative;margin-bottom: 6rem;margin-right: {{dbs.pinch}}.0%"
          ng-mousewheel-down="rePinch(-1)" ng-mousewheel-up="rePinch(1)">
         <img selector="canvas['@id']">
         <canvas></canvas>

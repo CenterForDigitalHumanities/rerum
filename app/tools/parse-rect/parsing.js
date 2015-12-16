@@ -54,7 +54,7 @@ rerum.config(['$routeProvider', '$locationProvider',
         return "success"; // TODO: asych save
     };
 });
-rerum.controller('parsingController', function ($scope, $rootScope, rerumService, Lists, config, Manifest, drawBoxService, hotkeys) {
+rerum.controller('parsingController', function ($scope, $rootScope, $uibModal, rerumService, Lists, config, Manifest, drawBoxService, hotkeys) {
     $scope.config = config;
     $scope.manifest = Manifest;
     rerumService.extractResources(Manifest);
@@ -66,17 +66,21 @@ rerum.controller('parsingController', function ($scope, $rootScope, rerumService
         if (!$scope.canvas.otherContent) {
             $scope.canvas.otherContent = [];
         }
-        var newList = {
-            label: prompt("Enter a label for this new Annotation List"),
-            motivation: prompt("Enter a motivation for this new Annotation List"),
+        $scope.list = {
+            motivation: "transcription",
             "@id": "new",
             "@type": "sc:AnnotationList",
             resources: []
         };
-        if (newList.label) {
-            $scope.canvas.otherContent.push(newList);
-        }
-        drawBoxService.activeList = newList;
+        $scope.modal = $uibModal.open({
+            templateUrl: "app/tools/parse-rect/addAnnotationList.html",
+            scope: $scope
+        });
+    };
+    $scope.pushList = function () {
+        $scope.canvas.otherContent.push($scope.list);
+        drawBoxService.activeList = $scope.list;
+        $scope.modal.close();
     };
         var motivations;
     $scope.getMotivations = function () {
@@ -204,6 +208,7 @@ rerum.directive('drawBox', function (drawBoxService, $compile, $rootScope) {
             // the last coordinates before the current move
             var centerX;
             var centerY;
+            var aX, aY; // pixel record for moving
 
             // canvas unit to pixels
             function pixelToUnit (px) {
@@ -220,8 +225,8 @@ rerum.directive('drawBox', function (drawBoxService, $compile, $rootScope) {
             element.bind('mousemove', function (event) {
                 if (moving) {
                     var container = document.getElementById('parseContainer');
-                    container.scrollLeft += centerX - event.offsetX;
-                    container.scrollTop += centerY - event.offsetY;
+                    container.scrollLeft += aX - event.offsetX;
+                    container.scrollTop += aY - event.offsetY;
                 } else if (drawBoxService.action === "create" && drawing) {
                     clearTools();
                             // get current mouse position
@@ -271,6 +276,9 @@ rerum.directive('drawBox', function (drawBoxService, $compile, $rootScope) {
                 var xTap = pixelToUnit(event.offsetX);
                 var yTap = pixelToUnit(event.offsetY);
                 var l = drawBoxService.activeList;
+                if (!l) {
+                    return;
+                }
                 var boxes = annotationsAt([xTap, yTap], l.resources);
                 if (boxes.length === 0) {
                     if (!drawBoxService.newBox.length)
@@ -382,10 +390,9 @@ rerum.directive('drawBox', function (drawBoxService, $compile, $rootScope) {
                     case "destroy": // confirm delete
                         break;
                     case "select": // pick out an annotation
-                        break;
                     default : // move image
-                        centerX = event.offsetX;
-                        centerY = event.offsetY;
+                        aX = event.offsetX;
+                        aY = event.offsetY;
                         moving = true;
                 }
                 scope.canvasElement = document.getElementById('parseImage').children[1];
@@ -432,12 +439,12 @@ rerum.controller('drawBoxController', function ($scope, parsingService, drawBoxS
         drawBoxService.pinch = 0;
     }
     $scope.rePinch = function (i) {
-        // TODO: Right now, this is not a true zoom, since it clips the left at <0 values.
-        drawBoxService.pinch -= i * 5;
-        if (drawBoxService.pinch > 40) {
-            drawBoxService.pinch = 40;
-        } else if (drawBoxService.pinch < -100) {
-            drawBoxService.pinch = -100;
+        // TODO: keep centered on mouse when zooming
+        drawBoxService.pinch -= i * 10;
+        if (drawBoxService.pinch > 90) {
+            drawBoxService.pinch = 90;
+        } else if (drawBoxService.pinch < -200) {
+            drawBoxService.pinch = -200;
         }
     };
     hotkeys.add({
