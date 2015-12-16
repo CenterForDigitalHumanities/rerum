@@ -23,7 +23,7 @@ rerum.config(['$routeProvider', '$locationProvider',
             })
             .otherwise(({redirectTo: '/welcome'}));
     }]);
-rerum.value('Terminal', true); // set Apple IIe style
+rerum.value('Terminal', false); // set Apple IIe style
 rerum.value('config', {
     buffer: .05, // percent of canvas height
     closeCrop: false, // show just enough around a slice to view
@@ -97,7 +97,7 @@ rerum.controller('mainController', function ($scope, $location, hotkeys, Termina
     hotkeys.add({
         combo: 'T',
         description: 'Term',
-        allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
+        allowIn: [],
         callback: function () {
             $scope.terminal = !$scope.terminal;
         }

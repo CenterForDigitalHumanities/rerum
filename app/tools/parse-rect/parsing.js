@@ -51,9 +51,10 @@ rerum.config(['$routeProvider', '$locationProvider',
         };
         list.push(anno);
         $rootScope.$broadcast("create-annotation");
+        return "success"; // TODO: asych save
     };
 });
-    rerum.controller('parsingController', function ($scope, $rootScope, rerumService, Lists, config, Manifest, drawBoxService) {
+rerum.controller('parsingController', function ($scope, $rootScope, rerumService, Lists, config, Manifest, drawBoxService, hotkeys) {
     $scope.config = config;
     $scope.manifest = Manifest;
     rerumService.extractResources(Manifest);
@@ -88,6 +89,15 @@ rerum.config(['$routeProvider', '$locationProvider',
         motivations = [];
         config.currentCanvas = $scope.canvas; // TODO: remove once the jump list is $location linked
         drawBoxService.activeList = $scope.canvas.otherContent && $scope.canvas.otherContent[0];
+    });
+
+    $scope.hotkeys = hotkeys;
+    hotkeys.add({
+        combo: 'ctrl+`',
+        description: 'Show Objects',
+        callback: function () {
+            $scope.dbs.showObject = !$scope.dbs.showObject;
+        }
     });
 });
 
@@ -162,7 +172,7 @@ rerum.config(['$routeProvider', '$locationProvider',
     };
 });
 
-        rerum.directive('drawBox', function (drawBoxService, Lists, $rootScope) {
+rerum.directive('drawBox', function (drawBoxService, $compile, $rootScope) {
     return {
         restrict: 'E',
         replace: true,
@@ -204,15 +214,16 @@ rerum.config(['$routeProvider', '$locationProvider',
             }
             element.bind('mousemove', function (event) {
                 if (drawBoxService.action === "create" && drawing) {
+                    clearTools();
                             // get current mouse position
                             var currentX = pixelToUnit(event.offsetX);
                             var currentY = pixelToUnit(event.offsetY);
                             draw(centerX, centerY, currentX, currentY);
-                        }
+                }
             });
 
-            function drawBoxes (annos, restrict) {
-                angular.forEach(annos, function (a) {
+            function drawBoxes (annos, restrict, then) {
+                angular.forEach(annos, function (a, multiple) {
                     var pos = a.on.substr(a.on.indexOf("xywh=") + 5).split(",").map(function (a) {
                         return parseFloat(a);
                     });
@@ -226,6 +237,9 @@ rerum.config(['$routeProvider', '$locationProvider',
                     }
                     if (draw) {
                         rect(pos[0], pos[1], pos[2], pos[3], '#F00');
+                    }
+                    if (then) {
+                        then(pos, multiple);
                     }
                 });
             };
@@ -253,7 +267,7 @@ rerum.config(['$routeProvider', '$locationProvider',
                 switch (drawBoxService.action) {
                     case "select":
                         if (boxes) {
-                            drawBoxes(boxes);
+                            drawBoxes(boxes, drawBoxService.restrictMotivations, addTools);
                         }
                         break;
                     case "destroy":
@@ -267,15 +281,49 @@ rerum.config(['$routeProvider', '$locationProvider',
                         break;
                 }
             });
-
+            scope.deleteAnno = function (box) {
+                if (box) {
+                var l = drawBoxService.activeList;
+                l.resources.splice(l.resources.indexOf(box), 1);
+                } else {
+                    drawBoxService.newBox = {};
+                }
+                $rootScope.$broadcast('destroy-annotation');
+                clearTools();
+            };
             element.bind('mouseup', function (event) {
                 // stop drawing
-                drawing = false;
+                if (drawing) {
+                    addTools([centerX, centerY]);
+                    drawing = false;
+                }
 
                 // let the view know there is a new box
                 scope.$apply();
             });
-
+            scope.$watch('dbs.action', function (n, o) {
+                if (n !== o) {
+                    clearTools();
+                }
+            });
+            function clearTools () {
+                angular.element(document.getElementsByClassName('parse-toolbar')).remove();
+            }
+            function addTools (pos, multiple) {
+                if (!multiple) {
+                    clearTools();
+                }
+                var toolbar = document.createElement('div');
+                angular.element(toolbar).addClass("parse-toolbar")
+                    .append('<button ng-click="saveAnno()" class="btn btn-primary"><i class="fa fa-save"></i></button>')
+                    .append('<button ng-click="deleteAnno(null)" class="btn btn-danger"><i class="fa fa-trash"></i></button>')
+                    .css({
+                        position: "absolute",
+                        left: pos[0] / scope.canvas.width * 100 + "%",
+                        top: pos[1] / scope.canvas.height * 100 + "%"
+                    });
+                angular.element(document.getElementById('drawingLayer')).after($compile(toolbar)(scope));
+            }
             // canvas reset
             function reset () {
                 // Does not work because beginPath() is not recalled.
@@ -303,6 +351,9 @@ rerum.config(['$routeProvider', '$locationProvider',
                         break;
                     case "select": // pick out an annotation
                         break;
+                    default : // move image
+                        centerX = event.offsetX;
+                        centerY = event.offsetY;
                 }
                 scope.canvasElement = document.getElementById('parseImage').children[1];
                 element.attr({
@@ -323,9 +374,9 @@ rerum.config(['$routeProvider', '$locationProvider',
     this.activeList = {};
     this.restrictMotivations = false;
 });
-            rerum.controller('drawBoxController', function ($scope, parsingService, drawBoxService) {
+rerum.controller('drawBoxController', function ($scope, parsingService, drawBoxService, hotkeys) {
     $scope.dbs = drawBoxService;
-    $scope.saveAnnotation = function () {
+    $scope.saveAnno = function () {
         var pos = drawBoxService.newBox.split(",").map(function (a) {
             return parseFloat(a);
         });
@@ -339,10 +390,79 @@ rerum.config(['$routeProvider', '$locationProvider',
             pos[3] = -pos[3];
         }
         parsingService.saveAnnotation(pos.join(","), $scope.canvas || drawBoxService.canvas);
+        // TODO: on success
         drawBoxService.newBox = {};
     };
     drawBoxService.action = ""; // select, destroy
+    if (!drawBoxService.pinch) {
+        drawBoxService.pinch = 0;
+    }
+    $scope.rePinch = function (i) {
+        drawBoxService.pinch -= i * 5;
+        if (drawBoxService.pinch > 40) {
+            drawBoxService.pinch = 40;
+        } else if (drawBoxService.pinch < -100) {
+            drawBoxService.pinch = -100;
+        }
+    };
+    hotkeys.add({
+        combo: 'ctrl+up',
+        description: 'Push In',
+        callback: function () {
+            $scope.rePinch(5);
+        }
+    });
+    hotkeys.add({
+        combo: 'ctrl+down',
+        description: 'Pull Out',
+        callback: function () {
+            $scope.rePinch(-5);
+        }
+    });
+
     if (!drawBoxService.activeList['@id']) {
         drawBoxService.activeList = drawBoxService.canvas.otherContent[0];
     }
+});
+
+rerum.directive('ngMousewheelUp', function () {
+    return function (scope, element, attrs) {
+        element.bind("DOMMouseScroll mousewheel onmousewheel", function (event) {
+            // cross-browser wheel delta
+            var delta = Math.max(-1, Math.min(1, (event.wheelDelta || -event.detail)));
+            if (delta > 0) {
+                scope.$apply(function () {
+                    scope.$eval(attrs.ngMousewheelUp);
+                });
+                // for IE
+                event.returnValue = false;
+                // for Chrome and Firefox
+                if (event.preventDefault) {
+                    event.preventDefault();
+                }
+
+            }
+        });
+    };
+});
+
+rerum.directive('ngMousewheelDown', function () {
+    return function (scope, element, attrs) {
+        element.bind("DOMMouseScroll mousewheel onmousewheel", function (event) {
+            // cross-browser wheel delta
+            var delta = Math.max(-1, Math.min(1, (event.wheelDelta || -event.detail)));
+            if (delta < 0) {
+                scope.$apply(function () {
+                    scope.$eval(attrs.ngMousewheelDown);
+                });
+                // for IE
+                event.returnValue = false;
+                // for Chrome and Firefox
+                if (event.preventDefault) {
+                    event.preventDefault();
+                }
+
+            }
+        });
+    };
 });
