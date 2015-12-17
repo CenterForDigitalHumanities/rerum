@@ -219,8 +219,10 @@ rerum.directive('drawBox', function (drawBoxService, $compile, $rootScope) {
                 ctx.lineWidth = width || 3;
                 // color
                 ctx.strokeStyle = color || '#fff';
+                ctx.fillStyle = 'rgba(255, 255, 0, .25)';
                 // draw it
                 ctx.stroke();
+                ctx.fill();
             }
             element.bind('mousemove', function (event) {
                 if (moving) {
