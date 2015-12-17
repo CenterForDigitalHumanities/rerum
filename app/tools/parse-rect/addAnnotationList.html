@@ -17,7 +17,7 @@
         </p>
         <div class="form-group">
             <label>Label for group</label>
-            <input type="text" class="form-control" ng-model="list.label" focus-on />
+            <input type="text" class="form-control" ng-model="list.label" focus-on required />
             <p class="help-block" uib-collapse="!showHelp">
                 This is a human-readable label for convenience. It will be
                 encoded as <code>rdfs:label</code>. This string does not
@@ -25,14 +25,13 @@
             </p>
         </div>
         <div class="form-group">
-            <label>Motivation for grouping</label>
+            <label>Default Motivation for annotations</label>
             <input type="text" class="form-control" ng-model="list.motivation" />
             <p class="help-block" uib-collapse="!showHelp">
                 This will be encoded as <code>oa:Motivation</code>. This string
                 may just be a string, but may be a uri to a defined motivation
                 such as <code>http://www.w3.org/ns/oa#commenting</code>. These
-                same motivations may be applied to the individual annotations
-                as well.
+                same motivations will be applied to the enlisted annotations.
             </p>
         </div>
     </div>

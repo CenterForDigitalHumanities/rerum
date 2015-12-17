@@ -28,14 +28,14 @@
                 ng-class="{active:dbs.action === 'create'}"
                 ng-show="dbs.activeList.resources"
                 tooltip-append-to-body="true"
-                uib-tooltip="Add Column" tooltip-placement="bottom">
+                uib-tooltip="Add Line" tooltip-placement="bottom">
             <i class="fa fa-plus-circle"></i>
         </button>
         <button ng-click="setAction('destroy')" class="btn bg-default"
                 ng-class="{active:dbs.action === 'destroy'}"
                 ng-show="dbs.activeList.resources.length"
                 tooltip-append-to-body="true"
-                uib-tooltip="Destroy Column" tooltip-placement="bottom">
+                uib-tooltip="Destroy Line" tooltip-placement="bottom">
             <i class="fa fa-minus-circle"></i>
         </button>
         <button ng-click="setAction('select')" class="btn bg-default" ng-class="{active:dbs.action === 'select'}" ng-show="dbs.activeList.resources">
