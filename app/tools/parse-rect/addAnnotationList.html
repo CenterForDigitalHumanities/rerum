@@ -6,19 +6,19 @@
             </button>
         </h3>
     </div>
-    <div class="modal-body">
-        <p collapse="!showHelp">
-            Each annotation list groups annotations together into a layer on
-            this canvas for different purposes. Each list must be labeled and
-            may be described further.
+    <form ng-submit="pushList()">
+        <div class="modal-body">
+        <p uib-collapse="!showHelp">
+            Each annotation list groups annotations together on this canvas for
+            different purposes. Each list must be labeled and may be described further.
             <a target="_blank" href="http://iiif.io/api/presentation/2#AnnotationList">
                 <i class="fa fa-external-link"></i> sc:AnnotationList
             </a>
         </p>
         <div class="form-group">
             <label>Label for group</label>
-            <input type="text" class="form-control" ng-model="list.label" />
-            <p class="help-block" collapse="!showHelp">
+            <input type="text" class="form-control" ng-model="list.label" focus-on />
+            <p class="help-block" uib-collapse="!showHelp">
                 This is a human-readable label for convenience. It will be
                 encoded as <code>rdfs:label</code>. This string does not
                 have any data value beyond human reading.
@@ -27,7 +27,7 @@
         <div class="form-group">
             <label>Motivation for grouping</label>
             <input type="text" class="form-control" ng-model="list.motivation" />
-            <p class="help-block" collapse="!showHelp">
+            <p class="help-block" uib-collapse="!showHelp">
                 This will be encoded as <code>oa:Motivation</code>. This string
                 may just be a string, but may be a uri to a defined motivation
                 such as <code>http://www.w3.org/ns/oa#commenting</code>. These
@@ -40,9 +40,10 @@
         <ul class="pull-left list-unstyled text-left">
             <li ng-repeat="L in canvas.otherContent">{{L.label}}</li>
         </ul>
-        <button class="btn btn-primary" type="button" ng-click="pushList()">
+        <button class="btn btn-primary" type="submit">
             <i class="fa fa-plus"></i>
         </button>
         <button class="btn btn-default" type="button" ng-click="modal.close()">Cancel</button>
     </div>
+    </form>
 </div>

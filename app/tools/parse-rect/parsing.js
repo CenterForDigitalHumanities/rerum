@@ -322,6 +322,7 @@ rerum.directive('drawBox', function (drawBoxService, $compile, $rootScope) {
                     drawing = false;
                 }
                 moving = false;
+                element.removeClass("grabbing");
 
                 // let the view know there is a new box
                 scope.$apply();
@@ -394,6 +395,7 @@ rerum.directive('drawBox', function (drawBoxService, $compile, $rootScope) {
                         aX = event.offsetX;
                         aY = event.offsetY;
                         moving = true;
+                        element.addClass("grabbing");
                 }
                 scope.canvasElement = document.getElementById('parseImage').children[1];
                 element.attr({
@@ -506,5 +508,14 @@ rerum.directive('ngMousewheelDown', function () {
 
             }
         });
+    };
+});
+rerum.directive('focusOn', function () {
+    return {
+        link: function (scope, element, attrs) {
+            setTimeout(function () {
+                element[0].focus();
+            }, 0);
+        }
     };
 });

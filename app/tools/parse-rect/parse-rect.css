@@ -38,7 +38,20 @@ body {
 .select {
     cursor: auto;
 }
+.grab {
+    cursor: -moz-grab;
+    cursor: -webkit-grab;
+    cursor: grab;
+}
+.grabbing {
+    cursor: -moz-grabbing;
+    cursor: -webkit-grabbing;
+    cursor: grabbing;
+}
 nav.parseFooter {
     position: fixed;
     bottom: 0;
+}
+.menu-item, [ng-click] {
+    cursor:pointer;
 }
