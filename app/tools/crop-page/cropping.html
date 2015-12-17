@@ -1,0 +1,59 @@
+<div ng-class="{fullscreen:config.fullscreen}" class="parsing">
+    <div class="parseButtons btn-group" ng-controller="drawBoxController">
+        <div class="btn-group" uib-dropdown ng-show="canvas.images.length" uib-tooltip="Image Choices" tooltip-placement="left">
+            <button type="button" class="btn btn-default" uib-dropdown-toggle id="choose-list">
+                {{dbs.activeImage.label||dbs.activeImage.motivation||dbs.activeImage['@id']||'Images'}}
+                <span class="caret" ng-show="canvas.images.length > 1"></span>
+            </button>
+            <ul class="uib-dropdown-menu" role="menu" aria-labelledby="choose-list">
+                <li role="menuitem" ng-hide="dbs.activeImage === I"
+                    ng-click="dbs.activeImage = I"
+                    ng-repeat="I in canvas.otherContent">{{I.label||I['@id']}}</li>
+                <li class="divider" ng-show="canvas.activeImage.length > 1"></li>
+                <li role="menuitem" ng-click="addImage()">Add New Image</li>
+            </ul>
+        </div>
+        <button ng-click="saveCrop()" ng-if="dbs.newBox[0]" class="btn bg-primary">
+            <i class="fa fa-save"></i>
+        </button>
+        <button ng-click="setAction('crop')" class="btn bg-default"
+                ng-class="{active:dbs.action === 'crop'}"
+                ng-show="dbs.activeImage"
+                tooltip-append-to-body="true"
+                uib-tooltip="Crop Image" tooltip-placement="bottom">
+            <i class="fa fa-crop"></i>
+        </button>
+        <button ng-click="setAction('resize')" class="btn bg-default"
+                ng-class="{active:dbs.action === 'resize'}"
+                tooltip-append-to-body="true"
+                uib-tooltip="Resize Canvas" tooltip-placement="bottom">
+            <i class="fa fa-arrows-alt"></i>
+        </button>
+    </div>
+    <div class="col-sm-8">
+        <uib-alert ng-repeat="m in messages" type="{{m.type}}">{{m.text}}</uib-alert>
+    </div>
+    <div id="parseContainer" ng-class="{grab:!dbs.action}">
+        <div id="parseImage" style="position:relative;margin-bottom: 6rem;margin-right: {{dbs.pinch}}.0%"
+         ng-mousewheel-down="rePinch(-1)" ng-mousewheel-up="rePinch(1)">
+        <img selector="canvas['@id']">
+        <canvas></canvas>
+        <annotation-layer width="{{canvas.width}}" height="{{canvas.height}}"></annotation-layer>
+        <draw-box class="{{dbs.action}}"></draw-box>
+    </div>
+    </div>
+    <pre ng-show="dbs.showObject"
+         style = "position:fixed; top:30vh;width:100vh;height: 40vh;">
+        {{canvas | json}}
+    </pre>
+    <nav class="parseFooter">
+        <button ng-click="dbs.pinch=0" class="btn btn-default" type="button"
+                ng-show="dbs.pinch!==0"
+                uib-tooltip="Reset canvas size">
+            <i class="fa fa-crosshairs"></i>
+        </button>
+        <select ng-model="canvas" class="btn btn-default"
+                ng-options="(c.label||$index) for c in manifest.sequences[config.currentSequenceIndex].canvases">
+        </select>
+    </nav>
+</div>

@@ -7,7 +7,7 @@
             </button>
             <ul class="uib-dropdown-menu" role="menu" aria-labelledby="choose-list">
                 <li role="menuitem" ng-hide="dbs.activeList === L"
-                    ng-click="dbs.activeList = l"
+                    ng-click="dbs.activeList = L"
                     ng-repeat="L in canvas.otherContent">{{L.label||L.motivation||L.on||L['@id']}}</li>
                 <li class="divider" ng-show="canvas.otherContent.length > 1"></li>
                 <li role="menuitem" ng-click="addList()">Create New List</li>
