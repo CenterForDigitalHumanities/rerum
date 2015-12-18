@@ -1,5 +1,5 @@
-<div ng-class="{fullscreen:config.fullscreen}" class="parsing">
-    <div class="parseButtons btn-group" ng-controller="drawBoxController">
+<div ng-class="{fullscreen:config.fullscreen}" class="cropping">
+    <div class="cropButtons btn-group" ng-controller="drawBoxController">
         <div class="btn-group" uib-dropdown ng-show="canvas.images.length" uib-tooltip="Image Choices" tooltip-placement="left">
             <button type="button" class="btn btn-default" uib-dropdown-toggle id="choose-list">
                 {{dbs.activeImage.label||dbs.activeImage.motivation||dbs.activeImage['@id']||'Images'}}
@@ -33,9 +33,9 @@
     <div class="col-sm-8">
         <uib-alert ng-repeat="m in messages" type="{{m.type}}">{{m.text}}</uib-alert>
     </div>
-    <div id="parseContainer" ng-class="{grab:!dbs.action}">
-        <div id="parseImage" style="position:relative;margin-bottom: 6rem;margin-right: {{dbs.pinch}}.0%"
-         ng-mousewheel-down="rePinch(-1)" ng-mousewheel-up="rePinch(1)">
+    <div id="canvasContainer" ng-class="{grab:!dbs.action}">
+        <div id="canvasImage" style="position:relative;margin-bottom: 6rem;margin-right: {{dbs.pinch}}.0%"
+             ng-mousewheel-down="rePinch(-1)" ng-mousewheel-up="rePinch(1)">
         <img selector="canvas['@id']">
         <canvas></canvas>
         <annotation-layer width="{{canvas.width}}" height="{{canvas.height}}"></annotation-layer>
@@ -46,7 +46,7 @@
          style = "position:fixed; top:30vh;width:100vh;height: 40vh;">
         {{canvas | json}}
     </pre>
-    <nav class="parseFooter">
+    <nav class="cropFooter">
         <button ng-click="dbs.pinch=0" class="btn btn-default" type="button"
                 ng-show="dbs.pinch!==0"
                 uib-tooltip="Reset canvas size">

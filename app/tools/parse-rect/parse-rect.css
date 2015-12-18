@@ -9,10 +9,10 @@ and open the template in the editor.
 */
 
 /* Parsing */
-#parseImage{
+#canvasImage{
     transition: margin 500ms;
 }
-#parseContainer{
+#canvasContainer{
     position: relative;
     width:100%;
     height: 80vh;

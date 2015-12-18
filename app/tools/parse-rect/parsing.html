@@ -56,8 +56,8 @@
     <div class="col-sm-8">
         <uib-alert ng-repeat="m in messages" type="{{m.type}}">{{m.text}}</uib-alert>
     </div>
-    <div id="parseContainer" ng-class="{grab:!dbs.action}">
-        <div id="parseImage" style="position:relative;margin-bottom: 6rem;margin-right: {{dbs.pinch}}.0%"
+    <div id="canvasContainer" ng-class="{grab:!dbs.action}">
+        <div id="canvasImage" style="position:relative;margin-bottom: 6rem;margin-right: {{dbs.pinch}}.0%"
          ng-mousewheel-down="rePinch(-1)" ng-mousewheel-up="rePinch(1)">
         <img selector="canvas['@id']">
         <canvas></canvas>
