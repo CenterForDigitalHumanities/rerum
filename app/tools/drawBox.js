@@ -70,7 +70,8 @@ rerum.directive('drawBox', function (drawBoxService, $compile, $rootScope) {
                     }
                     drawBoxService.newBox = [centerX, centerY, w, h].join(",");
                     rect(0, 0, element[0].width, element[0].height, null, null, 'rgba(0,0,0,.30)');
-                    rect(0, 0, centerX, centerY, w, h, null, null, null, 'destination-out');
+                    ctx.beginPath();
+                    rect(centerX, centerY, w, h, null, 0, '#000', 'destination-out');
                 }
             });
 
@@ -257,7 +258,7 @@ rerum.service('drawBoxService', function (config) {
     this.activeList = {};
     this.restrictMotivations = false;
 });
-rerum.controller('drawBoxController', function ($scope, parsingService, drawBoxService, hotkeys) {
+rerum.controller('drawBoxController', function ($scope, parsingService,cropService, drawBoxService, hotkeys) {
     $scope.dbs = drawBoxService;
     $scope.saveAnno = function () {
         var pos = drawBoxService.newBox.split(",").map(function (a) {
@@ -272,7 +273,13 @@ rerum.controller('drawBoxController', function ($scope, parsingService, drawBoxS
             pos[1] += pos[3];
             pos[3] = -pos[3];
         }
-        parsingService.saveAnnotation(pos.join(","), $scope.canvas || drawBoxService.canvas);
+        switch(drawBoxService.action){
+            case "crop" :
+                cropService.refit(pos.join(","), drawBoxService.activeImage);
+                break;
+            default : // save newBox as Annotation
+                parsingService.saveAnnotation(pos.join(","), $scope.canvas || drawBoxService.canvas);
+        }
         // TODO: on success
         drawBoxService.newBox = "";
         angular.element(document.getElementsByClassName('parse-toolbar')).remove(); // clearTools()

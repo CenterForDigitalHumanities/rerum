@@ -47,6 +47,22 @@ rerum.service('cropService', function ($rootScope, drawBoxService) {
         $rootScope.$broadcast("resized-canvas");
         return "success"; // TODO: asych save
     };
+    this.refit = function (pos, image, canvas) {
+        this.saveCrop(pos, image.resource).then(function (img) {
+            // receives the cropped image object
+            var iw, ih, cw, ch;
+            iw = img.naturalWidth;
+            ih = img.naturalHeight;
+            cw = canvas.width;
+            ch = canvas.height;
+            if (pos.indexOf)
+                true;
+                // TODO: evaluate if IIIF pre-cropped image is received
+
+        }, function (err) {
+            console.log(err);
+        });
+    };
 });
 rerum.controller('cropController', function ($scope, $rootScope, $uibModal, rerumService, Lists, config, Manifest, drawBoxService, hotkeys) {
     $scope.config = config;

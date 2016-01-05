@@ -23,12 +23,14 @@
                 uib-tooltip="Crop Image" tooltip-placement="bottom">
             <i class="fa fa-crop"></i>
         </button>
-        <button ng-click="setAction('resize')" class="btn bg-default"
+        <!--
+                <button ng-click="setAction('resize')" class="btn bg-default"
                 ng-class="{active:dbs.action === 'resize'}"
+                ng-show="dbs.activeImage && dbs.activeList"
                 tooltip-append-to-body="true"
                 uib-tooltip="Resize Canvas" tooltip-placement="bottom">
             <i class="fa fa-arrows-alt"></i>
-        </button>
+                </button>-->
     </div>
     <div class="col-sm-8">
         <uib-alert ng-repeat="m in messages" type="{{m.type}}">{{m.text}}</uib-alert>
