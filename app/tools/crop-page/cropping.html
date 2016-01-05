@@ -40,7 +40,7 @@
              ng-mousewheel-down="rePinch(-1)" ng-mousewheel-up="rePinch(1)">
         <img selector="canvas['@id']">
         <canvas></canvas>
-        <annotation-layer width="{{canvas.width}}" height="{{canvas.height}}"></annotation-layer>
+        <annotation-layer ng-attr-width="{{canvas.width}}" ng-attr-height="{{canvas.height}}"></annotation-layer>
         <draw-box class="{{dbs.action}}"></draw-box>
     </div>
     </div>

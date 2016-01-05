@@ -28,18 +28,21 @@ rerum.config(['$routeProvider', '$locationProvider',
             }
         });
     }]);
-rerum.service('cropService', function ($rootScope, drawBoxService) {
+rerum.service('cropService', function ($rootScope, drawBoxService, $q) {
     var service = this;
     this.saveCrop = function (xywh, image) {
         var selector = image['@id'].lastIndexOf("#xywh=");
         image['@id'] = selector > -1
             ? image['@id'].substring(0, selector) + "#xywh=" + xywh
             : image['@id'] + "#xywh=" + xywh;
-        // TODO: load image
-        // evaluate dimensions for new width/height
-
+        var img = new Image();
+        var deferred = $q.defer();
+        img.onload = function () {
+            deferred.resolve(img);
+        };
+        img.src = image['@id'];
         $rootScope.$broadcast("cropped-image");
-        return "success"; // TODO: asych save
+        return deferred.promise; // TODO: asych save
     };
     this.resizeCanvas = function (w, h, canvas) {
         canvas.width = w;
@@ -48,17 +51,23 @@ rerum.service('cropService', function ($rootScope, drawBoxService) {
         return "success"; // TODO: asych save
     };
     this.refit = function (pos, image, canvas) {
-        this.saveCrop(pos, image.resource).then(function (img) {
+        return this.saveCrop(pos, image.resource).then(function (img) {
             // receives the cropped image object
             var iw, ih, cw, ch;
             iw = img.naturalWidth;
             ih = img.naturalHeight;
             cw = canvas.width;
             ch = canvas.height;
-            if (pos.indexOf)
+            var xywh = pos.split(",").map(function (a) {
+                return parseFloat(a);
+            });
+            if (img.src.indexOf('/full/') + 1) {
                 true;
                 // TODO: evaluate if IIIF pre-cropped image is received
-
+            } else {
+                canvas.width = cw * (xywh[3] / ch);
+            }
+            return canvas;
         }, function (err) {
             console.log(err);
         });

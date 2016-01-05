@@ -275,7 +275,7 @@ rerum.controller('drawBoxController', function ($scope, parsingService,cropServi
         }
         switch(drawBoxService.action){
             case "crop" :
-                cropService.refit(pos.join(","), drawBoxService.activeImage);
+                cropService.refit(pos.join(","), drawBoxService.activeImage, drawBoxService.canvas);
                 break;
             default : // save newBox as Annotation
                 parsingService.saveAnnotation(pos.join(","), $scope.canvas || drawBoxService.canvas);
