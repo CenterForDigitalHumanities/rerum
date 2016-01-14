@@ -503,6 +503,7 @@ rerum.directive('selector', function () {
                 img.src = src;
             };
             $scope.$watch('selector', $scope.updateCrop);
+            $scope.$watch('resized-canvas', $scope.updateCrop);
 //            $scope.$on('resize', $scope.updateCrop);
         }
     };

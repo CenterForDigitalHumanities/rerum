@@ -67,6 +67,7 @@ rerum.service('cropService', function ($rootScope, drawBoxService, $q) {
             } else {
                 canvas.width = cw * (xywh[3] / ch);
             }
+            $rootScope.$broadcast("resized-canvas");
             return canvas;
         }, function (err) {
             console.log(err);
@@ -86,7 +87,8 @@ rerum.controller('cropController', function ($scope, $rootScope, $uibModal, reru
     };
 
     $rootScope.$on('change-canvas', function () {
-        config.currentCanvas = $scope.canvas; // TODO: remove once the jump list is $location linked
+        config.currentCanvas = drawBoxService.canvas; // TODO: remove once the jump list is $location linked
+        $scope.canvas = drawBoxService.canvas;
         drawBoxService.activeImage = $scope.canvas.images && $scope.canvas.images[0];
     });
 // REFACTOR FROM HERE

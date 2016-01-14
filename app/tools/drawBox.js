@@ -2,7 +2,7 @@ rerum.directive('drawBox', function (drawBoxService, $compile, $rootScope) {
     return {
         restrict: 'E',
         replace: true,
-        template: '<canvas id="drawingLayer"></canvas>',
+        template: '<canvas id="drawingLayer" ng-attr-width="{{canvas.width}}" ng-attr-height="{{canvas.height}}"></canvas>',
         link: function (scope, element) {
             scope.canvasElement = document.getElementById('canvasImage').children[1];
             element.css({
@@ -13,10 +13,10 @@ rerum.directive('drawBox', function (drawBoxService, $compile, $rootScope) {
                 top: 0,
                 left: 0
             });
-            element.attr({
-                width: scope.canvasElement.width,
-                height: scope.canvasElement.height
-            });
+//            element.attr({
+//                width: scope.canvasElement.width,
+//                height: scope.canvasElement.height
+//            });
             var ctx = element[0].getContext('2d');
 
             // variable that decides if something should be drawn on mousemove
@@ -195,8 +195,8 @@ rerum.directive('drawBox', function (drawBoxService, $compile, $rootScope) {
                 $t.append('<button ng-click="deleteAnno(' + box + ')" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></button>')
                     .css({
                         position: "absolute",
-                        left: pos[0] / scope.canvas.width * 100 + "%",
-                        top: pos[1] / scope.canvas.height * 100 + "%"
+                        left: pos[0] / scope.dbs.canvas.width * 100 + "%",
+                        top: pos[1] / scope.dbs.canvas.height * 100 + "%"
                     });
                 angular.element(document.getElementById('drawingLayer')).after($compile(toolbar)(scope));
             }
@@ -248,6 +248,7 @@ rerum.directive('drawBox', function (drawBoxService, $compile, $rootScope) {
             scope.$on('create-annotation', reset);
             scope.$on('destroy-annotation', reset);
             scope.$on('view-canvas', reset);
+            scope.$on('resized-canvas', reset);
         },
         controller: 'drawBoxController'
     };
@@ -278,7 +279,7 @@ rerum.controller('drawBoxController', function ($scope, parsingService,cropServi
                 cropService.refit(pos.join(","), drawBoxService.activeImage, drawBoxService.canvas);
                 break;
             default : // save newBox as Annotation
-                parsingService.saveAnnotation(pos.join(","), $scope.canvas || drawBoxService.canvas);
+                parsingService.saveAnnotation(pos.join(","), drawBoxService.canvas);
         }
         // TODO: on success
         drawBoxService.newBox = "";

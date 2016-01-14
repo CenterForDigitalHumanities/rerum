@@ -58,13 +58,13 @@ rerum.controller('parsingController', function ($scope, $rootScope, $uibModal, r
     $scope.config = config;
     $scope.manifest = Manifest;
     rerumService.extractResources(Manifest);
-    $scope.canvas = config.currentCanvas
+    drawBoxService.canvas = config.currentCanvas
         ? config.currentCanvas
         : Manifest.sequences[config.currentSequenceIndex].canvases[config.currentCanvasIndex];
     $rootScope.$broadcast('view-canvas');
     $scope.addList = function () {
-        if (!$scope.canvas.otherContent) {
-            $scope.canvas.otherContent = [];
+        if (!drawBoxService.canvas.otherContent) {
+            drawBoxService.canvas.otherContent = [];
         }
         $scope.list = {
             motivation: "transcription",
@@ -78,7 +78,7 @@ rerum.controller('parsingController', function ($scope, $rootScope, $uibModal, r
         });
     };
     $scope.pushList = function () {
-        $scope.canvas.otherContent.push($scope.list);
+        drawBoxService.canvas.otherContent.push($scope.list);
         drawBoxService.activeList = $scope.list;
         $scope.modal.close();
     };
@@ -95,8 +95,8 @@ rerum.controller('parsingController', function ($scope, $rootScope, $uibModal, r
 
     $rootScope.$on('change-canvas', function () {
         motivations = [];
-        config.currentCanvas = $scope.canvas; // TODO: remove once the jump list is $location linked
-        drawBoxService.activeList = $scope.canvas.otherContent && $scope.canvas.otherContent[0];
+        config.currentCanvas = drawBoxService.canvas; // TODO: remove once the jump list is $location linked
+        drawBoxService.activeList = drawBoxService.canvas.otherContent && drawBoxService.canvas.otherContent[0];
     });
 
     $scope.hotkeys = hotkeys;
@@ -152,7 +152,7 @@ rerum.directive('annotationLayer', function ($rootScope, drawBoxService) {
                 }
                 ctx.beginPath();
                 angular.forEach(drawBoxService.activeList.resources, function (a) {
-                    if (a.on.startsWith(scope.canvas['@id'])
+                    if (a.on.startsWith(drawBoxService.canvas['@id'])
                         && (!motive || motive === a.motivation)
                         && (!type || type === a['@type'])) {
                         var pos = a.on.substr(a.on.indexOf("xywh=") + 5).split(",").map(function (a) {

@@ -1,15 +1,15 @@
 <div ng-class="{fullscreen:config.fullscreen}" class="cropping">
     <div class="cropButtons btn-group" ng-controller="drawBoxController">
-        <div class="btn-group" uib-dropdown ng-show="canvas.images.length" uib-tooltip="Image Choices" tooltip-placement="left">
+        <div class="btn-group" uib-dropdown ng-show="dbs.canvas.images.length" uib-tooltip="Image Choices" tooltip-placement="left">
             <button type="button" class="btn btn-default" uib-dropdown-toggle id="choose-list">
                 {{dbs.activeImage.label||dbs.activeImage.motivation||dbs.activeImage['@id']||'Images'}}
-                <span class="caret" ng-show="canvas.images.length > 1"></span>
+                <span class="caret" ng-show="dbs.canvas.images.length > 1"></span>
             </button>
             <ul class="uib-dropdown-menu" role="menu" aria-labelledby="choose-list">
                 <li role="menuitem" ng-hide="dbs.activeImage === I"
                     ng-click="dbs.activeImage = I"
-                    ng-repeat="I in canvas.otherContent">{{I.label||I['@id']}}</li>
-                <li class="divider" ng-show="canvas.activeImage.length > 1"></li>
+                    ng-repeat="I in dbs.canvas.otherContent">{{I.label||I['@id']}}</li>
+                <li class="divider" ng-show="dbs.canvas.activeImage.length > 1"></li>
                 <li role="menuitem" ng-click="addImage()">Add New Image</li>
             </ul>
         </div>
@@ -38,15 +38,15 @@
     <div id="canvasContainer" ng-class="{grab:!dbs.action}">
         <div id="canvasImage" style="position:relative;margin-bottom: 6rem;margin-right: {{dbs.pinch}}.0%"
              ng-mousewheel-down="rePinch(-1)" ng-mousewheel-up="rePinch(1)">
-        <img selector="canvas['@id']">
-        <canvas></canvas>
-        <annotation-layer ng-attr-width="{{canvas.width}}" ng-attr-height="{{canvas.height}}"></annotation-layer>
-        <draw-box class="{{dbs.action}}"></draw-box>
+            <img selector="dbs.canvas['@id']">
+            <canvas ng-attr-width="{{dbs.canvas.width}}" ng-attr-height="{{dbs.canvas.height}}"></canvas>
+            <annotation-layer ng-attr-width="{{dbs.canvas.width}}" ng-attr-height="{{dbs.canvas.height}}"></annotation-layer>
+            <draw-box class="{{dbs.action}}"></draw-box>
     </div>
     </div>
     <pre ng-show="dbs.showObject"
          style = "position:fixed; top:30vh;width:100vh;height: 40vh;">
-        {{canvas | json}}
+        {{dbs.canvas | json}}
     </pre>
     <nav class="cropFooter">
         <button ng-click="dbs.pinch=0" class="btn btn-default" type="button"
@@ -54,7 +54,7 @@
                 uib-tooltip="Reset canvas size">
             <i class="fa fa-crosshairs"></i>
         </button>
-        <select ng-model="canvas" class="btn btn-default"
+        <select ng-model="dbs.canvas" class="btn btn-default"
                 ng-options="(c.label||$index) for c in manifest.sequences[config.currentSequenceIndex].canvases">
         </select>
     </nav>
