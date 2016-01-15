@@ -434,7 +434,7 @@ property label {
         top: -.05em;
     }
 }
-.terminal footer {
+footer {
     position:fixed;
     bottom:0;
     width:100vw;
@@ -459,4 +459,9 @@ property label {
 .terminal ::-webkit-scrollbar-thumb
 {
     background-color: rgba(0,255,0,.8);
+}
+body pre {
+    -webkit-user-select: all;
+    -moz-user-select: all;
+    user-select: all;
 }

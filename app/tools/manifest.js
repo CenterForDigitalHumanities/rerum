@@ -53,19 +53,6 @@ rerum.value('Knowns',{
                 "canvases": []
             }]
     },
-    essay: {
-//        "@id" : "",
-        "@context": "http://iiif.io/api/presentation/2/context.json",
-        "@type": "Essay",
-        "label": "",
-        "metadataResources": [],
-        "sections": [],
-        "footnotes": [],
-        "endnotes": [],
-        "indices": [],
-        "comments": [],
-        "otherContent": []
-    },
     types: ['number', 'string', 'memo', 'list', 'object', 'canvas'],
     adding : {
         sequences: {
@@ -141,63 +128,87 @@ rerum.value('Knowns',{
             }
         },
         sections: {
-            item: 'lists',
-            single: 'list',
+            item: 'sections',
+            single: 'section',
             init: {
                 '@id': "",
-                '@type': "sc:AnnotationList",
-                label: "",
-                resources: []
+                '@type': "oa:Annotation",
+                motivation: "rr:sectioning",
+                on: ""
+            },
+            build: function (item, parent) {
+                item.on = parent['@id'];
+                return item;
             }
         },
         metadataResources: {
-            item: 'lists',
-            single: 'list',
+            item: 'resources',
+            single: 'resource',
             init: {
                 '@id': "",
-                '@type': "sc:AnnotationList",
-                label: "",
-                resources: []
+                '@type': "oa:Annotation",
+                motivation: "rr:describing",
+                on: ""
+            },
+            build: function (item, parent) {
+                item.on = parent['@id'];
+                return item;
             }
         },
         footnotes: {
-            item: 'lists',
-            single: 'list',
+            item: 'footnotes',
+            single: 'footnote',
             init: {
                 '@id': "",
-                '@type': "sc:AnnotationList",
-                label: "",
-                resources: []
+                '@type': "oa:Annotation",
+                motivation: "",
+                on: ""
+            },
+            build: function (item, parent) {
+                item.on = parent['@id'];
+                return item;
             }
         },
         endnotes: {
-            item: 'lists',
-            single: 'list',
+            item: 'endnotes',
+            single: 'endnote',
             init: {
                 '@id': "",
-                '@type': "sc:AnnotationList",
-                label: "",
-                resources: []
+                '@type': "oa:Annotation",
+                motivation: "",
+                on: ""
+            },
+            build: function (item, parent) {
+                item.on = parent['@id'];
+                return item;
             }
         },
         indices: {
-            item: 'lists',
-            single: 'list',
+            item: 'indices',
+            single: 'index',
             init: {
                 '@id': "",
-                '@type': "sc:AnnotationList",
-                label: "",
-                resources: []
+                '@type': "oa:Annotation",
+                motivation: "",
+                on: ""
+            },
+            build: function (item, parent) {
+                item.on = parent['@id'];
+                return item;
             }
         },
         comments: {
-            item: 'lists',
-            single: 'list',
+            item: 'comments',
+            single: 'comment',
             init: {
                 '@id': "",
-                '@type': "sc:AnnotationList",
-                label: "",
-                resources: []
+                '@type': "oa:Annotation",
+                motivation: "",
+                on: ""
+            },
+            build: function (item, parent) {
+                item.on = parent['@id'];
+                return item;
             }
         },
         structures: {
@@ -232,7 +243,7 @@ rerum.value('Knowns',{
     }
 });
 
-rerum.controller('buildManifestController', function ($scope, $modal, Context, Knowns, rerumService, obj) {
+rerum.controller('buildManifestController', function ($scope, $uibModal, Context, Knowns, rerumService, obj) {
     Context.getJSON.success(function (c) {
         $scope.context = c['@context'][0];
     });
@@ -243,7 +254,7 @@ rerum.controller('buildManifestController', function ($scope, $modal, Context, K
 
     $scope.editList = function (parent,prop) {
         var self = this;
-        var modal = $modal.open({
+        var modal = $uibModal.open({
             templateUrl: 'app/tools/editList.html',
             size: 'lg',
             controller: function ($scope,Knowns,Context) {
@@ -390,7 +401,7 @@ rerum.directive('addProperty',function(){
 });
 rerum.directive('property', function ($compile) {
     var getTemplate = function (type, insert) {
-        var tmpl = ['<div class="form-group">'
+        var tmpl = ['<div class="form-group clearfix">'
                 + '<label class="{{labelClass}}" title="{{context[is][\'@id\']||context[is]}}"><span ng-show="context[is]">'
                 + '<i class="fa fa-check"></i></span> {{is}}:</label>',
             null,
@@ -412,7 +423,8 @@ rerum.directive('property', function ($compile) {
             case 'pairs' :
                 input = '<button class="btn btn-xs btn-default" type="button" ng-click="editList(for,is)">'
                     + '<i class="fa fa-list-ol"></i> edit</button>'
-                    + '<dl class="dl-horizontal"><dt title="{{item.label}}" ng-repeat-start="item in for[is]">{{item.label}}</dt>'
+                    + '<dl class="dl-horizontal"><dt title="{{item.label}}" ng-repeat-start="item in for[is]">'
+                    + '{{item.label||item["@id"]||item["@value"]||item["@type"]||item}}</dt>'
                     + '<dd ng-repeat-end>{{item["@value"]}}</dd></dl>';
                 break;
             case '@list' :

@@ -33,7 +33,6 @@
     <div ng-show="obj.label">
         <form class="col-sm-6">
             <property for="obj" is="k" ng-repeat="(k,v) in obj"></property>
-            <!-- 			<add-property obj="obj"></add-property> -->
         </form>
         <div class="col-sm-6">
             <div class="form-group">
@@ -44,13 +43,16 @@
                 </span>
             </div>
             <div class="form-group">
+                <h3>
+                    JSON Output
+                </h3>
                 <label class="btn-block">Essay
                     <button class="btn btn-xs btn-default pull-right"
                             ng-click="show_essay = !show_essay">
                         <i class="fa fa-code"></i>
                     </button>
                 </label>
-                <div collapse="!show_essay">
+                <div uib-collapse="!show_essay">
                     <pre class="pre-scrollable">{{obj|json}}</pre>
                 </div>
                 <label class="btn-block">Context
@@ -59,7 +61,7 @@
                         <i class="fa fa-code"></i>
                     </button>
                 </label>
-                <div collapse="!show_context">
+                <div uib-collapse="!show_context">
                     <pre class="pre-scrollable">{{context|json}}</pre>
                 </div>
             </div>

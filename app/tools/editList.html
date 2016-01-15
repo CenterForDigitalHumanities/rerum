@@ -1,13 +1,13 @@
 <div>
-    <alert type="info" close="close">
+    <uib-alert type="info" close="close">
         {{list.length}} {{list.length !== 1 && (adding[prop].item || 'items') || (adding[prop].single || 'item')}} in this list.
         <div class="btn-group">
             <button class="btn btn-default" ng-click="addItem(adding[prop].init, parent, list, adding[prop].build)">+ {{adding[prop].single||'item'}}</button>
         </div>
-    </alert>
+    </uib-alert>
     <div class="modal-body">
         <ol>
-            <li ng-repeat="item in ::list track by $index" ng-class-odd="'bg-info'">
+            <li ng-repeat="item in ::list track by $index" ng-class-odd="'bg-info'" class="clearfix">
                 <!--                <ul class="list-unstyled">-->
                 <!--                    <li ng-repeat="(k,v) in item">-->
             <property for="item" is="k" label-class="col-sm-3" ng-repeat="(k,v) in item"></property>
