@@ -418,7 +418,8 @@ rerum.directive('property', function ($compile) {
                     + '<property for="for[is]" is="k"></property></li></ul>';
                 break;
             case 'memo' :
-                input = '<textarea ng-model="for[is]"></textarea>';
+                input = '<textarea ng-if="for[is].hasOwnProperty(\'@value\')" ng-model="for[is][\'@value\']"></textarea>'
+                    + '<textarea ng-if="!for[is].hasOwnProperty(\'@value\')" ng-model="for[is]"></textarea>';
                 break;
             case 'pairs' :
                 input = '<button class="btn btn-xs btn-default" type="button" ng-click="editList(for,is)">'
@@ -444,7 +445,8 @@ rerum.directive('property', function ($compile) {
                 input = '[video placeholder]';
                 break;
             case 'string' :
-                input = '<input type="text" ng-model="for[is]">';
+                input = '<input ng-if="for[is].hasOwnProperty(\'@value\')" type="text" ng-model="for[is][\'@value\']">'
+                    + '<input ng-if="!for[is].hasOwnProperty(\'@value\')" type="text" ng-model="for[is]">';
                 break;
                 // or display only
             default :
