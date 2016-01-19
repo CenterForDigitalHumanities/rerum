@@ -1,4 +1,4 @@
-var rerum = angular.module('rerum', ['ui.bootstrap', 'ngRoute', 'angular-loading-bar', 'cfp.hotkeys', 'utils']);
+var rerum = angular.module('rerum', ['ui.bootstrap', 'ngRoute', 'ngAnimate', 'angular-loading-bar', 'cfp.hotkeys', 'utils']);
 rerum.config(['$routeProvider', '$locationProvider',
     function ($routeProvider, $locationProvider) {
 //            $locationProvider.html5Mode(true);
