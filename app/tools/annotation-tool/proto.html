@@ -54,7 +54,7 @@
         </div>
         
         <div class="hideme" id="setTranscriptionObjectArea">
-            <textarea id="transcriptionText" placeholder="Enter a line transcription"></textarea>
+            <textarea id="transcriptionText" placeholder="Enter a IIIF canvas"></textarea>
         </div>
         <button id="loadBtn" class="hideme" onclick="loadCanvas();"> Load Canvas </button> 
         <!-- notice we do not use an actual <canvas> element here.  You will need that for SVG to work -->
@@ -227,7 +227,7 @@
             linesToScreen(lines);
         }
         else{ 
-            if(canvasObj.otherContent && canvasObj.otherContent.length>0 && canvasObj.otherContent[0].indexOf("/annoList/5") > -1){
+            if(canvasObj.otherContent && canvasObj.otherContent.length>0){
                 var annosURL = canvasObj.otherContent[0]; //there may be multiple.  I am just grabbing the first one for ease, you guys can change this.
                 $.post(annosURL, function(annoList){
                     //check if resources actually exist first.  Otherwise its a malformed sc:AnnotationList
@@ -303,7 +303,7 @@
                 return false;
             }
             
-            if(line.resource['cnt:chars'] !== undefined && line.resource['cnt:chars'] !== "" && line.resource['cnt:chars'] != "Enter a line transcription"){
+            if(line.resource['cnt:chars'] !== undefined && line.resource['cnt:chars'] !== "" && line.resource['cnt:chars'] !== "Enter a line transcription"){
                 thisContent = line.resource['cnt:chars'];
             }
             /*
