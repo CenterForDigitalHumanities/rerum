@@ -9,21 +9,12 @@ and open the template in the editor.
 */
 
 /* Parsing */
-#canvasImage{
-    transition: margin 500ms;
-}
-#canvasContainer{
-    position: relative;
-    width:100%;
-    height: 80vh;
-    overflow: hidden;
-}
 body {
     -webkit-user-select: none;
     -moz-user-select: none;
     user-select: none;
 }
-.parseButtons {
+.cropButtons {
     position:fixed;
     top:5px;
     right:5px;
@@ -48,7 +39,7 @@ body {
     cursor: -webkit-grabbing;
     cursor: grabbing;
 }
-nav.parseFooter {
+nav.cropFooter {
     position: fixed;
     bottom: 0;
 }

@@ -7,7 +7,7 @@
             </button>
             <ul class="uib-dropdown-menu" role="menu" aria-labelledby="choose-list">
                 <li role="menuitem" ng-hide="dbs.activeList === L"
-                    ng-click="dbs.activeList = l"
+                    ng-click="dbs.activeList = L"
                     ng-repeat="L in canvas.otherContent">{{L.label||L.motivation||L.on||L['@id']}}</li>
                 <li class="divider" ng-show="canvas.otherContent.length > 1"></li>
                 <li role="menuitem" ng-click="addList()">Create New List</li>
@@ -56,8 +56,8 @@
     <div class="col-sm-8">
         <uib-alert ng-repeat="m in messages" type="{{m.type}}">{{m.text}}</uib-alert>
     </div>
-    <div id="parseContainer" ng-class="{grab:!dbs.action}">
-        <div id="parseImage" style="position:relative;margin-bottom: 6rem;margin-right: {{dbs.pinch}}.0%"
+    <div id="canvasContainer" ng-class="{grab:!dbs.action}">
+        <div id="canvasImage" style="position:relative;margin-bottom: 6rem;margin-right: {{dbs.pinch}}.0%"
          ng-mousewheel-down="rePinch(-1)" ng-mousewheel-up="rePinch(1)">
         <img selector="canvas['@id']">
         <canvas></canvas>
