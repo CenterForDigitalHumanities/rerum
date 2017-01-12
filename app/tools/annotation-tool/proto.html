@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<!--
+ This page is intended to get your foot into the door for what its like to render a canvas object and draw to it.  It is flawed and will need further development to work for your
+ purposes.  Enjoy!
+-->
+<html>
+    <head>
+        <title>Render and Draw to Canvas</title>
+        <meta charset="UTF-8">
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.js"></script>
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.js"></script>
+    <style>
+        #canvasOverlay{
+            display:block;
+            height:auto;
+            overflow:hidden;
+            position:absolute;
+            width:auto;
+            z-index:1;
+            max-width: 100%;
+        }
+        .transcriptionImage{
+            display:block;
+            left:0;
+            position:absolute;
+            top:0;
+            max-height: none !important; 
+            z-index:inherit;
+            max-width: 100%;
+        }
+        #transcriptionCanvas{
+            height: auto;
+            width: 100%;
+            position: relative;
+        }
+        .annoLine{
+            border: 1px solid white;
+            position: relative;
+        }
+        .annoLine:hover{
+            border: 1px solid green;
+        }
+    </style>
+        
+    </head>
+    <body>
+         <div class="hideme instructions">
+            <p>
+                The area below accepts a JSON canvas and will render this canvas to the screen.
+            </p>
+            <p>
+                Once you have decided what to put into the area, click 'Load Transcription' to have the input created into the transcription interface.  
+            </p>
+        </div>
+        
+        <div class="hideme" id="setTranscriptionObjectArea">
+            <textarea id="transcriptionText" placeholder="Enter a IIIF canvas"></textarea>
+        </div>
+        <button id="loadBtn" class="hideme" onclick="loadCanvas();"> Load Canvas </button> 
+        <!-- notice we do not use an actual <canvas> element here.  You will need that for SVG to work -->
+        <div id="transcriptionCanvas"> 
+            <img class="transcriptionImage"/>
+            <div id="canvasOverlay"> </div>
+        </div>
+    </body>
+</html>
+<script type="text/javascript">
+    //an annotation list can sit behind a URL that resolves its JSON object.  This one has a ton, for example.  Just copy and paste the URL into a web browser to resolve it and
+    //see an annotation list for yourself.
+    
+    var urlOfAnnoList = "http://165.134.241.141/annotationstore/annotation/5595497ce4b02f2838e37cc9";
+    
+    //The varaibles below are good test IIIF canvases and annotations to use.  The annotations have arbitrary values, they may not line up with anything.  
+    //You can change them if you would like.  
+    var noLineCanvas =
+            {
+                "@id":"http://canvas.org/canvas/1",
+                "@type" : "sc:Canvas",
+                "label" : "100r",
+                "height" : 1000,
+                "width" : 667,
+                "resources" : [],
+                "images":[{
+                          "@type":"oa:Annotation",
+                          "motivation":"sc:painting",
+                          "resource":{
+                              "@id":"http://norman.hrc.utexas.edu/graphics/mswaste/160 h612e 617/160_h612e_617_001.jpg",
+                              "@type":"dctypes:Image",
+                              "format":"image/jpeg"
+                          },
+                          "on":"http://canvas.org/canvas/1"
+                }],
+                "otherContent":[]
+            };
+            
+        var linesInResourcesCanvas =
+            {
+                "@id":"http://canvas.org/canvas/1",
+                "@type" : "sc:Canvas",
+                "label" : "100r",
+                "height" : 1000,
+                "width" : 667,
+                "resources" : [
+                    {
+                    "@id" : "http://t-pen.org/Tradamus+Simple/line/101083800",
+                    "@type" : "oa:Annotation",
+                    "motivation" : "sc:painting",
+                    "resource" : {
+                      "@type" : "cnt:ContentAsText",
+                      "cnt:chars" : "hello"
+                    },
+                    "on" : "http://canvas.org/canvas/1#xywh=148,132,409,55"
+                  },
+                  {
+                    "@id" : "http://t-pen.org/Tradamus+Simple/line/101083800",
+                    "@type" : "oa:Annotation",
+                    "motivation" : "sc:painting",
+                    "resource" : {
+                      "@type" : "cnt:ContentAsText",
+                      "cnt:chars" : "world"
+                    },
+                    "on" : "http://canvas.org/canvas/1#xywh=148,188,409,100"
+                  }
+                ],
+                "images":[{
+                          "@type":"oa:Annotation",
+                          "motivation":"sc:painting",
+                          "resource":{
+                              "@id":"http://norman.hrc.utexas.edu/graphics/mswaste/160 h612e 617/160_h612e_617_001.jpg",
+                              "@type":"dctypes:Image",
+                              "format":"image/jpeg"
+                          },
+                          "on":"http://canvas.org/canvas/1"
+                }],
+                "otherContent":[]
+            };
+            
+            var linesInOtherContentURLCanvas =
+                    {
+                "@id":"http://canvas.org/canvas/1",
+                "@type" : "sc:Canvas",
+                "label" : "100r",
+                "height" : 1000,
+                "width" : 667,
+                "resources" : [],
+                "images":[{
+                          "@type":"oa:Annotation",
+                          "motivation":"sc:painting",
+                          "resource":{
+                              "@id":"http://norman.hrc.utexas.edu/graphics/mswaste/160 h612e 617/160_h612e_617_001.jpg",
+                              "@type":"dctypes:Image",
+                              "format":"image/jpeg"
+                          },
+                          "on":"http://canvas.org/canvas/1"
+                }],
+                "otherContent":[urlOfAnnoList]
+            };
+            
+    window.onresize = function(event) {
+        //Hint: Consider the necessity of this function.  Would it still be necessary if #transcriptionCanvas was an actual <canvas> element?
+        var newHeight = $("#transcriptionCanvas img").height();
+        var newWidth = $("#transcriptionCanvas img").width();
+        $("#transcriptionCanvas").css("height",newHeight+"px");
+        $("#canvasOverlay").css("height",newHeight+"px");
+        $("#transcriptionCanvas").css("width",newWidth+"px");
+        $("#canvasOverlay").css("width",newWidth+"px");
+    };
+    
+    /*
+     * Begin preparing the environment for a canvas
+     */
+    function loadCanvas(){
+            var canvasObj = $("#transcriptionText").val();
+            if(canvasObj !== ""){
+                //might need to catch whether this passes or fails.
+                canvasObj = JSON.parse(canvasObj);
+            }
+            else{
+                //must provide input
+                return false;
+            }
+            var canvasAnnoList = "";
+            //check if the canvas object has an image.  If not, this is a problem.
+            if(canvasObj.images[0].resource['@id'] !== undefined && canvasObj.images[0].resource['@id'] !== ""){ //Only one image
+                var image = new Image();
+                $(image)
+                        .on("load",function() {
+                            $("#transcriptionCanvas").css("height", "auto");
+                            $('.transcriptionImage').attr('src', canvasObj.images[0].resource['@id'].replace('amp;',''));
+                            originalCanvasHeight = $("#transcriptionCanvas img").height();
+                            originalCanvasWidth = $("#transcriptionCanvas img").width();
+                            drawLinesToCanvas(canvasObj);
+                            $("#transcriptionCanvas").attr("canvasid", canvasObj["@id"]);
+                            $("#transcriptionCanvas").attr("annoList", canvasAnnoList);
+                        })
+                        .on("error", function(){
+                            // set a default image failed to load image here
+                            var image2 = new Image();
+                            $(image2)
+                            .on("load", function(){
+                                $("#transcriptionCanvas").css("height", "auto");
+                            })
+                            //.attr("src", "images/missingImage.png")
+                        })
+                        .attr("src", canvasObj.images[0].resource['@id']);
+            }
+            else{
+                //set a default no image available image here.
+                 //$('.transcriptionImage').attr('src',"images/missingImage.png");
+                 alert("The canvas is malformed.  No 'images' field in canvas object or images:[0]['@id'] does not exist.  Cannot draw lines.");
+            }
+
+    }    
+    
+    /*
+     * Gather the line data from the canvas data and pass it on to the HTML element creator.
+     */
+    function drawLinesToCanvas(canvasObj){
+        var lines = [];
+        if(canvasObj.resources !== undefined && canvasObj.resources.length > 0){
+            //this means lines are listed directly in canvas.resources.
+            for(var i=0; i<canvasObj.resources.length; i++){
+                if(isJSON(canvasObj.resources[i])){   // it is directly an annotation
+                    lines.push(canvasObj.resources[i]);
+                }
+            }
+            linesToScreen(lines);
+        }
+        else{ 
+            if(canvasObj.otherContent && canvasObj.otherContent.length>0){
+                var annosURL = canvasObj.otherContent[0]; //there may be multiple.  I am just grabbing the first one for ease, you guys can change this.
+                $.post(annosURL, function(annoList){
+                    //check if resources actually exist first.  Otherwise its a malformed sc:AnnotationList
+                    lines = annoList.resources;
+                    linesToScreen(lines);
+                });
+            }
+
+        }
+    }
+    
+    /*
+     * Take the line data and create HTML elements to append to the screen.
+     */
+    
+    function linesToScreen(lines){
+        var thisContent = "";
+        var counter = 0;
+        var image = $('#transcriptionCanvas img');
+        var theHeight = image.height();
+        var theWidth = image.width();
+        $('#transcriptionCanvas').css('height', originalCanvasHeight +"px");
+        $('#canvasOverlay').css('height',originalCanvasHeight + "px");
+        $('#canvasOverlay').css('width',originalCanvasWidth + "px");
+        var ratio = 0;
+        ratio = theWidth / theHeight;
+        for(var i=0; i<lines.length;i++){
+            var line = lines[i];
+            var x,y,w,h = 0;
+            var XYWHarray = [x,y,w,h];
+            var lineURL = "";
+            var lineID = -1;
+            if(line.on !== undefined){
+                lineURL = line.on;
+            }
+            else{
+                //ERROR.  malformed line.
+                return false;
+            }
+            if(line["@id"] !== undefined && line["@id"]!=="" ){ //&& line['@id'].indexOf('annotationstore/annotation') >=0
+                lineID = line['@id']; //.slice(line['@id'].lastIndexOf('line/') + 5)
+            }
+            else{
+                //ERROR.  Malformed line. 
+                return false;
+            }
+            thisContent = "";
+            
+            //This is what works for rectalinear annotations
+            if(lineURL.indexOf('#') > -1){ //string must contain this to be valid
+                var XYWHsubstring = lineURL.substring(lineURL.lastIndexOf('#' + 1)); //xywh = 'x,y,w,h'
+                if(XYWHsubstring.indexOf('=') > -1){ //string must contain this to be valid
+                    var numberArray = XYWHsubstring.substring(lineURL.lastIndexOf('xywh=') + 5).split(',');
+                    if(numberArray.length === 4){ // string must have all 4 to be valid
+                        x = numberArray[0];
+                        w = numberArray[2];
+                        y = numberArray[1];
+                        h = numberArray[3];
+                        XYWHarray = [x,y,w,h];
+                    }
+                    else{
+                        //ERROR! Malformed line
+                        return false;
+                    }
+                }
+                else{
+                    //ERROR! Malformed line
+                    return false;
+                }
+            }
+            else{
+                //ERROR!  Malformed line.
+                return false;
+            }
+            
+            if(line.resource['cnt:chars'] !== undefined && line.resource['cnt:chars'] !== "" && line.resource['cnt:chars'] !== "Enter a line transcription"){
+                thisContent = line.resource['cnt:chars'];
+            }
+            /*
+             * convert all integer values into percentages.  This means you will not have the redraw the line html elements, they will resize as the screen or canvas resizes.
+             * The code below assumes a canvas height of 1000 and the fact that the entire image was used inside of it
+             * since this was our original use case.  This will have to be re-written. 
+             *  
+             * Hint: The height and width of the canvas is stored in the canvas element (which is
+             * also the height and width it was when things were drawn to it).
+             * 
+             
+            */
+                var left = parseFloat(XYWHarray[0]) / (10 * ratio);
+                var top = parseFloat(XYWHarray[1]) / 10;
+                var width = parseFloat(XYWHarray[2]) / (10 * ratio);
+                var height = parseFloat(XYWHarray[3]) / 10;              
+                var lineToDraw = $("<div lineserverid='"+lineID+"' lineID='"+counter+"' class='annoLine' annoText='"+thisContent+"' style='left:"+left+"%; top:"+top+"%; width:"+width+"%; height:"+height+"%;'></div>");
+                //Put to the DOM
+                $("#canvasOverlay").append(lineToDraw);
+        }
+        $(".hideme").hide();
+    }
+    
+    /* Test if a given string can be parsed into a valid JSON object.
+     * @param str  A string
+     * @return bool
+     */
+    function isJSON(str) {
+        var r = true;
+        if(typeof str === "object"){
+            r = true;
+        }
+        else{
+            try {
+                JSON.parse(str);
+                r=true;
+            } 
+            catch (e) {
+               r = false;
+            }
+        }
+        return r;
+    };
+</script>
