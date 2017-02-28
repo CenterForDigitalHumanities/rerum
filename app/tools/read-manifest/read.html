@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<!--
+Read a T-PEN (or other similarly formed) transcription with images as available
+-->
+<div>
+    <div ng-if="obj['@id']">
+        <h1>{{obj.label || "[ no label ]"}}</h1>
+        <p>{{obj.description}}</p>
+
+        {{ obj.sequences[0].canvases.length }}
+    </div>
+    <div ng-if="!obj['@id']">
+        <input type="text" placeholder="Paste or type a URI for any Manifest" ng-model="murl">
+        <a class="btn" ng-href="?url={{murl}}">Load it</a>
+
+        {{ obj}}
+    </div>
+</div>
