@@ -5,7 +5,10 @@ Read a T-PEN (or other similarly formed) transcription with images as available
 <div>
     <div ng-if="obj['@id']">
         <h1>{{obj.label || "[ no label ]"}}</h1>
-        <p>{{obj.description}}</p>
+        <select ng-if="languages"
+                ng-model="languages"
+                ng-options="l in languages"></select>
+        <p>{{getDescription(obj.description,languages)}}</p>
 
         {{ obj.sequences[0].canvases.length }}
     </div>

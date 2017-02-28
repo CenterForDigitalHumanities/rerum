@@ -36,5 +36,26 @@ rerum.config(['$routeProvider',
 
 rerum.controller('readManifestController',function($scope,context,obj){
     $scope.obj = obj;
+    $scope.getDescription = function(desc,lang){
+        var d = "[ no description ]";
+        var lang = lang || "en";
+        if(!desc){
+            return d;
+        }
+        if(angular.isArray(desc)){
+            $scope.languages = [];
+            angular.forEach(desc,function(o,i){
+                $scope.languages.push(o['@language']);
+                if(o['@language']===lang){
+                    d=o['@value'];
+                }
+            });
+            return d;
+        }
+        if(typeof d === "string"){
+            return d;
+        }
+        return d;
+    };
 });
 
