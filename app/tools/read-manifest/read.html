@@ -94,14 +94,14 @@ Read a T-PEN (or other similarly formed) transcription with images as available
             <img id="backsplash" ng-style="screen.backsplashStyle" ng-src="{{canvas.images[0].resource['@id']}}">
             <div ng-show="screen.viewing==='image'">
                 <img ng-src="{{canvas.images[0].resource['@id']}}">
-            <div class="annotation" ng-mouseenter="moveBacksplash(a.on)" data-content="{{ a.resource.chars }}" ng-repeat="a in canvas.otherContent[0].resources" ng-if="a['@type']==='oa:Annotation'" ng-style={{getStyle(a.on)}} data-uri="{{a['@id']}}">
-            </div>
+                <div class="annotation" ng-mouseenter="moveBacksplash(a.on)" data-content="{{ a.resource['cnt:chars'] }}" ng-repeat="a in canvas.otherContent[0].resources" ng-if="a['@type']==='oa:Annotation'" ng-style={{getStyle(a.on)}} data-uri="{{a['@id']}}">
+                </div>
             </div>
             <div ng-show="screen.viewing==='text'" class="card">
                 <div class="card-block">
-                    <div class="text-annotation" ng-mouseenter="moveBacksplash(a.on)" data-content="{{ a.resource.chars }}" ng-repeat="a in canvas.otherContent[0].resources" ng-if="a['@type']==='oa:Annotation'" data-uri="{{a['@id']}}">
-                        {{ a.resource.chars }}
-                        <code ng-hide='a.resource.chars'>[ no transcription ]</code>
+                    <div class="text-annotation" ng-mouseenter="moveBacksplash(a.on)" data-content="{{ a.resource['cnt:chars'] }}" ng-repeat="a in canvas.otherContent[0].resources" ng-if="a['@type']==='oa:Annotation'" data-uri="{{a['@id']}}">
+                        {{ a.resource['cnt:chars'] }}
+                        <code ng-hide="a.resource['cnt:chars']">[ no transcription ]</code>
                         <img selector="a.on">
                     </div>
                 </div>

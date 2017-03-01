@@ -37,7 +37,7 @@ var dummy = function(fn){
                     "motivation": "http://filteredpush.org/ontologies/oa/oad#transcribing",
                     "resource": {
                         "@type": "cnt:ContentAsText",
-                        "chars": "ape nota trinitas al-<choice> choice tag </choice> gggdd</note>  dgd <note type=\"biblCite\" place=\"\" target=\"\">"
+                        "cnt:chars": "ape nota trinitas al-<choice> choice tag </choice> gggdd</note>  dgd <note type=\"biblCite\" place=\"\" target=\"\">"
                     },
                     "on": "http://t-pen.org/Tradamus+Simple/canvas/100r#xywh=148,26,409,105"
                 }, {
@@ -46,7 +46,7 @@ var dummy = function(fn){
                     "motivation": "http://filteredpush.org/ontologies/oa/oad#transcribing",
                     "resource": {
                         "@type": "cnt:ContentAsText",
-                        "chars": "line test for testing a <div type=\"creed\" n=\"\" xml:id=\"\">tag"
+                        "cnt:chars": "line test for testing a <div type=\"creed\" n=\"\" xml:id=\"\">tag"
                     },
                     "on": "http://t-pen.org/Tradamus+Simple/canvas/100r#xywh=148,140,409,32"
                 }, {
@@ -55,7 +55,7 @@ var dummy = function(fn){
                     "motivation": "http://filteredpush.org/ontologies/oa/oad#transcribing",
                     "resource": {
                         "@type": "cnt:ContentAsText",
-                        "chars": ""
+                        "cnt:chars": ""
                     },
                     "on": "http://t-pen.org/Tradamus+Simple/canvas/100r#xywh=148,172,409,28"
                 }, {
@@ -64,7 +64,7 @@ var dummy = function(fn){
                     "motivation": "http://filteredpush.org/ontologies/oa/oad#transcribing",
                     "resource": {
                         "@type": "cnt:ContentAsText",
-                        "chars": ""
+                        "cnt:chars": ""
                     },
                     "on": "http://t-pen.org/Tradamus+Simple/canvas/100r#xywh=148,200,409,31"
                 }, {
@@ -73,7 +73,7 @@ var dummy = function(fn){
                     "motivation": "http://filteredpush.org/ontologies/oa/oad#transcribing",
                     "resource": {
                         "@type": "cnt:ContentAsText",
-                        "chars": ""
+                        "cnt:chars": ""
                     },
                     "on": "http://t-pen.org/Tradamus+Simple/canvas/100r#xywh=148,231,409,48"
                 }, {
@@ -82,7 +82,7 @@ var dummy = function(fn){
                     "motivation": "http://filteredpush.org/ontologies/oa/oad#transcribing",
                     "resource": {
                         "@type": "cnt:ContentAsText",
-                        "chars": ""
+                        "cnt:chars": ""
                     },
                     "on": "http://t-pen.org/Tradamus+Simple/canvas/100r#xywh=148,279,409,33"
                 }, {
@@ -91,7 +91,7 @@ var dummy = function(fn){
                     "motivation": "http://filteredpush.org/ontologies/oa/oad#transcribing",
                     "resource": {
                         "@type": "cnt:ContentAsText",
-                        "chars": ""
+                        "cnt:chars": ""
                     },
                     "on": "http://t-pen.org/Tradamus+Simple/canvas/100r#xywh=148,312,409,32"
                 }, {
@@ -100,7 +100,7 @@ var dummy = function(fn){
                     "motivation": "http://filteredpush.org/ontologies/oa/oad#transcribing",
                     "resource": {
                         "@type": "cnt:ContentAsText",
-                        "chars": ""
+                        "cnt:chars": ""
                     },
                     "on": "http://t-pen.org/Tradamus+Simple/canvas/100r#xywh=148,344,409,33"
                 }, {
@@ -109,7 +109,7 @@ var dummy = function(fn){
                     "motivation": "http://filteredpush.org/ontologies/oa/oad#transcribing",
                     "resource": {
                         "@type": "cnt:ContentAsText",
-                        "chars": "tralalalal lalaal alala"
+                        "cnt:chars": "tralalalal lalaal alala"
                     },
                     "on": "http://t-pen.org/Tradamus+Simple/canvas/100r#xywh=148,377,409,34"
                 }, {
@@ -118,7 +118,7 @@ var dummy = function(fn){
                     "motivation": "http://filteredpush.org/ontologies/oa/oad#transcribing",
                     "resource": {
                         "@type": "cnt:ContentAsText",
-                        "chars": "uia tibi gloria et laus en be d"
+                        "cnt:chars": "uia tibi gloria et laus en be d"
                     },
                     "on": "http://t-pen.org/Tradamus+Simple/canvas/100r#xywh=148,411,409,29"
                 }, {
@@ -127,7 +127,7 @@ var dummy = function(fn){
                     "motivation": "http://filteredpush.org/ontologies/oa/oad#transcribing",
                     "resource": {
                         "@type": "cnt:ContentAsText",
-                        "chars": "tralalalal lalaal alala"
+                        "cnt:chars": "tralalalal lalaal alala"
                     },
                     "on": "http://t-pen.org/Tradamus+Simple/canvas/100r#xywh=148,440,409,29"
                 }, {
@@ -136,7 +136,7 @@ var dummy = function(fn){
                     "motivation": "http://filteredpush.org/ontologies/oa/oad#transcribing",
                     "resource": {
                         "@type": "cnt:ContentAsText",
-                        "chars": "trua Benedictus sitirus"
+                        "cnt:chars": "trua Benedictus sitirus"
                     },
                     "on": "http://t-pen.org/Tradamus+Simple/canvas/100r#xywh=148,469,409,30"
                 }, {
@@ -145,7 +145,7 @@ var dummy = function(fn){
                     "motivation": "http://filteredpush.org/ontologies/oa/oad#transcribing",
                     "resource": {
                         "@type": "cnt:ContentAsText",
-                        "chars": "tralalalal lalaal alala"
+                        "cnt:chars": "tralalalal lalaal alala"
                     },
                     "on": "http://t-pen.org/Tradamus+Simple/canvas/100r#xywh=148,499,409,31"
                 }, {
@@ -154,7 +154,7 @@ var dummy = function(fn){
                     "motivation": "oa:commenting",
                     "resource": {
                         "@type": "cnt:ContentAsText",
-                        "chars": "scspocm"
+                        "cnt:chars": "scspocm"
                     },
                     "on": "http://t-pen.org/Tradamus+Simple/line/101083804"
                 }, {
@@ -163,7 +163,7 @@ var dummy = function(fn){
                     "motivation": "http://filteredpush.org/ontologies/oa/oad#transcribing",
                     "resource": {
                         "@type": "cnt:ContentAsText",
-                        "chars": ""
+                        "cnt:chars": ""
                     },
                     "on": "http://t-pen.org/Tradamus+Simple/canvas/100r#xywh=148,530,409,84"
                 }]
@@ -196,7 +196,7 @@ var dummy = function(fn){
                     "motivation": "http://filteredpush.org/ontologies/oa/oad#transcribing",
                     "resource": {
                         "@type": "cnt:ContentAsText",
-                        "chars": "<temp>Infesto Corporis Christi</temp>"
+                        "cnt:chars": "<temp>Infesto Corporis Christi</temp>"
                     },
                     "on": "http://t-pen.org/Tradamus+Simple/canvas/100v#xywh=104,61,401,45"
                 }, {
@@ -205,7 +205,7 @@ var dummy = function(fn){
                     "motivation": "http://filteredpush.org/ontologies/oa/oad#transcribing",
                     "resource": {
                         "@type": "cnt:ContentAsText",
-                        "chars": "tralalalal lalaal alala"
+                        "cnt:chars": "tralalalal lalaal alala"
                     },
                     "on": "http://t-pen.org/Tradamus+Simple/canvas/100v#xywh=104,106,401,27"
                 }, {
@@ -214,7 +214,7 @@ var dummy = function(fn){
                     "motivation": "http://filteredpush.org/ontologies/oa/oad#transcribing",
                     "resource": {
                         "@type": "cnt:ContentAsText",
-                        "chars": "midi alleluia Benediate all"
+                        "cnt:chars": "midi alleluia Benediate all"
                     },
                     "on": "http://t-pen.org/Tradamus+Simple/canvas/100v#xywh=104,133,401,30"
                 }, {
@@ -223,7 +223,7 @@ var dummy = function(fn){
                     "motivation": "http://filteredpush.org/ontologies/oa/oad#transcribing",
                     "resource": {
                         "@type": "cnt:ContentAsText",
-                        "chars": "tralalalal lalaal alala"
+                        "cnt:chars": "tralalalal lalaal alala"
                     },
                     "on": "http://t-pen.org/Tradamus+Simple/canvas/100v#xywh=104,163,401,37"
                 }, {
@@ -232,7 +232,7 @@ var dummy = function(fn){
                     "motivation": "http://filteredpush.org/ontologies/oa/oad#transcribing",
                     "resource": {
                         "@type": "cnt:ContentAsText",
-                        "chars": "celi et mia omnibus uiuentibus routite"
+                        "cnt:chars": "celi et mia omnibus uiuentibus routite"
                     },
                     "on": "http://t-pen.org/Tradamus+Simple/canvas/100v#xywh=104,200,401,26"
                 }, {
@@ -241,7 +241,7 @@ var dummy = function(fn){
                     "motivation": "http://filteredpush.org/ontologies/oa/oad#transcribing",
                     "resource": {
                         "@type": "cnt:ContentAsText",
-                        "chars": "tralalalal lalaal alala"
+                        "cnt:chars": "tralalalal lalaal alala"
                     },
                     "on": "http://t-pen.org/Tradamus+Simple/canvas/100v#xywh=104,226,401,42"
                 }, {
@@ -250,7 +250,7 @@ var dummy = function(fn){
                     "motivation": "http://filteredpush.org/ontologies/oa/oad#transcribing",
                     "resource": {
                         "@type": "cnt:ContentAsText",
-                        "chars": "uum e i qui a te at vobis tuum"
+                        "cnt:chars": "uum e i qui a te at vobis tuum"
                     },
                     "on": "http://t-pen.org/Tradamus+Simple/canvas/100v#xywh=104,268,401,23"
                 }, {
@@ -259,7 +259,7 @@ var dummy = function(fn){
                     "motivation": "http://filteredpush.org/ontologies/oa/oad#transcribing",
                     "resource": {
                         "@type": "cnt:ContentAsText",
-                        "chars": "tralalalal lalaal alala"
+                        "cnt:chars": "tralalalal lalaal alala"
                     },
                     "on": "http://t-pen.org/Tradamus+Simple/canvas/100v#xywh=104,291,401,26"
                 }, {
@@ -268,7 +268,7 @@ var dummy = function(fn){
                     "motivation": "http://filteredpush.org/ontologies/oa/oad#transcribing",
                     "resource": {
                         "@type": "cnt:ContentAsText",
-                        "chars": "le moridam tuam blah eos"
+                        "cnt:chars": "le moridam tuam blah eos"
                     },
                     "on": "http://t-pen.org/Tradamus+Simple/canvas/100v#xywh=104,317,401,27"
                 }, {
@@ -277,7 +277,7 @@ var dummy = function(fn){
                     "motivation": "http://filteredpush.org/ontologies/oa/oad#transcribing",
                     "resource": {
                         "@type": "cnt:ContentAsText",
-                        "chars": "tralalalal lalaal alala"
+                        "cnt:chars": "tralalalal lalaal alala"
                     },
                     "on": "http://t-pen.org/Tradamus+Simple/canvas/100v#xywh=104,344,401,44"
                 }, {
@@ -286,7 +286,7 @@ var dummy = function(fn){
                     "motivation": "http://filteredpush.org/ontologies/oa/oad#transcribing",
                     "resource": {
                         "@type": "cnt:ContentAsText",
-                        "chars": "<temp>silidun</temp> Alleulia"
+                        "cnt:chars": "<temp>silidun</temp> Alleulia"
                     },
                     "on": "http://t-pen.org/Tradamus+Simple/canvas/100v#xywh=104,388,401,27"
                 }, {
@@ -295,7 +295,7 @@ var dummy = function(fn){
                     "motivation": "http://filteredpush.org/ontologies/oa/oad#transcribing",
                     "resource": {
                         "@type": "cnt:ContentAsText",
-                        "chars": "tralalalal lalaal alala"
+                        "cnt:chars": "tralalalal lalaal alala"
                     },
                     "on": "http://t-pen.org/Tradamus+Simple/canvas/100v#xywh=104,415,401,32"
                 }, {
@@ -304,7 +304,7 @@ var dummy = function(fn){
                     "motivation": "http://filteredpush.org/ontologies/oa/oad#transcribing",
                     "resource": {
                         "@type": "cnt:ContentAsText",
-                        "chars": "Lardo vica vere"
+                        "cnt:chars": "Lardo vica vere"
                     },
                     "on": "http://t-pen.org/Tradamus+Simple/canvas/100v#xywh=104,447,401,29"
                 }, {
@@ -313,7 +313,7 @@ var dummy = function(fn){
                     "motivation": "http://filteredpush.org/ontologies/oa/oad#transcribing",
                     "resource": {
                         "@type": "cnt:ContentAsText",
-                        "chars": "tralalalal lalaal alala"
+                        "cnt:chars": "tralalalal lalaal alala"
                     },
                     "on": "http://t-pen.org/Tradamus+Simple/canvas/100v#xywh=104,476,401,27"
                 }, {
@@ -322,7 +322,7 @@ var dummy = function(fn){
                     "motivation": "http://filteredpush.org/ontologies/oa/oad#transcribing",
                     "resource": {
                         "@type": "cnt:ContentAsText",
-                        "chars": "est a bus et languis meus verr"
+                        "cnt:chars": "est a bus et languis meus verr"
                     },
                     "on": "http://t-pen.org/Tradamus+Simple/canvas/100v#xywh=104,503,401,23"
                 }, {
@@ -331,7 +331,7 @@ var dummy = function(fn){
                     "motivation": "http://filteredpush.org/ontologies/oa/oad#transcribing",
                     "resource": {
                         "@type": "cnt:ContentAsText",
-                        "chars": "tralalalal lalaal alala"
+                        "cnt:chars": "tralalalal lalaal alala"
                     },
                     "on": "http://t-pen.org/Tradamus+Simple/canvas/100v#xywh=104,526,401,37"
                 }, {
@@ -340,7 +340,7 @@ var dummy = function(fn){
                     "motivation": "http://filteredpush.org/ontologies/oa/oad#transcribing",
                     "resource": {
                         "@type": "cnt:ContentAsText",
-                        "chars": "est potus qui inaducat carue ine"
+                        "cnt:chars": "est potus qui inaducat carue ine"
                     },
                     "on": "http://t-pen.org/Tradamus+Simple/canvas/100v#xywh=104,563,401,25"
                 }, {
@@ -349,7 +349,7 @@ var dummy = function(fn){
                     "motivation": "http://filteredpush.org/ontologies/oa/oad#transcribing",
                     "resource": {
                         "@type": "cnt:ContentAsText",
-                        "chars": "tralalalal lalaal alala"
+                        "cnt:chars": "tralalalal lalaal alala"
                     },
                     "on": "http://t-pen.org/Tradamus+Simple/canvas/100v#xywh=104,588,401,39"
                 }, {
@@ -358,7 +358,7 @@ var dummy = function(fn){
                     "motivation": "http://filteredpush.org/ontologies/oa/oad#transcribing",
                     "resource": {
                         "@type": "cnt:ContentAsText",
-                        "chars": "am et bibitincum"
+                        "cnt:chars": "am et bibitincum"
                     },
                     "on": "http://t-pen.org/Tradamus+Simple/canvas/100v#xywh=104,627,401,27"
                 }, {
@@ -367,7 +367,7 @@ var dummy = function(fn){
                     "motivation": "http://filteredpush.org/ontologies/oa/oad#transcribing",
                     "resource": {
                         "@type": "cnt:ContentAsText",
-                        "chars": "tralalalal lalaal alala"
+                        "cnt:chars": "tralalalal lalaal alala"
                     },
                     "on": "http://t-pen.org/Tradamus+Simple/canvas/100v#xywh=104,654,401,30"
                 }, {
@@ -376,7 +376,7 @@ var dummy = function(fn){
                     "motivation": "http://filteredpush.org/ontologies/oa/oad#transcribing",
                     "resource": {
                         "@type": "cnt:ContentAsText",
-                        "chars": "languinem in me inauet et"
+                        "cnt:chars": "languinem in me inauet et"
                     },
                     "on": "http://t-pen.org/Tradamus+Simple/canvas/100v#xywh=104,684,401,30"
                 }]
@@ -409,7 +409,7 @@ var dummy = function(fn){
                     "motivation": "http://filteredpush.org/ontologies/oa/oad#transcribing",
                     "resource": {
                         "@type": "cnt:ContentAsText",
-                        "chars": "In festo Corpous Christi"
+                        "cnt:chars": "In festo Corpous Christi"
                     },
                     "on": "http://t-pen.org/Tradamus+Simple/canvas/101r#xywh=151,27,410,46"
                 }, {
@@ -418,7 +418,7 @@ var dummy = function(fn){
                     "motivation": "http://filteredpush.org/ontologies/oa/oad#transcribing",
                     "resource": {
                         "@type": "cnt:ContentAsText",
-                        "chars": "tralalalal lalaal alala"
+                        "cnt:chars": "tralalalal lalaal alala"
                     },
                     "on": "http://t-pen.org/Tradamus+Simple/canvas/101r#xywh=151,73,410,35"
                 }, {
@@ -427,7 +427,7 @@ var dummy = function(fn){
                     "motivation": "http://filteredpush.org/ontologies/oa/oad#transcribing",
                     "resource": {
                         "@type": "cnt:ContentAsText",
-                        "chars": "ego in eo Sacerdotes in ceilium"
+                        "cnt:chars": "ego in eo Sacerdotes in ceilium"
                     },
                     "on": "http://t-pen.org/Tradamus+Simple/canvas/101r#xywh=151,108,410,28"
                 }, {
@@ -436,7 +436,7 @@ var dummy = function(fn){
                     "motivation": "http://filteredpush.org/ontologies/oa/oad#transcribing",
                     "resource": {
                         "@type": "cnt:ContentAsText",
-                        "chars": "tralalalal lalaal alala"
+                        "cnt:chars": "tralalalal lalaal alala"
                     },
                     "on": "http://t-pen.org/Tradamus+Simple/canvas/101r#xywh=151,136,410,33"
                 }, {
@@ -445,7 +445,7 @@ var dummy = function(fn){
                     "motivation": "http://filteredpush.org/ontologies/oa/oad#transcribing",
                     "resource": {
                         "@type": "cnt:ContentAsText",
-                        "chars": "domini et panes offerunt deo et"
+                        "cnt:chars": "domini et panes offerunt deo et"
                     },
                     "on": "http://t-pen.org/Tradamus+Simple/canvas/101r#xywh=151,169,410,22"
                 }, {
@@ -454,7 +454,7 @@ var dummy = function(fn){
                     "motivation": "http://filteredpush.org/ontologies/oa/oad#transcribing",
                     "resource": {
                         "@type": "cnt:ContentAsText",
-                        "chars": "tralalalal lalaal alala"
+                        "cnt:chars": "tralalalal lalaal alala"
                     },
                     "on": "http://t-pen.org/Tradamus+Simple/canvas/101r#xywh=151,191,410,37"
                 }, {
@@ -463,7 +463,7 @@ var dummy = function(fn){
                     "motivation": "http://filteredpush.org/ontologies/oa/oad#transcribing",
                     "resource": {
                         "@type": "cnt:ContentAsText",
-                        "chars": "ideo lauiti erunt deo cuo et no-"
+                        "cnt:chars": "ideo lauiti erunt deo cuo et no-"
                     },
                     "on": "http://t-pen.org/Tradamus+Simple/canvas/101r#xywh=151,228,410,23"
                 }, {
@@ -472,7 +472,7 @@ var dummy = function(fn){
                     "motivation": "http://filteredpush.org/ontologies/oa/oad#transcribing",
                     "resource": {
                         "@type": "cnt:ContentAsText",
-                        "chars": "tralalalal lalaal alala"
+                        "cnt:chars": "tralalalal lalaal alala"
                     },
                     "on": "http://t-pen.org/Tradamus+Simple/canvas/101r#xywh=151,251,410,36"
                 }, {
@@ -481,7 +481,7 @@ var dummy = function(fn){
                     "motivation": "http://filteredpush.org/ontologies/oa/oad#transcribing",
                     "resource": {
                         "@type": "cnt:ContentAsText",
-                        "chars": "polluent uome cuis alleluia"
+                        "cnt:chars": "polluent uome cuis alleluia"
                     },
                     "on": "http://t-pen.org/Tradamus+Simple/canvas/101r#xywh=151,287,410,23"
                 }, {
@@ -490,7 +490,7 @@ var dummy = function(fn){
                     "motivation": "http://filteredpush.org/ontologies/oa/oad#transcribing",
                     "resource": {
                         "@type": "cnt:ContentAsText",
-                        "chars": "tralalalal lalaal alala"
+                        "cnt:chars": "tralalalal lalaal alala"
                     },
                     "on": "http://t-pen.org/Tradamus+Simple/canvas/101r#xywh=151,310,410,46"
                 }, {
@@ -499,7 +499,7 @@ var dummy = function(fn){
                     "motivation": "http://filteredpush.org/ontologies/oa/oad#transcribing",
                     "resource": {
                         "@type": "cnt:ContentAsText",
-                        "chars": "Quoae laique inaducabitis pauce huic"
+                        "cnt:chars": "Quoae laique inaducabitis pauce huic"
                     },
                     "on": "http://t-pen.org/Tradamus+Simple/canvas/101r#xywh=151,356,410,22"
                 }, {
@@ -508,7 +508,7 @@ var dummy = function(fn){
                     "motivation": "http://filteredpush.org/ontologies/oa/oad#transcribing",
                     "resource": {
                         "@type": "cnt:ContentAsText",
-                        "chars": "tralalalal lalaal alala"
+                        "cnt:chars": "tralalalal lalaal alala"
                     },
                     "on": "http://t-pen.org/Tradamus+Simple/canvas/101r#xywh=151,378,410,28"
                 }, {
@@ -517,7 +517,7 @@ var dummy = function(fn){
                     "motivation": "http://filteredpush.org/ontologies/oa/oad#transcribing",
                     "resource": {
                         "@type": "cnt:ContentAsText",
-                        "chars": "et calicem bibetis mo?te <temp>domini</temp> annuabi"
+                        "cnt:chars": "et calicem bibetis mo?te <temp>domini</temp> annuabi"
                     },
                     "on": "http://t-pen.org/Tradamus+Simple/canvas/101r#xywh=151,406,410,29"
                 }, {
@@ -526,7 +526,7 @@ var dummy = function(fn){
                     "motivation": "http://filteredpush.org/ontologies/oa/oad#transcribing",
                     "resource": {
                         "@type": "cnt:ContentAsText",
-                        "chars": "<temp>tralalalal lalaal alala</temp>"
+                        "cnt:chars": "<temp>tralalalal lalaal alala</temp>"
                     },
                     "on": "http://t-pen.org/Tradamus+Simple/canvas/101r#xywh=151,435,410,36"
                 }, {
@@ -535,7 +535,7 @@ var dummy = function(fn){
                     "motivation": "http://filteredpush.org/ontologies/oa/oad#transcribing",
                     "resource": {
                         "@type": "cnt:ContentAsText",
-                        "chars": "tralalalal lalaal alala"
+                        "cnt:chars": "tralalalal lalaal alala"
                     },
                     "on": "http://t-pen.org/Tradamus+Simple/canvas/101r#xywh=151,471,410,23"
                 }, {
@@ -544,7 +544,7 @@ var dummy = function(fn){
                     "motivation": "http://filteredpush.org/ontologies/oa/oad#transcribing",
                     "resource": {
                         "@type": "cnt:ContentAsText",
-                        "chars": "tralalalal lalaal alala"
+                        "cnt:chars": "tralalalal lalaal alala"
                     },
                     "on": "http://t-pen.org/Tradamus+Simple/canvas/101r#xywh=151,494,410,34"
                 }, {
@@ -553,7 +553,7 @@ var dummy = function(fn){
                     "motivation": "http://filteredpush.org/ontologies/oa/oad#transcribing",
                     "resource": {
                         "@type": "cnt:ContentAsText",
-                        "chars": "tralalalal lalaal alala"
+                        "cnt:chars": "tralalalal lalaal alala"
                     },
                     "on": "http://t-pen.org/Tradamus+Simple/canvas/101r#xywh=151,528,410,29"
                 }, {
@@ -562,7 +562,7 @@ var dummy = function(fn){
                     "motivation": "http://filteredpush.org/ontologies/oa/oad#transcribing",
                     "resource": {
                         "@type": "cnt:ContentAsText",
-                        "chars": "tralalalal lalaal alala"
+                        "cnt:chars": "tralalalal lalaal alala"
                     },
                     "on": "http://t-pen.org/Tradamus+Simple/canvas/101r#xywh=151,557,410,39"
                 }, {
@@ -571,7 +571,7 @@ var dummy = function(fn){
                     "motivation": "http://filteredpush.org/ontologies/oa/oad#transcribing",
                     "resource": {
                         "@type": "cnt:ContentAsText",
-                        "chars": "tralalalal lalaal alala"
+                        "cnt:chars": "tralalalal lalaal alala"
                     },
                     "on": "http://t-pen.org/Tradamus+Simple/canvas/101r#xywh=151,596,410,23"
                 }, {
@@ -580,7 +580,7 @@ var dummy = function(fn){
                     "motivation": "http://filteredpush.org/ontologies/oa/oad#transcribing",
                     "resource": {
                         "@type": "cnt:ContentAsText",
-                        "chars": "tralalalal lalaal alala"
+                        "cnt:chars": "tralalalal lalaal alala"
                     },
                     "on": "http://t-pen.org/Tradamus+Simple/canvas/101r#xywh=151,619,410,40"
                 }, {
@@ -589,7 +589,7 @@ var dummy = function(fn){
                     "motivation": "http://filteredpush.org/ontologies/oa/oad#transcribing",
                     "resource": {
                         "@type": "cnt:ContentAsText",
-                        "chars": "tralalalal lalaal alala"
+                        "cnt:chars": "tralalalal lalaal alala"
                     },
                     "on": "http://t-pen.org/Tradamus+Simple/canvas/101r#xywh=151,659,410,21"
                 }]
