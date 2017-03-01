@@ -463,7 +463,7 @@ angular.module('utils', [])
                     cache.put("img" + $scope.canvas['@id'], targ);
                     $element.next().remove(); // delete any backup <canvas> that has been added
                     $element.removeClass('ng-hide');
-                    var scale = 1|| targ.width / $scope.canvas.width; // knocked to 1 for testing
+                    var scale = targ.naturalWidth / $scope.canvas.width;
                     if (imgTrim) {
                         scale = imgTrim[2] / $scope.canvas.width;
                         for (var i = 0; i < 2; i++) {
