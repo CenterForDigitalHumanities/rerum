@@ -1,4 +1,5 @@
-var dummy = {
+var dummy = function(fn){
+    var m ={
     "@context": "http://iiif.io/api/presentation/1/context.json",
     "@id": "http://t-pen.org/TPEN/project/4080",
     "@type": "sc:Manifest",
@@ -596,6 +597,9 @@ var dummy = {
         }]
     }]
 };
+fn(m);
+return m;
+};
 
 /*
  * Read a manifest's transcription.
@@ -603,7 +607,7 @@ var dummy = {
  */
 
 rerum.config(['$routeProvider',
-    function($routeProvider, $locationProvider, Edition) {
+    function($routeProvider) {
         $routeProvider
             .when('/read', {
                 templateUrl: 'app/tools/read-manifest/read.html',
@@ -614,18 +618,19 @@ rerum.config(['$routeProvider',
                             // cached for later consumption
                         });
                     },
-                    obj: function($location, $http) {
+                    obj: function($location, $http,rerumService) {
                         // TODO: preload a known manifest from the URL or memory
                         var mUrl = $location.search().url;
                         var manifest = (mUrl && $http.get(mUrl).then(function(m) {
                             // success
+                            rerumService.extractResources(m.data);
                             return m.data;
                         }, function(err) {
                             // error
                             return {
                                 error: err
                             };
-                        })) || dummy;
+                        })) || dummy(rerumService.extractResources);
                         return manifest;
                     }
                 }
@@ -633,12 +638,21 @@ rerum.config(['$routeProvider',
     }
 ]);
 
-rerum.controller('readManifestController', function($scope, context, obj) {
+rerum.controller('readManifestController', function($scope, obj) {
     $scope.obj = obj;
     $scope.canvas = $scope.obj.sequences[0].canvases[0];
+    $scope.screen = {
+            viewing: "image",
+            language: "en",
+            backsplashStyle:"",
+            views:{
+            image:"text",
+            text:"image"
+        }
+    };
     $scope.setDescription = function(desc, lang) {
-        $scope.language = lang;
-        $scope.description = "[ no description ]";
+        $scope.screen.language = lang;
+        $scope.description = "";
         if (!desc) {
             return $scope.description;
         }
@@ -667,19 +681,27 @@ rerum.controller('readManifestController', function($scope, context, obj) {
             top: xywh[1] / height * 100 + "%",
             height: xywh[3] / height * 100 + "%",
             width: xywh[2] / width * 100 + "%"
-        }
+        };
     };
     $scope.moveBacksplash = function(on) {
         var xywh = on.substring(on.indexOf("xywh=") + 5).split(",");
         var height = $scope.canvas.height;
         var width = $scope.canvas.width;
         var ww = window.innerWidth;
-        var wh = window.innerHeight;
-        $scope.backsplashStyle = {
-            left: -xywh[0] / width * ww / xywh[2] * 100 + "%",
-            top: -xywh[1] / height * wh / xywh[3] * 100 + "%",
-            width: ww / xywh[2] * 100 + "%",
+        var iw = ww * width / xywh[2]; // in pixels
+        var ih = iw * height / width;
+        var ratio = iw / width;
+        $scope.screen.backsplashStyle = {
+            left: -xywh[0] * ratio + "px",
+            top: -xywh[1] * ratio + "px",
+            width: iw + "px",
             opacity: .6
-        }
+        };
+    };
+    $scope.hideBacksplash = function(){
+        $scope.screen.backsplashStyle = null;
+    };
+    $scope.cycleView = function(){
+        $scope.screen.viewing = $scope.screen.views[$scope.screen.viewing];
     };
 });

@@ -5,21 +5,21 @@ Read a T-PEN (or other similarly formed) transcription with images as available
 <div>
     <style scoped>
         img {
-            max-width: 100%;
+            width: 100%;
         }
-        
+
         img#backsplash {
             position: fixed;
             width: 125vw;
             left: -12vw;
-            top: 0;
+            top: -25vh;
             z-index: -1;
-            filter: grayscale(1);
+            filter: grayscale(1) contrast(2) brightness(2);
             opacity: 0;
             max-width: none;
             transition: 500ms all;
         }
-        
+
         .annotation {
             opacity: 0;
             position: absolute;
@@ -28,7 +28,7 @@ Read a T-PEN (or other similarly formed) transcription with images as available
             transition: 250ms opacity;
             box-sizing: content-box;
         }
-        
+
         .annotation::before {
             width: 100%;
             color: #8c8c8c;
@@ -40,7 +40,7 @@ Read a T-PEN (or other similarly formed) transcription with images as available
             box-shadow: 2px 4px 15px rgba(0, 0, 0, .33);
             font-size: .75em;
         }
-        
+
         .annotation::after {
             width: 100%;
             background: #dfdfdf;
@@ -49,26 +49,62 @@ Read a T-PEN (or other similarly formed) transcription with images as available
             position: absolute;
             top: 100%;
             margin-top: 3px;
+            font-family: 'Junicode',serif;
         }
-        
+
         .annotation:hover {
+            opacity: 1;
+        }
+        .text-annotation {
+            font-family: 'Junicode',serif;
+            font-size: 1.2rem;
+        }
+        .text-annotation canvas {
+            transition: 500ms opacity;
+            opacity: .3;
+        }
+        .text-annotation:hover{
+            background-color: #cfcfcf;
+        }
+        .text-annotation:hover canvas{
             opacity: 1;
         }
     </style>
     <div ng-if="obj['@id']">
-        <h1>{{obj.label || "[ no label ]"}}</h1>
-        <select class="btn btn-secondary" ng-show="languages.length" ng-model="language" ng-change="setDescription(obj.description,language)" ng-options="l for l in languages"></select>
-        <p>{{description}}</p>
-        <div class="btn-group">
-            <button role="button" class="btn btn-secondary" ng-click="canvas=obj.sequences[0].canvases[obj.sequences[0].canvases.indexOf(canvas)-1]" ng-hide="obj.sequences[0].canvases.indexOf(canvas)<1">previous</button>
-            <select class="btn btn-secondary" ng-show="obj.sequences[0].canvases.length" ng-model="canvas" ng-options="canvas.label for canvas in obj.sequences[0].canvases"></select>
-            <button role="button" class="btn btn-secondary" ng-click="canvas=obj.sequences[0].canvases[obj.sequences[0].canvases.indexOf(canvas)+1]" ng-hide="obj.sequences[0].canvases.indexOf(canvas)>(obj.sequences[0].canvases.length-2)">next</button>
+        <div class="card">
+            <h3 class="card-header">{{obj.label || "[ no label ]"}}</h3>
+            <div class="card-block">
+                {{description}}
+                <code ng-hide='description'>[ no description ]</code>
+                <div class="btn-group btn-group-sm btn-block" ng-show="languages.length" data-toggle="buttons">
+                    <label class="btn btn-info" ng-class="{'active':screen.language===l}" ng-repeat="l in languages" ng-click="setDescription(obj.description,l)">
+                        <input type="radio" ng-model="screen.language" ng-value="l" >
+                        {{l}}
+                    </label>
+                </div>
+            </div>
+            <div class="btn-group card-footer">
+                <button role="button" class="btn btn-secondary" ng-click="canvas=obj.sequences[0].canvases[obj.sequences[0].canvases.indexOf(canvas)-1]" ng-hide="obj.sequences[0].canvases.indexOf(canvas)<1">previous</button>
+                <select class="btn btn-secondary" ng-show="obj.sequences[0].canvases.length" ng-model="canvas" ng-options="canvas.label for canvas in obj.sequences[0].canvases"></select>
+                <button role="button" class="btn btn-secondary" ng-click="canvas=obj.sequences[0].canvases[obj.sequences[0].canvases.indexOf(canvas)+1]" ng-hide="obj.sequences[0].canvases.indexOf(canvas)>(obj.sequences[0].canvases.length-2)">next</button>
+                <button role="button" class="btn btn-outline-primary" ng-click="cycleView()">{{screen.views[screen.viewing]}}</button>
+            </div>
         </div>
-        <div style="position:relative;">
-            <img ng-src="{{canvas.images[0].resource['@id']}}">
-            <img id="backsplash" ng-style="backsplashStyle" ng-src="{{canvas.images[0].resource['@id']}}">
+        <div style="position:relative;" ng-mouseleave="hideBacksplash()">
+            <img id="backsplash" ng-style="screen.backsplashStyle" ng-src="{{canvas.images[0].resource['@id']}}">
+            <div ng-show="screen.viewing==='image'">
+                <img ng-src="{{canvas.images[0].resource['@id']}}">
             <div class="annotation" ng-mouseenter="moveBacksplash(a.on)" data-content="{{ a.resource.chars }}" ng-repeat="a in canvas.otherContent[0].resources" ng-if="a['@type']==='oa:Annotation'" ng-style={{getStyle(a.on)}} data-uri="{{a['@id']}}">
-
+            </div>
+            </div>
+            <div ng-show="screen.viewing==='text'" class="card">
+                <div class="card-block">
+                    <div class="text-annotation" ng-mouseenter="moveBacksplash(a.on)" data-content="{{ a.resource.chars }}" ng-repeat="a in canvas.otherContent[0].resources" ng-if="a['@type']==='oa:Annotation'" data-uri="{{a['@id']}}">
+                        {{ a.resource.chars }}
+                        <code ng-hide='a.resource.chars'>[ no transcription ]</code>
+                        <img selector="a.on">
+                    </div>
+                </div>
             </div>
         </div>
         {{ obj.sequences[0].canvases.length }}

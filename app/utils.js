@@ -407,9 +407,7 @@ angular.module('utils', [])
 //        var url = "api/res/"+obj['@id']; // live server test
             return $http.post(url, {content: obj});
         };
-    });
-
-rerum.directive('selector', function () {
+    }).directive('selector', function () {
     return {
         scope: {
             selector: "="
@@ -465,7 +463,7 @@ rerum.directive('selector', function () {
                     cache.put("img" + $scope.canvas['@id'], targ);
                     $element.next().remove(); // delete any backup <canvas> that has been added
                     $element.removeClass('ng-hide');
-                    var scale = targ.width / $scope.canvas.width;
+                    var scale = 1|| targ.width / $scope.canvas.width; // knocked to 1 for testing
                     if (imgTrim) {
                         scale = imgTrim[2] / $scope.canvas.width;
                         for (var i = 0; i < 2; i++) {
