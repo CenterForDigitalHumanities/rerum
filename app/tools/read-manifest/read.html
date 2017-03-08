@@ -76,7 +76,11 @@ Read a T-PEN (or other similarly formed) transcription with images as available
     </style>
     <div ng-if="obj['@id']">
         <div class="card">
-            <h3 class="card-header">{{obj.label || "[ no label ]"}}</h3>
+            <h3 class="card-header">{{obj.label || "[ no label ]"}}
+                <a title="clear manifest" href="#/read" class="btn btn-sm btn-outline-danger">
+            <i class="fa fa-bomb"></i>
+        </a>
+            </h3>
             <div class="card-block">
                 {{description}}
                 <code ng-hide='description'>[ no description ]</code>
@@ -87,11 +91,20 @@ Read a T-PEN (or other similarly formed) transcription with images as available
                     </label>
                 </div>
             </div>
+            <div class="card-block" ng-if="obj.metadata" style="max-height: 12rem;overflow: auto;">
+                <dl class="row">
+                <dt ng-repeat-start="(k,v) in obj.metadata" class="col-sm-3 text-truncate">
+                    {{v.label || k}}
+                </dt>
+                <dd class="col-sm-9" ng-bind-html="trustMetadata(v.value || v['@value'] || v || obj.metadata[k])" ng-repeat-end>
+                </dd>
+                </dl>
+            </div>
             <div class="btn-group card-footer">
                 <button role="button" class="btn btn-secondary" ng-click="canvas=obj.sequences[0].canvases[obj.sequences[0].canvases.indexOf(canvas)-1]" ng-hide="obj.sequences[0].canvases.indexOf(canvas)<1">previous</button>
                 <select class="btn btn-secondary" ng-show="obj.sequences[0].canvases.length" ng-model="canvas" ng-options="canvas.label for canvas in obj.sequences[0].canvases"></select>
                 <button role="button" class="btn btn-secondary" ng-click="canvas=obj.sequences[0].canvases[obj.sequences[0].canvases.indexOf(canvas)+1]" ng-hide="obj.sequences[0].canvases.indexOf(canvas)>(obj.sequences[0].canvases.length-2)">next</button>
-                <button role="button" class="btn btn-outline-primary" ng-click="cycleView()">{{screen.views[screen.viewing]}}</button>
+                <button role="button" class="btn btn-outline-primary" ng-if="canvas.otherContent[0].resources" ng-click="cycleView()">{{screen.views[screen.viewing]}}</button>
             </div>
         </div>
         <div style="position:relative;" ng-mouseleave="hideBacksplash()">
@@ -101,11 +114,11 @@ Read a T-PEN (or other similarly formed) transcription with images as available
                 <div class="annotation" ng-mouseenter="moveBacksplash(a.on)" data-content="{{ a.resource['cnt:chars'] }}" ng-repeat="a in canvas.otherContent[0].resources" ng-if="a['@type']==='oa:Annotation'" ng-style={{getStyle(a.on)}} data-uri="{{a['@id']}}">
                 </div>
             </div>
-            <div ng-show="screen.viewing==='text'" class="card">
+            <div ng-show="screen.viewing==='annotations'" class="card">
                 <div class="card-block">
                     <div class="text-annotation" ng-mouseenter="moveBacksplash(a.on)" data-content="{{ a.resource['cnt:chars'] }}" ng-repeat="a in canvas.otherContent[0].resources" ng-if="a['@type']==='oa:Annotation'" data-uri="{{a['@id']}}">
-                        <strong>{{ a.label }}</strong> {{ a.resource['cnt:chars'] }}
-                        <code ng-hide="a.resource['cnt:chars']">[ no transcription ]</code>
+                        <strong>{{ a.label }}</strong> {{ a.resource['cnt:chars'] || a.resource['@value'] }}
+                        <code ng-hide="a.resource['cnt:chars'] || a.resource['@value']">[ no transcription ]</code>
                         <img selector="a.on" ng-if="a.on.indexOf('xywh')>0">
                     </div>
                 </div>
@@ -114,12 +127,31 @@ Read a T-PEN (or other similarly formed) transcription with images as available
         {{ obj.sequences[0].canvases.length }}
     </div>
     <div ng-if="!obj['@id']">
-        <input type="text" placeholder="Paste or type a URI for any Manifest" class="form-control" ng-model="murl">
-        <a class="btn btn-default" ng-href="#/read?url={{murl}}">Load it</a>
+        <div class="input-group">
+        <input type="url" placeholder="Paste or type a URI for any Manifest" class="form-control" ng-model="screen.murl">
+        <span class="input-group-btn">
+        <a class="btn btn-outline-primary" ng-href="#/read?url={{screen.murl}}">Load it</a>
+        </span>
+        </div>
+        <span ng-if="universe">
+            <button role="button" class="btn btn-primary" ng-show="universe.label!=='IIIF Universe'" ng-click="getUniverse()">
+                <i class="fa fa-globe fa-rotate-90"></i>
+            </button>
+        <select class="btn btn-outline-primary" ng-options="c['@id'] as c.label for c in universe.collections" ng-model='collectionID' ng-change="updateCollection(collectionID)">
+            <option value="">{{universe.label}}</option>
+        </select>
+        <select class="btn btn-outline-primary" ng-show="collection.manifests" ng-options="m['@id'] as m.label || $index for m in collection.manifests" ng-model='screen.murl'>
+            <option value="">{{collection.label || " Select a Manifest "}}</option>
+        </select>
+        </span>
+        <p class="text-muted">or try these examples:</p>
+        <a class="btn btn-outline-primary" href="#/read?url=http://t-pen.org/TPEN/manifest/4080">T-PEN (unauthorized)</a>
+        <a class="btn btn-outline-primary" href="#/read?url=http://165.134.241.141/annotationstore/annotation/577d2cace4b075dfb3779f08">Broken Books (no transcription, custom data)</a>
+        <a class="btn btn-outline-primary" href="#/read?url=http://www.e-codices.unifr.ch/metadata/iiif/bge-cl0015/manifest.json">e-codices (Classic IIIF, no text)</a>
         <p ng-if="obj.error" ng-class="obj.error &&'alert alert-danger'">
             {{obj.error.status}} {{obj.error.statusText}}
         </p>
-        <pre>
+        <pre ng-class="{'alert alert-danger':obj.status}">
             {{ obj }}
         </pre>
     </div>

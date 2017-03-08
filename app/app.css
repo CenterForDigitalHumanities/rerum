@@ -25,7 +25,7 @@ body.terminal {
 }
 body.terminal::before {
     content: " ";
-    box-shadow: inset #000 0 0 25rem 30rem;
+    box-shadow: inset rgba(0,0,0,.64) 0 0 15em 30em;
     position: fixed;
     height: 150vh;
     width: 150vw;
