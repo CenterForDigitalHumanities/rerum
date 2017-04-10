@@ -117,8 +117,8 @@ Read a T-PEN (or other similarly formed) transcription with images as available
             <div ng-show="screen.viewing==='annotations'" class="card">
                 <div class="card-block">
                     <div class="text-annotation" ng-mouseenter="moveBacksplash(a.on)" data-content="{{ a.resource['cnt:chars'] }}" ng-repeat="a in canvas.otherContent[0].resources" ng-if="a['@type']==='oa:Annotation'" data-uri="{{a['@id']}}">
-                        <strong>{{ a.label }}</strong> {{ a.resource['cnt:chars'] || a.resource['@value'] }}
-                        <code ng-hide="a.resource['cnt:chars'] || a.resource['@value']">[ no transcription ]</code>
+                        <strong>{{ a.label }}</strong> {{ a.resource['cnt:chars'] || a.resource['chars'] || a.resource['@value'] }}
+                        <code ng-hide="a.resource['cnt:chars'] || a.resource['chars'] || a.resource['@value']">[ no transcription ]</code>
                         <img selector="a.on" ng-if="a.on.indexOf('xywh')>0">
                     </div>
                 </div>
