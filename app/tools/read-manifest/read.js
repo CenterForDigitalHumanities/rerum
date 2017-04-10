@@ -29,16 +29,21 @@ rerum.config(['$routeProvider',
                             };
                         })) || {};
                         return manifest;
+                    },
+                    canvas: function($location, $http, rerumService) {
+                        // TODO: preload a known manifest from the URL or memory
+                        var c = $location.search().p;
+                        return c || undefined;
                     }
                 }
             });
     }
 ]);
 
-rerum.controller('readManifestController', function ($scope, $http,$sce, obj, rerumService) {
+rerum.controller('readManifestController', function ($scope, $http,$sce, obj,canvas, rerumService) {
     $scope.obj = obj;
     if (obj['@id']) {
-        $scope.canvas = $scope.obj.sequences[0].canvases[0];
+        $scope.canvas = (canvas===undefined) ? $scope.obj.sequences[0].canvases[0] : $scope.obj.sequences[0].canvases[canvas];
         angular.forEach(obj.sequences[0].canvases, function (canvas) {
             var uri;
             if (!canvas.otherContent || angular.isArray(canvas.otherContent[0].resources)) {
