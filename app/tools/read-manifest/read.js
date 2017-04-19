@@ -42,8 +42,18 @@ rerum.config(['$routeProvider',
 
 rerum.controller('readManifestController', function ($scope, $http,$sce, obj,canvas, rerumService) {
     $scope.obj = obj;
+    $scope.screen = {
+        viewing: "image",
+        language: "en",
+        backsplashStyle: "",
+        views: {
+            image: "annotations",
+            annotations: "image"
+        },
+        murl: ""
+    };
     if (obj['@id']) {
-        $scope.canvas = (canvas===undefined) ? $scope.obj.sequences[0].canvases[0] : $scope.obj.sequences[0].canvases[canvas];
+        $scope.screen.canvas = (canvas===undefined) ? $scope.obj.sequences[0].canvases[0] : $scope.obj.sequences[0].canvases[canvas];
         angular.forEach(obj.sequences[0].canvases, function (canvas) {
             var uri;
             if (!canvas.otherContent || angular.isArray(canvas.otherContent[0].resources)) {
@@ -62,16 +72,7 @@ rerum.controller('readManifestController', function ($scope, $http,$sce, obj,can
     $scope.trustMetadata = function(m){
         return $sce.trustAsHtml(m);
     };
-    $scope.screen = {
-        viewing: "image",
-        language: "en",
-        backsplashStyle: "",
-        views: {
-            image: "annotations",
-            annotations: "image"
-        },
-        murl: ""
-    };
+
     $scope.setDescription = function (desc, lang) {
         $scope.screen.language = lang;
         $scope.description = "";
@@ -94,10 +95,10 @@ rerum.controller('readManifestController', function ($scope, $http,$sce, obj,can
         return $scope.description;
     };
     $scope.setDescription(obj.description, "en");
-    $scope.getStyle = function (on) {
+    $scope.getStyle = function (on,canvas) {
         var xywh = on.substring(on.indexOf("xywh=") + 5).split(",");
-        var height = $scope.canvas.height;
-        var width = $scope.canvas.width;
+        var height = canvas.height;
+        var width = canvas.width;
         return {
             left: xywh[0] / width * 100 + "%",
             top: xywh[1] / height * 100 + "%",
@@ -105,10 +106,10 @@ rerum.controller('readManifestController', function ($scope, $http,$sce, obj,can
             width: xywh[2] / width * 100 + "%"
         };
     };
-    $scope.moveBacksplash = function (on) {
+    $scope.moveBacksplash = function (on,canvas) {
         var xywh = on.substring(on.indexOf("xywh=") + 5).split(",");
-        var height = $scope.canvas.height;
-        var width = $scope.canvas.width;
+        var height = canvas.height;
+        var width = canvas.width;
         var ww = window.innerWidth;
         var iw = ww * width / xywh[2]; // in pixels
         var ih = iw * height / width;

@@ -7,7 +7,7 @@ Read a T-PEN (or other similarly formed) transcription with images as available
         img {
             width: 100%;
         }
-        
+
         img#backsplash {
             position: fixed;
             width: 125vw;
@@ -19,7 +19,7 @@ Read a T-PEN (or other similarly formed) transcription with images as available
             max-width: none;
             transition: 500ms all;
         }
-        
+
         .annotation {
             opacity: 0;
             position: absolute;
@@ -28,7 +28,7 @@ Read a T-PEN (or other similarly formed) transcription with images as available
             transition: 250ms opacity;
             box-sizing: content-box;
         }
-        
+
         .annotation::before {
             width: 100%;
             color: #8c8c8c;
@@ -40,7 +40,7 @@ Read a T-PEN (or other similarly formed) transcription with images as available
             box-shadow: 2px 4px 15px rgba(0, 0, 0, .33);
             font-size: .75em;
         }
-        
+
         .annotation::after {
             width: 100%;
             background: #dfdfdf;
@@ -51,25 +51,25 @@ Read a T-PEN (or other similarly formed) transcription with images as available
             margin-top: 3px;
             font-family: 'Junicode', serif;
         }
-        
+
         .annotation:hover {
             opacity: 1;
         }
-        
+
         .text-annotation {
             font-family: 'Junicode', serif;
             font-size: 1.2rem;
         }
-        
+
         .text-annotation canvas {
             transition: 500ms opacity;
             opacity: .3;
         }
-        
+
         .text-annotation:hover {
             background-color: #cfcfcf;
         }
-        
+
         .text-annotation:hover canvas {
             opacity: 1;
         }
@@ -101,22 +101,22 @@ Read a T-PEN (or other similarly formed) transcription with images as available
                 </dl>
             </div>
             <div class="btn-group card-footer">
-                <button role="button" class="btn btn-secondary" ng-click="canvas=obj.sequences[0].canvases[obj.sequences[0].canvases.indexOf(canvas)-1]" ng-hide="obj.sequences[0].canvases.indexOf(canvas)<1">previous</button>
-                <select class="btn btn-secondary" ng-show="obj.sequences[0].canvases.length" ng-model="canvas" ng-options="canvas.label for canvas in obj.sequences[0].canvases"></select>
-                <button role="button" class="btn btn-secondary" ng-click="canvas=obj.sequences[0].canvases[obj.sequences[0].canvases.indexOf(canvas)+1]" ng-hide="obj.sequences[0].canvases.indexOf(canvas)>(obj.sequences[0].canvases.length-2)">next</button>
-                <button role="button" class="btn btn-outline-primary" ng-if="canvas.otherContent[0].resources" ng-click="cycleView()">{{screen.views[screen.viewing]}}</button>
+                <button role="button" class="btn btn-secondary" ng-click="screen.canvas=obj.sequences[0].canvases[obj.sequences[0].canvases.indexOf(screen.canvas)-1]" ng-hide="obj.sequences[0].canvases.indexOf(screen.canvas)<1">previous</button>
+                <select class="btn btn-secondary" ng-show="obj.sequences[0].canvases.length" ng-model="screen.canvas" ng-options="canvas.label for canvas in obj.sequences[0].canvases"></select>
+                <button role="button" class="btn btn-secondary" ng-click="screen.canvas=obj.sequences[0].canvases[obj.sequences[0].canvases.indexOf(screen.canvas)+1]" ng-hide="obj.sequences[0].canvases.indexOf(screen.canvas)>(obj.sequences[0].canvases.length-2)">next</button>
+                <button role="button" class="btn btn-outline-primary" ng-if="screen.canvas.otherContent[0].resources" ng-click="cycleView()">{{screen.views[screen.viewing]}}</button>
             </div>
         </div>
         <div style="position:relative;" ng-mouseleave="hideBacksplash()">
-            <img id="backsplash" ng-style="screen.backsplashStyle" ng-src="{{canvas.images[0].resource['@id']}}">
+            <img id="backsplash" ng-style="screen.backsplashStyle" ng-src="{{screen.canvas.images[0].resource['@id']}}">
             <div ng-show="screen.viewing==='image'">
-                <img fallback-src="http://placekitten.com/{{canvas.width}}/{{canvas.height}}" ng-src="{{canvas.images[0].resource['@id']}}">
-                <div class="annotation" ng-mouseenter="moveBacksplash(a.on)" data-content="{{ a.resource['cnt:chars'] }}" ng-repeat="a in canvas.otherContent[0].resources" ng-if="a['@type']==='oa:Annotation'" ng-style={{getStyle(a.on)}} data-uri="{{a['@id']}}">
+                <img fallback-src="http://placekitten.com/{{screen.canvas.width}}/{{screen.canvas.height}}" ng-src="{{screen.canvas.images[0].resource['@id']}}">
+                <div class="annotation" ng-mouseenter="moveBacksplash(a.on,screen.canvas)" data-content="{{ a.resource['cnt:chars'] }}" ng-repeat="a in screen.canvas.otherContent[0].resources" ng-if="a['@type']==='oa:Annotation'" ng-style={{getStyle(a.on,screen.canvas)}} data-uri="{{a['@id']}}">
                 </div>
             </div>
             <div ng-show="screen.viewing==='annotations'" class="card">
                 <div class="card-block">
-                    <div class="text-annotation" ng-mouseenter="moveBacksplash(a.on)" data-content="{{ a.resource['cnt:chars'] }}" ng-repeat="a in canvas.otherContent[0].resources" ng-if="a['@type']==='oa:Annotation'" data-uri="{{a['@id']}}">
+                    <div class="text-annotation" ng-mouseenter="moveBacksplash(a.on,screen.canvas)" data-content="{{ a.resource['cnt:chars'] }}" ng-repeat="a in screen.canvas.otherContent[0].resources" ng-if="a['@type']==='oa:Annotation'" data-uri="{{a['@id']}}">
                         <strong>{{ a.label }}</strong> {{ a.resource['cnt:chars'] || a.resource['chars'] || a.resource['@value'] }}
                         <code ng-hide="a.resource['cnt:chars'] || a.resource['chars'] || a.resource['@value']">[ no transcription ]</code>
                         <img selector="a.on" ng-if="a.on.indexOf('xywh')>0">
