@@ -79,6 +79,19 @@ Read a T-PEN (or other similarly formed) transcription with images as available
         .terminal .card {
             background-color: rgba(0,0,0,.7);
         }
+
+/* special case CSS to test injecting stylesheets */
+em[decoration='double-underline'] {
+    font-style: normal;
+    text-decoration: underline;
+    text-decoration-style: double;
+}
+em[decoration='underline'] {
+    font-style: normal;
+    text-decoration: underline;
+}
+/* end case */
+
     </style>
     <div ng-if="obj['@id']">
         <div class="card">
@@ -102,7 +115,7 @@ Read a T-PEN (or other similarly formed) transcription with images as available
                 <dt ng-repeat-start="(k,v) in obj.metadata" class="col-sm-3 text-truncate">
                     {{v.label || k}}
                 </dt>
-                <dd class="col-sm-9" ng-bind-html="trustMetadata(v.value || v['@value'] || v || obj.metadata[k])" ng-repeat-end>
+                <dd class="col-sm-9" ng-bind-html="trust(v.value || v['@value'] || v || obj.metadata[k])" ng-repeat-end>
                 </dd>
                 </dl>
             </div>
@@ -117,13 +130,13 @@ Read a T-PEN (or other similarly formed) transcription with images as available
             <img id="backsplash" ng-style="screen.backsplashStyle" ng-src="{{screen.canvas.images[0].resource['@id']}}">
             <div ng-show="screen.viewing==='image'">
                 <img fallback-src="http://placekitten.com/{{screen.canvas.width}}/{{screen.canvas.height}}" ng-src="{{screen.canvas.images[0].resource['@id']}}">
-                <div class="annotation" ng-mouseenter="moveBacksplash(a.on,screen.canvas)" data-content="{{ a.resource['cnt:chars'] }}" ng-repeat="a in screen.canvas.otherContent[0].resources" ng-if="a['@type']==='oa:Annotation'" ng-style={{getStyle(a.on,screen.canvas)}} data-uri="{{a['@id']}}">
+                <div class="annotation" ng-mouseenter="moveBacksplash(a.on,screen.canvas)" data-content="{{ trust(a.resource['cnt:chars']) }}" ng-repeat="a in screen.canvas.otherContent[0].resources" ng-if="a['@type']==='oa:Annotation'" ng-style={{getStyle(a.on,screen.canvas)}} data-uri="{{a['@id']}}">
                 </div>
             </div>
             <div ng-show="screen.viewing==='annotations'" class="card">
                 <div class="card-block">
                     <div class="text-annotation" ng-mouseenter="moveBacksplash(a.on,screen.canvas)" data-content="{{ a.resource['cnt:chars'] }}" ng-repeat="a in screen.canvas.otherContent[0].resources" ng-if="a['@type']==='oa:Annotation'" data-uri="{{a['@id']}}">
-                        <strong>{{ a.label }}</strong> {{ a.resource['cnt:chars'] || a.resource['chars'] || a.resource['@value'] }}
+                        <strong>{{ a.label }}</strong> <span data-ng-bind-html="trust(a.resource['cnt:chars'] || a.resource['chars'] || a.resource['@value'])"></span>
                         <code ng-hide="a.resource['cnt:chars'] || a.resource['chars'] || a.resource['@value']">[ no transcription ]</code>
                         <img selector="a.on" ng-if="a.on.indexOf('xywh')>0">
                     </div>

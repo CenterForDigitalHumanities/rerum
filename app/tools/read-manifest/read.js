@@ -69,8 +69,8 @@ rerum.controller('readManifestController', function ($scope, $http,$sce, obj,can
             }, function (err) { });
         });
     }
-    $scope.trustMetadata = function(m){
-        return $sce.trustAsHtml(m);
+    $scope.trust = function(body){
+        return $sce.trustAsHtml(body);
     };
 
     $scope.setDescription = function (desc, lang) {
