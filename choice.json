@@ -1,0 +1,72 @@
+{
+    "@context": "http://iiif.io/api/presentation/2/context.json",
+    "@type": "sc:Manifest",
+    "label": "New Manifest",
+    "sequences": [
+        {
+            "@id": "normal sequence",
+            "@type": "sc:Sequence",
+            "canvases": [
+                {
+                    "@id": "",
+                    "@type": "sc:Canvas",
+                    "label": "YLc0ILeWwjBpggdUuwlYb35UxsBE2u7GhNhp19_Q-2Zk6veZG9p45WmWLxMCMh85CMF-MJMnJT_TfEtcUgcP-hJK_3BGpRZFCWPIZiIoDEFbTMGnkmy1dNYpsoYQtXJbQ3lA9_Yi4gjpQhZt1_TY7wE5nE7WSe-Pf6N6w160oyDg2jKrGWJH8b8_MqJEYSE5jUNt_OOrCMTxgipqizyMwGpiY2_48N1Q-_w0XBkK7zwIzvP0DHVN4mH8tQBo8dC0zqla64udjg9wr0GfPLHI_YXV-N5PZRSmZW5ZiFuMEQ0I-9VNaXzIhL9dC7pJNnvpYYABHYYZRO6Zy06IZhEeXI7m_QJWSaRoaG8zVcNwWYRyT6ZKPGEA75qvoTZoc4GepwKuUoF1FgGohTYixs3IOeSGEdXAe5nPyxAKT03l7DuSRK5jaMMTcwQUTX6u8YvSxAoW4hGPAztjR547Ap-4Zw0Y2VQBLkrra90yIQSC6eQqk57-Rwc0Jh0a00nk9v3pib4pXYfTqyVdwB-U56Kpn1ZUtmBnWuSsg314BfUNjDs8e2-G0cTiCiL2lziD9IaSgk-5H6yJMotauK-hxRCZz3mdUuKfiH8=w503-h667-no",
+                    "height": 1000,
+                    "width": 753,
+                    "images": [
+                        {
+                            "@type": "oa:Annotation",
+                            "motivation": "sc:painting",
+                            "resource": {
+                                "@id": "https://lh3.googleusercontent.com/YLc0ILeWwjBpggdUuwlYb35UxsBE2u7GhNhp19_Q-2Zk6veZG9p45WmWLxMCMh85CMF-MJMnJT_TfEtcUgcP-hJK_3BGpRZFCWPIZiIoDEFbTMGnkmy1dNYpsoYQtXJbQ3lA9_Yi4gjpQhZt1_TY7wE5nE7WSe-Pf6N6w160oyDg2jKrGWJH8b8_MqJEYSE5jUNt_OOrCMTxgipqizyMwGpiY2_48N1Q-_w0XBkK7zwIzvP0DHVN4mH8tQBo8dC0zqla64udjg9wr0GfPLHI_YXV-N5PZRSmZW5ZiFuMEQ0I-9VNaXzIhL9dC7pJNnvpYYABHYYZRO6Zy06IZhEeXI7m_QJWSaRoaG8zVcNwWYRyT6ZKPGEA75qvoTZoc4GepwKuUoF1FgGohTYixs3IOeSGEdXAe5nPyxAKT03l7DuSRK5jaMMTcwQUTX6u8YvSxAoW4hGPAztjR547Ap-4Zw0Y2VQBLkrra90yIQSC6eQqk57-Rwc0Jh0a00nk9v3pib4pXYfTqyVdwB-U56Kpn1ZUtmBnWuSsg314BfUNjDs8e2-G0cTiCiL2lziD9IaSgk-5H6yJMotauK-hxRCZz3mdUuKfiH8=w503-h667-no",
+                                "@type": "dcTypes:Image",
+                                "width": 502,
+                                "height": 667
+                            }
+                        },
+                        {
+                            "@type": "oa:Annotation",
+                            "motivation": "sc:painting",
+                            "resource": {
+                                "@id": " https://lh3.googleusercontent.com/DxXyRIYlv0CYChhvw12wZewo7yWuZmt8msKUCk-y-h2C0bwXHNchXu_6msFw9LF_RffUWUjG-6KSTr62sRk7BNl4i8-qcncVtxXJzojTodEqlwKp2_J3GsS5sRYZd24VKtWqf5hKJHO5aqfxZGHy91l2_YHYyQGtTBMotn55hgYy9ipoMUTUSXfOy1jh37pimGGmNA00IKYcmZT3y5ncDuNYg6JoXP4wIgVVRvtS0i-s5rMMfYdzaETLkdLLZBQhrpuQgTkO7eUynIo2MuXelNEso3PRv7b8Xj8BoDnBS6LWkcHcRADUH20Qgq1lgT6lgYEvpxcTxpUtJ8vrmS0m8AL06IW2ucDZ0yHRKQbJ2MrmQTdLTA5nt-1MjZpE3gREjvtcKVRwhJqDwB506ZBnfXg4vqzZ7dnuUCF0GUThpeniKz9-KiYJy_wn75TsBD9gNrfcMhQUSZqpHREKmIE_QiBNa5gYJjTxYdrvqjVUTXb2TCJBMlHDKCbaDnHxTJtKQrL2lG2Xs5lNavaOt_SdhWbmjIjd6MtPdHUHJ9wwRHkKqPW8loit36r7LGOoFgQIXP7K_2PzKdS3SLw0RCG-k7J35RDgenw=w504-h668-no",
+                                "@type": "dcTypes:Image",
+                                "width": 503,
+                                "height": 668
+                            }
+                        },
+                        {
+                            "@type": "oa:Annotation",
+                            "motivation": "sc:painting",
+                            "resource": {
+                                "@id": " https://lh3.googleusercontent.com/hcaUvMMBFeWGsB2rrXNgqo3Ua0QT-Y2ZF2nxF3PfWei24t0peFHE6QIxLMLd94VuEUlulkp02V31qehWqzewQwK26ipOyTDFbnG0U4qi47zLECCkOgTEvzoJXft8oJg-S1AOimktt3K1CbpDSvHWytrVnKdbvrzp8Akn4DwqH8iSltIj4rc28IwqkGBqYiPx5Mo2r6Fm1uieUcn2V8cnkoJ0E__m8j4QIO8uZGaUYr2XO9xrDP-Y6QLHtBa_zHud_G51BbASAUyeO1BU4_drlsCt5pJ4C03CM2W0_eE1pGW9ocKYKafXOXtp5zzRup27iOUUHafUmX7UUs4clQtwyauBzBzcUwVAOT7Hyef1FzCkEayh-WxUh6WgTYiaWJx1lyxtEg-rsCcbej3ER54e85qlAmLbKeuai6SCdjculFUMuQScc0oEq-v21_8CFIUvKO18_gKMyyxgp_E3RYNVK0559phy5C1a_K9NBao_DcTo8DN1KIAiu_ozgTpcmsNv09Z7VmM97rBxM3Roqukflufu5rS2aXdSduY0AwYdOU1Tg6RJnacK_CHzIgZFgMvu7NHx4D-7Ro88_NhcjlW79b1E5O5fNaI=w504-h668-no",
+                                "@type": "dcTypes:Image",
+                                "width": 503,
+                                "height": 668
+                            }
+                        },
+                        {
+                            "@type": "oa:Annotation",
+                            "motivation": "sc:painting",
+                            "resource": {
+                                "@id": " https://lh3.googleusercontent.com/_S9cwHg-mF4cAkMYOQPu1A6QGTFl98FIbk3yr9_hlNN1N3EcoVAOBQEAa3rV7gStR421HVZR0rSSiu_FHrlFweK16EXfdVPWx6s1qTWsTLXgd7_dBx93PAuB8kHr9Upru4FDXJluOhSH-QJAXFSK5EaJ7bMMVoIKOdsUVEukRU0CwmbQj80HMfDGjCXVoTn0v2-ZCLPygnUI76fodlYxQ1-wfqMuqqmfYBBaVaPmbUA3XMuHteLavo2wYme1dud5BMHL40ECFhxz4rLYrED5elnuuwJrfx6NXRqmwg9GnOBtSAF_HAXRA0JcwD2ewY51v55tINLg6WzF7-lofpPu9K7ZZYkKMmz8uCqceB5_zmQYbl4uv1yLiY9uhUjl6qPzKuhqdHaVk3aNYvKRWIH0HkdZeZ1SJjM40kxVfPGHwCYQnrZaVr4_BsN-UsQW6xLAmPWdAOePjJalFy8GFnSuBEMMYqi1YOzT6N1R6wh2zFmbgYxgAoUUTU-C6TwXQ0PAOgJCIa8hyDvQ2IXAhxXPj1-3-sl0iNfOAMuBUNd8DtkZ7gT66yr6RnJkE_fcNZ9DgrboCKVc2vgbmUdYv2cE8usni68G4Rw=w504-h668-no",
+                                "@type": "dcTypes:Image",
+                                "width": 503,
+                                "height": 668
+                            }
+                        },
+                        {
+                            "@type": "oa:Annotation",
+                            "motivation": "sc:painting",
+                            "resource": {
+                                "@id": " https://lh3.googleusercontent.com/Qtg1MNDdVS4ICfKKYGnX7nXFrcr5fSuDZNochFawoPHjtGAzyNNUN5wRlcnEoYTnGxur55GxbJVV08TjHYgOycezpSqmuyj2kSVXR4B5owcyEbc8QhfjCyYJxlazUkg-hQ5Z2aDqYDMOdBpHGujL8znHkRKqb5iqAEsP7lRD9v-JzjvL6b05yAbe6qZlPS-VsrRJtxm5KaL8iPfVjPykik0wZ_Oa2tlTV-ClRbj-x4d5r73gnzAjjDI5s9kTTX5lagOnLvU6DVhgLqwxfCsL8LbNEGo8_DnjZyFHLhR02d1cdgXueEBJeCM3AaVYNTHxZBotnSEvNJ3j9nHZ_X1rcKR_KjyS16x5_W9OsPBdERLSvpFYx8e_hY3sXAmtsb-vfsCvMWlt31nM85Cyd2FqeHxEPuwrciED3v2KPRtmutczXp-I8hpjwEg4Dcca_ZVw139khiiMG4MhSgsqmIi23ssAXgcccJzsPjOfcga27Fui-79wlxbt-jY5_SCdmKkxeEuqBSZpogOOdOCBqXicPKf9mml-GN87vfNWu3HDctGchGzZyov0XjDPko7ENSp-u0GRaX44g1UQrxkv8bSYiB3LD36S2Yk=w504-h668-no",
+                                "@type": "dcTypes:Image",
+                                "width": 503,
+                                "height": 668
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

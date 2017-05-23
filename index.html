@@ -4,10 +4,8 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>RERUM</title>
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
-        <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+        <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="https://cdn.rawgit.com/dhg/Skeleton/master/css/skeleton.css">
         <link rel="stylesheet" href="app/lib/loading-bar.css" media="screen">
         <link rel="stylesheet" href="app/lib/hotkeys.min.css" media="screen">
         <link rel="stylesheet" href="assets/fonts.css" media="screen">
@@ -15,34 +13,58 @@
         <link rel="stylesheet" href="app/tools/parse-rect/parse-rect.css" media="screen">
         <link rel="stylesheet" href="app/tools/crop-page/crop-page.css" media="screen">
         <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
-        <link rel="icon" href="favicon.ico" type="image/x-icon">
+        <link rel="apple-touch-icon" sizes="57x57" href="apple-icon-57x57.png">
+        <link rel="apple-touch-icon" sizes="60x60" href="apple-icon-60x60.png">
+        <link rel="apple-touch-icon" sizes="72x72" href="apple-icon-72x72.png">
+        <link rel="apple-touch-icon" sizes="76x76" href="apple-icon-76x76.png">
+        <link rel="apple-touch-icon" sizes="114x114" href="apple-icon-114x114.png">
+        <link rel="apple-touch-icon" sizes="120x120" href="apple-icon-120x120.png">
+        <link rel="apple-touch-icon" sizes="144x144" href="apple-icon-144x144.png">
+        <link rel="apple-touch-icon" sizes="152x152" href="apple-icon-152x152.png">
+        <link rel="apple-touch-icon" sizes="180x180" href="apple-icon-180x180.png">
+        <link rel="icon" type="image/png" sizes="192x192"  href="android-icon-192x192.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+        <link rel="manifest" href="/manifest.json">
         <!--        <base href="rerum/">-->
     </head>
-    <body class="container" ng-controller="mainController" ng-class="{terminal:terminal}">
+    <body ng-controller="mainController">
         <header>
-            <pre class="title" ng-if="terminal">
-██████╗&nbsp;███████╗██████╗&nbsp;██╗&nbsp;&nbsp;&nbsp;██╗███╗&nbsp;&nbsp;&nbsp;███╗
-██╔══██╗██╔════╝██╔══██╗██║&nbsp;&nbsp;&nbsp;██║████╗&nbsp;████║
-██████╔╝█████╗&nbsp;&nbsp;██████╔╝██║&nbsp;&nbsp;&nbsp;██║██╔████╔██║
-██╔══██╗██╔══╝&nbsp;&nbsp;██╔══██╗██║&nbsp;&nbsp;&nbsp;██║██║╚██╔╝██║
-██║&nbsp;&nbsp;██║███████╗██║&nbsp;&nbsp;██║╚██████╔╝██║&nbsp;╚═╝&nbsp;██║
-╚═╝&nbsp;&nbsp;╚═╝╚══════╝╚═╝&nbsp;&nbsp;╚═╝&nbsp;╚═════╝&nbsp;╚═╝&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;╚═╝ v0.5
-            </pre>
-            <h1 ng-if="!terminal">RERUM</h1>
-            <small>reconditorium eximium rerum universalium mutabiliumque</small>
+            <div class="row">
+                <img src="logo.png" alt="logo" class="two columns" />
+                <small>reconditorium eximium rerum universalium mutabiliumque</small>
+                <h1 class="ten columns">
+                    rerum
+                </h1>
+            </div>
         </header>
     <ng-view></ng-view>
     <footer>
-        <span ng-if="terminal">
-            <a ng-repeat="hotkey in hotkeys.get()" ng-hide="hotkey.combo[0]==='?'"
-           ng-click="hotkey.callback($event)">
-            <span class="btn-invert">{{symbolize(hotkey.combo)}}</span>
-            {{hotkey.description}}</a>
-        </span>
-        <a class="btn-block text-center" href='mailto:digitalhumanities@slu.edu'
-           tabindex="-1">
-            digitalhumanities@slu.edu
+        <div class="row">
+            <a href="#annotation" class="button six columns">
+            The Annotation Story
+            <i class="fa fa-comment-o"></i>
         </a>
+        <a href="#about" class="button six columns">
+            The O<small>ng</small>CDH Connection
+            <i class="fa fa-map-marker"></i>
+        </a>
+        </div>
+        <div class="row">
+            <a href="#tools" class="button four columns">
+            Rerum Tools
+            <i class="fa fa-cogs"></i>
+        </a>
+        <a href="#api" class="button four columns">
+            Using RERUM
+            <i class="fa fa-wrench"></i>
+        </a>
+        <a href="#future" class="button four columns">
+            The Future
+            <i class="fa fa-cubes"></i>
+        </a>
+        </div>
     </footer>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular-route.js"></script>

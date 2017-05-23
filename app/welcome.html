@@ -1,18 +1,65 @@
-<div>
-    <p>Welcome to RERUM!</p>
-    <p>This is an open and free repository for all sorts of digital things.
-        Choose an option below to learn more or register your application.</p>
-    <p class="positioned" ng-controller="welcomeController">
-        <a href="#api" class="btn-block">1. API</a>
-        <a href="#register" class="btn-block">2. register a server</a>
-        <a href="#objects" class="btn-block">3. discover rerum objects</a>
-        <a href="#tools" class="btn-block">4. available rerum tools</a>
-        <a href="#about" class="btn-block">5. about us / contact</a>
-    </p>
-    <p>In this virtual place you will find many things wondrous to behold.
+<div class="container">
+    <p>
+        This is an open and free repository for all sorts of digital things.
         Digital anchors for real world objects and encoded assertions from real
-        world people are stored here without prejudice.</p>
-    <p>At the moment, anything that can be represented as an oa:Annotation, an
-        ore:Aggregation, or several types of IIIF objects can find a permanent
-        home here. More options will be added as this place of things matures.</p>
+        world people are stored here without prejudice.
+    </p>
+    <div ng-controller="welcomeController" class="text-center">
+        <!--    <div class="one column"></div>-->
+        <div class="row">
+            <div class=" six columns">
+                <a href="#annotation" class="button u-full-width">
+                    The Annotation Story
+                    <i class="fa fa-comment-o"></i>
+                </a>
+                <p>
+                    <i class="fa fa-comment-o watermark"></i>
+                    Learn more about the technology of digitizing the
+                    scholarly conversations around the world's
+                    <span class="no-break">most valuable resources.</span>
+                </p>
+            </div>
+            <div class=" six columns">
+                <a href="#about" class="button u-full-width">
+                    The O<small>ng</small>CDH Connection
+                    <i class="fa fa-map-marker"></i>
+                </a>
+                <p>
+                    <i class="fa fa-map-marker watermark"></i>
+                    Meet the organization aligning open standards and
+                    idiosyncratic needs of the global history
+                    <span class="no-break">of scholarship.</span>
+                </p>
+            </div>
+        </div>
+        <div class="row">
+        <div class=" four columns">
+            <a href="#tools" class="button u-full-width">
+                Rerum Tools
+            <i class="fa fa-cogs"></i>
+            </a>
+            <p>
+                Create, update, and interact with  <span class="no-break">the objects.</span>
+            </p>
+        </div>
+            <div class=" four columns">
+                <a href="#api" class="button u-full-width">
+                    Using RERUM
+            <i class="fa fa-wrench"></i>
+                </a>
+                <p>
+                    Connect your application to  <span class="no-break">the repository</span>.
+                </p>
+            </div>
+            <div class=" four columns">
+                <a href="#future" class="button u-full-width">
+                    The Future
+            <i class="fa fa-cubes"></i>
+                </a>
+                <p>
+                    Preview and suggest <span class="no-break">what comes next.</span>
+                </p>
+            </div>
+    </div>
+    </div>
 </div>
