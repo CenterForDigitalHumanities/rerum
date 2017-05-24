@@ -251,6 +251,7 @@ rerum.controller('buildManifestController', function ($scope, $uibModal, Context
     $scope.types = Knowns.type;
     $scope.adding = Knowns.adding;
     $scope.cHeight = 1000;
+    $scope.previewManifest =  "";
 
     $scope.editList = function (parent,prop) {
         var self = this;
@@ -308,7 +309,16 @@ rerum.controller('buildManifestController', function ($scope, $uibModal, Context
             };
         }
         $scope.imgStr = "";
+
     };
+
+    $scope.preview = function(){
+        $scope.previewManifest = JSON.stringify($scope.obj,null,4);
+    }
+
+    $scope.closePreview = function(){
+        $scope.previewManifest = "";
+    }
 
     $scope.defaultCanvas = function(index,event){
         var img = event.target;
@@ -353,6 +363,25 @@ rerum.controller('buildManifestController', function ($scope, $uibModal, Context
     };
 
     $scope.saveManifest = rerumService.save;
+});
+
+rerum.controller('thumbsController', function ($scope, Display) {
+   $scope.display = Display;
+   $scope.getBoundaryTip = function (page) {
+       if (!page.text || page.text.length === 0) {
+           return false;
+       }
+       if ($scope.display['cache' + page.id + 'tip']) {
+           return $scope.display['cache' + page.id + 'tip'];
+       }
+       var charin = 25;
+       var charout = 15;
+       var tip = (page.text.length > (charin + charout + 3))
+           ? page.text.substr(0, charin) + "…<br><span class='text-right'>…" + page.text.substr(-charout) + "</span>"
+           : page.text;
+       $scope.display['cache' + page.id + 'tip'] = tip;
+       return tip;
+   };
 });
 
 rerum.directive('ngLoad', function($parse){
@@ -523,4 +552,17 @@ rerum.directive('property', function ($compile) {
             }
         }
     };
+});
+
+rerum.directive('thumbsCanvas', function () {
+   return {
+       restrict: "EA",
+       scope: {
+           slides: '=',
+           sortable: '='
+       },
+       replace: true,
+       controller: "thumbsController",
+       templateUrl: "app/thumbsCanvas.html"
+   };
 });
