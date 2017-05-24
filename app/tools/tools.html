@@ -14,6 +14,9 @@
                     Showing {{(tools.rerum|filter:tagFilter.toLowerCase()).length+(tools.community|filter:tagFilter.toLowerCase()).length}}
                     of {{tools.rerum.length+tools.community.length}}
                 </span>
+                <button ng-show="tagFilter.length" title="reset" type="button" ng-click="tagFilter=''" style="margin:0;padding:.25rem;line-height:1;height:auto;">
+                    <i class="fa fa-undo"></i>
+                </button>
             </label>
             <input class="u-full-width" type="text" ng-model="tagFilter">
             <h4>RERUM Tools</h4>
