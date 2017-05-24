@@ -83,3 +83,23 @@ body pre {
     top: 4rem;
     z-index: -1;
 }
+.previewManifest{
+    white-space: pre;
+    border: 1px solid black;
+    padding: 4px;
+    position: relative;
+    background-color: wheat;
+    font-family: serif;
+}
+.closeManifestPreview{
+    position: absolute;
+    right: 9px;
+    font-weight: bold;
+    font-size: 17pt;
+    top: 3px;
+    cursor: pointer;
+}
+
+figure img{
+    max-height:300px;
+}
