@@ -1,58 +1,49 @@
-<div>
+<div class="container">
     <form ng-submit="loadImages(imgString,cHeight)">
-        <div class="form-group">
-            <label class="control-label">Images</label>
-            <div class="positioned">
-                <input class="form-control" type="text" ng-model="imgString"
+        <label>Images</label>
+        <input class="u-full-width" type="text" ng-model="imgString"
                ng-model-options="{ updateOn: 'blur' }"><i></i>
-            </div>
-            <p class="help-block">
-                Enter a list of URLs to available images, separated by a comma(","). Any
-                images that we cannot resolve will result in unannotated Canvases. The
-                SharedCanvas Manifest that you create is editable. By default, the image
-                names will be used as Canvas labels and they will be sequenced in the
-                order they are input.
-            </p>
-        </div>
-        <div class="form-group">
-            <label class="control-label">Canvas Dimensions</label>
-            <div class="positioned">
-                <input class="form-control" type="number" ng-model="cHeight"
-                 ng-model-options="{ updateOn: 'blur' }"><i></i>
-            </div>
-            <p class="help-block">
+        <p>
+            Enter a list of URLs to available images, separated by a comma(","). Any
+            images that we cannot resolve will result in unannotated Canvases. The
+            SharedCanvas Manifest that you create is editable. By default, the image
+            names will be used as Canvas labels and they will be sequenced in the
+            order they are input.
+        </p>
+            <label>Canvas Dimensions</label>
+            <input class="u-full-width" type="number" ng-model="cHeight"
+                   ng-model-options="{ updateOn: 'blur' }"><i></i>
+            <p>
                 Incoming images will be scaled to the height set and the initial width will
                 be based off the natural ratio of the full image.
             </p>
-        </div>
-        <button type="submit" class="btn btn-default">Create Manifest</button>
-        
-        <button type="button" ng-show="canvases.length" class="btn btn-link"
+        <button type="submit" >Create Manifest</button>
+
+        <button type="button" ng-show="canvases.length"
                 ng-click="preview()">
             Preview manifest
         </button>
-        <button ng-show="canvases.length" class="btn btn-link" href="#/edit">
+        <a class="button" ng-show="canvases.length" href="#/edit">
             Edit this manifest ({{canvases.length}} canvas{{(canvases.length===1)&&""||"es"}})
-        </button>
-        <button type="button" ng-show="canvases.length" class="btn btn-link"
+        </a>
+        <button type="button" ng-show="canvases.length"
                 ng-click="saveManifest(obj)">
             Save this manifest
         </button>
-        
+
     </form>
-    <div class="col-sm-3 previewManifest" ng-show="previewManifest">
-        <div class="closeManifestPreview" ng-click="closePreview();">X</div>
-        {{previewManifest}}
-    </div>
+    <pre style="position:relative;" ng-show="previewManifest">
+<div class="closeManifestPreview" ng-click="closePreview();">X</div>
+<code>{{previewManifest}}</code></pre>
     <!--<thumbs-canvas slides="c in ::canvases track by c.images[0].resource['@id']">
         <img ng-src="{{::c.images[0].resource['@id']||c.images[0]}}" ng-load="defaultCanvas($index,$event)">
         <small class="help-block">{{c.width}} x {{c.height}}</small>
     </thumbs-canvas> -->
-    <figure class="col-sm-3" ng-repeat="c in ::canvases track by c.images[0].resource['@id']">
+    <figure ng-repeat="c in ::canvases track by c.images[0].resource['@id']">
         <figcaption>{{::c.label.substring(0,10)}}</figcaption>
         <img ng-src="{{::c.images[0].resource['@id']||c.images[0]}}" ng-load="defaultCanvas($index,$event)">
         <small class="help-block">{{c.width}} x {{c.height}}</small>
     </figure>
 
-    
+
 </div>

@@ -87,20 +87,12 @@ body pre {
     line-height: 3.5;
     z-index: -1;
 }
-.previewManifest{
-    white-space: pre;
-    border: 1px solid black;
-    padding: 4px;
-    position: relative;
-    background-color: wheat;
-    font-family: serif;
-}
 .closeManifestPreview{
     position: absolute;
-    right: 9px;
+    right: 1rem;
     font-weight: bold;
-    font-size: 17pt;
-    top: 3px;
+    font-size: 3rem;
+    top: 1rem;
     cursor: pointer;
 }
 
