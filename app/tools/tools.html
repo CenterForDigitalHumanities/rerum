@@ -1,21 +1,83 @@
-<div>
+<div class="container">
     <p>
-        These tools are all in beta (let's say forever), but just keep getting
-        better. The goal for all of these is to work with the RERUM store to
-        manipulate <a href='#objects'>data objects</a> or instantiate new ones
-        for permanent residence within RERUM without requiring the building of
-        an independent application. Later, these objects will still be available
-        to remote applications.
+        In service to the mission, tools must be supported and referenced which
+        make <a href='#objects'>object</a> creation easier, more accurate, and
+        with which more encoding is possible than may be the minimum required
+        for the motivating task. Here at rerum.io, we will maintain annotated
+        references to external tools as well as producing tools ourselves.
     </p>
-    <h3>The Toolbox</h3>
-    <p class="positioned" ng-controller="welcomeController">
-        <a href="#build" class="btn-block">Build a sc:Manifest from a list of images</a>
-        <a href="#edit" class="btn-block">Edit an existing sc:Manifest</a>
-        <a href="#read" class="btn-block">Read an existing sc:Manifest transcription</a>
-
-    <div class="btn-block btn-disabled">Create a sc:Canvas</div>
-    <div class="btn-block btn-disabled">Create an oa:Annotation</div>
-    <div class="btn-block btn-disabled">Manage or batch edit oa:Annotation objects</div>
-    <div class="btn-block btn-disabled">View a sc:Manifest or sc:Canvas</div>
-</p>
+    <div ng-controller="welcomeController">
+        <div ng-controller="toolsController">
+            <label>
+                Filter by Tag
+                <span style="opacity:.5;">
+                    Showing {{(tools.rerum|filter:tagFilter.toLowerCase()).length+(tools.community|filter:tagFilter.toLowerCase()).length}}
+                    of {{tools.rerum.length+tools.community.length}}
+                </span>
+            </label>
+            <input class="u-full-width" type="text" ng-model="tagFilter">
+            <h4>RERUM Tools</h4>
+            <p>
+                These tools are designed to create or manage resources on RERUM or to
+                be used modularly away from rerum.io.
+            </p>
+            <table>
+                <thead>
+                <th>Name</th>
+                <th>Version</th>
+                <th>Tags</th>
+                <th>Notes</th>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="t in tools.rerum|filter:tagFilter.toLowerCase()">
+                        <td>
+                            <a ng-href="{{t.link}}" class="nowrap">{{t.label}}</a>
+                        </td>
+                        <td>
+                            {{t.version}}
+                        </td>
+                        <td>
+                            <code ng-repeat="tag in t.tags">{{tag}}</code>
+                        </td>
+                        <td>
+                            {{t.notes}}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <h4>Community Tools</h4>
+            <p>
+                These applications are not part of RERUM or modular, but allow
+                for the use, distribution, or viewing of RERUM resources.
+            </p>
+            <table>
+                <thead>
+                <th>Name</th>
+                <th>Version</th>
+                <th>Tags</th>
+                <th>Notes</th>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="t in tools.community|filter:tagFilter.toLowerCase()">
+                        <td>
+                            <a ng-href="{{t.link}}" class="nowrap">{{t.label}}</a>
+                        </td>
+                        <td>
+                            {{t.version}}
+                        </td>
+                        <td>
+                            <code ng-repeat="tag in t.tags">{{tag}}</code>
+                        </td>
+                        <td>
+                            {{t.notes}}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <!--        <div class="btn-block btn-disabled">Create a sc:Canvas</div>
+                <div class="btn-block btn-disabled">Create an oa:Annotation</div>
+            <div class="btn-block btn-disabled">Manage or batch edit oa:Annotation objects</div>
+                <div class="btn-block btn-disabled">View a sc:Manifest or sc:Canvas</div>-->
+    </div>
 </div>

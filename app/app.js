@@ -15,9 +15,6 @@ rerum.config(['$routeProvider', '$locationProvider',
                 .when('/objects', {
                     templateUrl: 'app/objects/objects.html'
             })
-            .when('/tools', {
-                templateUrl: 'app/tools/tools.html'
-            })
             .when('/about', {
                 templateUrl: 'app/about/about.html'
             })
@@ -118,6 +115,11 @@ rerum.controller('mainController', function ($scope, $location, hotkeys, Termina
             tabTo(-1).focus();
         }
     });
+    $scope.tzOffset = (function(){
+        var now = new Date();
+                    var tz = -now.getTimezoneOffset()/60;
+                    return (tz);
+    })();
 });
 rerum.controller('welcomeController', function ($scope, $location, hotkeys) {
     hotkeys.bindTo($scope)

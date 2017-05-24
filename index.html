@@ -32,7 +32,9 @@
     <body ng-controller="mainController">
         <header>
             <div class="row">
-                <img src="logo.png" alt="logo" class="two columns" />
+                <a class="two columns" href="#welcome">
+                    <img src="logo.png" alt="logo" class="u-full-width" />
+                </a>
                 <small>reconditorium eximium rerum universalium mutabiliumque</small>
                 <h1 class="ten columns">
                     rerum
@@ -40,14 +42,19 @@
             </div>
         </header>
     <ng-view></ng-view>
+    <div style="height:20rem;width:100%;"></div>
     <footer>
         <div class="row">
-            <a href="#annotation" class="button six columns">
-            The Annotation Story
-            <i class="fa fa-comment-o"></i>
-        </a>
-        <a href="#about" class="button six columns">
-            The O<small>ng</small>CDH Connection
+            <a href="#welcome" class="button four columns">
+                Home
+                <i class="fa fa-home"></i>
+            </a>
+            <a href="#annotation" class="button four columns">
+                The Annotation Story
+                <i class="fa fa-comment-o"></i>
+            </a>
+            <a href="#about" class="button four columns">
+                The O<small>ng</small>CDH Connection
             <i class="fa fa-map-marker"></i>
         </a>
         </div>
@@ -79,6 +86,7 @@
     <script type="text/javascript" src="app/registration/registration.js"></script>
     <script type="text/javascript" src="app/tools/drawBox.js"></script>
     <script type="text/javascript" src="app/tools/manifest.js"></script>
+    <script type="text/javascript" src="app/tools/tools.js"></script>
     <script type="text/javascript" src="app/tools/essay/essay.js"></script>
     <script type="text/javascript" src="app/tools/parse-rect/parsing.js"></script>
     <script type="text/javascript" src="app/tools/crop-page/cropping.js"></script>

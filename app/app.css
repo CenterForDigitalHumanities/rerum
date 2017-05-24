@@ -19,7 +19,6 @@ header {
     background: #222;
     width: 100%;
     padding: 1rem;
-    color: #dfdfdf;
     position: relative;
     box-shadow: 0 0 3rem #001e3c;
     margin-bottom: 2rem;
@@ -34,7 +33,8 @@ header small {
     position: absolute;
     bottom: 1rem;
     line-height: 1;
-    margin-left: 4%; /* match .column */
+    margin-left: 17.3333%; /* match .column */
+    color: #dfdfdf;
 }
 footer {
     position:fixed;
@@ -42,6 +42,7 @@ footer {
     width:100vw;
     overflow: hidden;
     padding: 1rem 0;
+    background-color: #dfdfdf;
 }
 footer .button {
     border-color: transparent;
@@ -79,7 +80,21 @@ body pre {
     opacity: .5;
     font-size: 5rem;
     width: 100%;
-    text-align: center;
-    top: 4rem;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background-color: #f5faff;
+    line-height: 3.5;
     z-index: -1;
+}
+.card {
+    margin-bottom: 2.5rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,.12), 0 1px 2px rgba(0,0,0,.24);
+    padding: 1.5rem;
+}
+.row {
+    display: flex;
+}
+.nowrap {
+    white-space: nowrap !important;
 }
