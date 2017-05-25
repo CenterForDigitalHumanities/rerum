@@ -1,21 +1,158 @@
-<div>
-    <pre class="title">
-    #######################################
-    # A P I * * * * * * * * * * * * * * * #
-    #######################################
-    </pre>
-    <a href="https://centerfordigitalhumanities.github.io/rerum-cloud/api.html">API is developing here for now...</a>
-    <p>This is not ready to go yet, but the
-        short version is that we provide several
+<div class="container">
+    <h2>Version 0</h2>
+    <p>Though in the early stages, we provide several
         endpoints for creating, updating, or
         reading any object in the database from
-        any registered server.</p>
-    <p>All objects are sent and returned as
-        JSON-LD objects, for the time being.
-        They are stored as objects in a MongoDB
-        with query access to find unique objects
-        or discover relationships.</p>
-    <p>Creating any new object will return
-        to you the permanent location (URI) at
-        which it will live and be versioned.</p>
+        any registered server. All requests are
+        <code>HTTP POST</code>. Objects are known
+        by the assigned <code>@id</code> or
+        <code>objectID</code> assigned by MongoDB.</p>
+
+    <label>Environment Notes:</label>
+    <p>
+        This version of RERUM runs on Ubuntu/Tomcat/Java/MongoDB.
+        Much of the code refers to "annotation" objects, but any
+        valid JSON object can be placed into RERUM. Strictly
+        speaking, an "annotation" is the <code>content:{}</code>
+        wrapper around the data.
+    </p>
+
+    <label>
+        Base URL:
+    </label>
+    <aside class="u-pull-right note three columns">
+        <div class="note-heading">
+            API Note
+        </div>
+        <div class="note-block">
+            This will soon alias to <code>https://rerum.io/api/v0/</code>,
+            but the existing links will continue to work.
+        </div>
+    </aside>
+    <h5>
+        <code>http://165.134.241.141:80/annotationstore/</code>
+    </h5>
+    <h3>Actions</h3>
+    <h4>
+        Get an entire namespace
+    </h4>
+    <p>
+        Retrieve all namespaced objects from the store including the latest version,
+        all forks and revisions.
+    </p>
+    <h5>
+        <code>anno/getAllMyAnnotations.action</code>
+    </h5>
+    <p>Query with stringified <code>"content":{"namespace":YOUR_NAMESPACE}</code></p>
+    <p>Returns a <code>List</code> of objects.</p>
+
+    <h4>
+        Get all versions of an object.
+    </h4>
+    <p>
+        Retrieve all versions of a single object.
+    </p>
+    <h5>
+        <code>anno/getAllVersionsOfAnnotationByObjectID.action</code>
+    </h5>
+    <p>Query with stringified <code>"content":{"objectID":ID}</code></p>
+    <p>Returns a <code>List</code> of objects.</p>
+
+    <h4>
+        Query for object by properties.
+    </h4>
+    <p>
+        Retrieve all objects that match the property or properties values.
+    </p>
+    <h5>
+        <code>anno/getAnnotationByProperties.action</code>
+    </h5>
+    <p>Query with stringified <code>"content":{KEY:VALUE}</code></p>
+    <p>Returns a <code>List</code> of objects.</p>
+
+    <h4>
+        Create an object.
+    </h4>
+    <p>
+        Place a new object in RERUM.
+    </p>
+    <h5>
+        <code>anno/saveNewAnnotation.action</code>
+    </h5>
+    <p><code>"content":{NEW_OBJECT}</code> Include complete object.</p>
+    <p>Returns HTTP status and object <code>@id</code>.</p>
+
+    <h4>
+        Update an object.
+    </h4>
+    <p>
+        Replace the object in RERUM with the updated version.
+    </p>
+    <h5>
+        <code>anno/updateAnnotation.action</code>
+    </h5>
+    <p><code>"content":{"objectID":ID}</code> Include complete object,
+        even unchanged properties.</p>
+    <p>Returns HTTP status.</p>
+
+    <h4>
+        Revise an object.
+    </h4>
+    <p>
+        Create a newer version of the object in RERUM with
+        the updated version.
+    </p>
+    <h5>
+        <code>anno/saveNewVersionOfAnnotation.action</code>
+    </h5>
+    <p><code>"content":{"objectID":ID}</code> Include complete
+        new version, even unchanged properties.</p>
+    <p>Returns HTTP status.</p>
+
+    <h4>
+        Delete an object.
+    </h4>
+    <p>
+        Remove an object from RERUM completely. Identify by
+        <code>objectID</code> or <code>@id</code>.
+    </p>
+    <h5>
+        <code>anno/deleteAnnotationByObjectID.action</code>
+        <code>anno/deleteAnnotationByAtID.action</code>
+    </h5>
+    <p><code>"content":{"objectID":ID}</code> or
+        <code>"content":{"@id":ID}</code>.</p>
+    <p>Returns HTTP status.</p>
+
+    <h4>
+        Fork an object.
+    </h4>
+    <p>
+        Fork a given annotation. It doesn’t save, only returns a forked annotation.
+    </p>
+    <h5>
+        <code>anno/forkAnnotation.action</code>
+    </h5>
+    <p><code>"content":{"objectID":ID}</code> Include complete
+        new version, even unchanged properties.</p>
+    <p>Returns HTTP status.</p>
+
+    <h4>
+        Save forked object.
+    </h4>
+    <p>
+        Save forked annotation. It runs <code>saveNewAnnotation</code> inside.
+    </p>
+    <h5>
+        <code>anno/saveForkAnnotation.action</code>
+    </h5>
+    <p><code>"content":{"objectID":ID}</code> Include complete
+        new version, even unchanged properties.</p>
+    <p>Returns HTTP status.</p>
+
+
+
+
+    <h2>Version 1</h2>
+    <a href="https://centerfordigitalhumanities.github.io/rerum-cloud/api.html">API is developing here for now...</a>
 </div>
