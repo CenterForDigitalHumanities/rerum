@@ -1,5 +1,5 @@
 <div class="container">
-    <form ng-submit="loadImages(imgString,cHeight)">
+    <form ng-submit="loadImages(imgString,cHeight);" ng-show="previewManifest" class="ng-hide">
         <label>Images</label>
         <input class="u-full-width" type="text" ng-model="imgString"
                ng-model-options="{ updateOn: 'blur' }"><i></i>
@@ -10,13 +10,27 @@
             names will be used as Canvas labels and they will be sequenced in the
             order they are input.
         </p>
-            <label>Canvas Dimensions</label>
-            <input class="u-full-width" type="number" ng-model="cHeight"
-                   ng-model-options="{ updateOn: 'blur' }"><i></i>
+        <label>Canvas Dimensions</label>
+        <input class="u-full-width" type="number" ng-model="cHeight"
+               ng-model-options="{ updateOn: 'blur' }"><i></i>
+        <p>
+            Incoming images will be scaled to the height set and the initial width will
+            be based off the natural ratio of the full image.
+        </p>
+        <label>Manifest Metadata</label>
+        <div id="metadataFields">
             <p>
-                Incoming images will be scaled to the height set and the initial width will
-                be based off the natural ratio of the full image.
+                You can supply some basic metadata for your manifest here.
             </p>
+            <label>Manifest Label</label>
+            <input class="u-full-width" type="text" ng-model="mLabel"
+               ng-model-options="{ updateOn: 'blur' }"><i></i>
+            <label>Manifest Creator</label>
+            <input class="u-full-width" type="text" ng-model="mCreator.value"
+               ng-model-options="{ updateOn: 'blur' }"><i></i>
+            <label>Something Custom</label>
+            TODO: We could allow them to add custom manifest.metadata[] objects <br>
+        </div>
         <button type="submit" >Create Manifest</button>
 
         <button type="button" ng-show="canvases.length"
@@ -32,9 +46,11 @@
         </button>
 
     </form>
+    
     <pre style="position:relative;" ng-show="previewManifest">
-<div class="closeManifestPreview" ng-click="closePreview();">X</div>
-<code>{{previewManifest}}</code></pre>
+        <div class="closeManifestPreview" ng-click="closePreview();">X</div>
+        <code>{{previewManifest}}</code>
+    </pre>
     <!--<thumbs-canvas slides="c in ::canvases track by c.images[0].resource['@id']">
         <img ng-src="{{::c.images[0].resource['@id']||c.images[0]}}" ng-load="defaultCanvas($index,$event)">
         <small class="help-block">{{c.width}} x {{c.height}}</small>
