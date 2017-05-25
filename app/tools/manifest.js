@@ -1,5 +1,6 @@
 /* global angular, rerum */
 
+/* This is here to make it modular.  It connects to app.js routeProvider */
 rerum.config(['$routeProvider',
     function ($routeProvider, $locationProvider, Edition) {
         $routeProvider
@@ -251,7 +252,10 @@ rerum.controller('buildManifestController', function ($scope, $uibModal, Context
     $scope.types = Knowns.type;
     $scope.adding = Knowns.adding;
     $scope.cHeight = 1000;
+    $scope.mLabel = "New RERUM Manifest";
+    $scope.mCreator = {"label":"Manifest Creator", "value":"OngCDH@SLU_RERUM_"};
     $scope.previewManifest =  "";
+    $scope.savedToStore = false;
 
     $scope.editList = function (parent,prop) {
         var self = this;
@@ -300,8 +304,9 @@ rerum.controller('buildManifestController', function ($scope, $uibModal, Context
                     }]
             };
         });
-        Knowns.manifest.label = "New Manifest";
+        Knowns.manifest.label = $scope.mLabel;
         Knowns.manifest.sequences[0].canvases = $scope.canvases;
+        Knowns.manifest.metdata.push($scope.mCreator);
         if(!$scope.canvases.length){
             $scope.msg = {
                 type:"error",
@@ -314,11 +319,11 @@ rerum.controller('buildManifestController', function ($scope, $uibModal, Context
 
     $scope.preview = function(){
         $scope.previewManifest = JSON.stringify($scope.obj,null,4);
-    }
+    };
 
     $scope.closePreview = function(){
         $scope.previewManifest = "";
-    }
+    };
 
     $scope.defaultCanvas = function(index,event){
         var img = event.target;
@@ -362,7 +367,19 @@ rerum.controller('buildManifestController', function ($scope, $uibModal, Context
             });
     };
 
-    $scope.saveManifest = rerumService.save;
+    $scope.saveManifest = function(){
+        var manifestToSave = Knowns.manifest; //This is the mainfest we have been manipulating in this $scope
+        rerumService.save(manifestToSave) //Rerum service to $post into anno store
+            .success(function(data, status, headers, config){ //manifest saved
+                $scope.savedToStore = true;
+                //inform user of a successful save, have the UI react accordingly
+            })
+            .fail(function(data, status, headers, config){ //maniest did not save
+                $scope.savedToStore = false;
+                //inform user of an unseuccesful save, have the UI react accordingly
+            });
+    };
+    
 });
 
 rerum.controller('thumbsController', function ($scope, Display) {
