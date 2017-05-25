@@ -1,5 +1,6 @@
 <div class="container">
-    <h2>Version 0</h2>
+    <section>
+        <h2>Version 0</h2>
     <p>Though in the early stages, we provide several
         endpoints for creating, updating, or
         reading any object in the database from
@@ -25,7 +26,7 @@
             API Note
         </div>
         <div class="note-block">
-            This will soon alias to <code>https://rerum.io/api/v0/</code>,
+            This will soon alias to <code>https://rerum.io/api/v0/</code>
             but the existing links will continue to work.
         </div>
     </aside>
@@ -34,8 +35,32 @@
     </h5>
     <h3>Actions</h3>
     <h4>
+        Get an object.
+    </h4>
+    <p>
+        Read the simple JSON string for an object from RERUM. This
+        action requires no authentication and can be easily called
+        from a client application or web page.
+    </p>
+    <h5>
+        <code>http://165.134.241.141:80/annotationstore/annotation/OBJECT_ID</code>
+    </h5>
+    <p>
+        This pattern is used for all objects and stored in the
+        <code>@id</code> property.
+    </p>
+
+    <h4>
         Get an entire namespace
     </h4>
+    <aside class="u-pull-right note three columns">
+        <div class="note-heading">
+            Deprecation Notice
+        </div>
+        <div class="note-block">
+            This is still available, but is not supported.
+        </div>
+    </aside>
     <p>
         Retrieve all namespaced objects from the store including the latest version,
         all forks and revisions.
@@ -43,19 +68,29 @@
     <h5>
         <code>anno/getAllMyAnnotations.action</code>
     </h5>
-    <p>Query with stringified <code>"content":{"namespace":YOUR_NAMESPACE}</code></p>
+    <p>Query with stringified <code>"content="{"namespace":YOUR_NAMESPACE}"</code>
+        added to the URL.</p>
     <p>Returns a <code>List</code> of objects.</p>
 
     <h4>
         Get all versions of an object.
     </h4>
+    <aside class="u-pull-right note three columns">
+        <div class="note-heading">
+            Use Notice
+        </div>
+        <div class="note-block">
+            This is still available, but not currently used in any active
+            OngCDH project. Contact us if you have any support needs.
+        </div>
+    </aside>
     <p>
         Retrieve all versions of a single object.
     </p>
     <h5>
         <code>anno/getAllVersionsOfAnnotationByObjectID.action</code>
     </h5>
-    <p>Query with stringified <code>"content":{"objectID":ID}</code></p>
+    <p>Query with stringified <code>"content="{"objectID":ID}"</code></p>
     <p>Returns a <code>List</code> of objects.</p>
 
     <h4>
@@ -67,7 +102,7 @@
     <h5>
         <code>anno/getAnnotationByProperties.action</code>
     </h5>
-    <p>Query with stringified <code>"content":{KEY:VALUE}</code></p>
+    <p>Query with stringified <code>"content="{KEY:VALUE}"</code></p>
     <p>Returns a <code>List</code> of objects.</p>
 
     <h4>
@@ -79,7 +114,7 @@
     <h5>
         <code>anno/saveNewAnnotation.action</code>
     </h5>
-    <p><code>"content":{NEW_OBJECT}</code> Include complete object.</p>
+    <p><code>"content="{NEW_OBJECT}"</code> Include complete object.</p>
     <p>Returns HTTP status and object <code>@id</code>.</p>
 
     <h4>
@@ -91,13 +126,22 @@
     <h5>
         <code>anno/updateAnnotation.action</code>
     </h5>
-    <p><code>"content":{"objectID":ID}</code> Include complete object,
+    <p><code>"content="{"objectID":ID}"</code> Include complete object,
         even unchanged properties.</p>
     <p>Returns HTTP status.</p>
 
     <h4>
         Revise an object.
     </h4>
+    <aside class="u-pull-right note three columns">
+        <div class="note-heading">
+            Use Notice
+        </div>
+        <div class="note-block">
+            This is still available, but not currently used in any active
+            OngCDH project. Contact us if you have any support needs.
+        </div>
+    </aside>
     <p>
         Create a newer version of the object in RERUM with
         the updated version.
@@ -105,7 +149,7 @@
     <h5>
         <code>anno/saveNewVersionOfAnnotation.action</code>
     </h5>
-    <p><code>"content":{"objectID":ID}</code> Include complete
+    <p><code>"content="{"objectID":ID}"</code> Include complete
         new version, even unchanged properties.</p>
     <p>Returns HTTP status.</p>
 
@@ -120,8 +164,8 @@
         <code>anno/deleteAnnotationByObjectID.action</code>
         <code>anno/deleteAnnotationByAtID.action</code>
     </h5>
-    <p><code>"content":{"objectID":ID}</code> or
-        <code>"content":{"@id":ID}</code>.</p>
+    <p><code>"content="{"objectID":ID}"</code> or
+        <code>"content="{"@id":ID}"</code>.</p>
     <p>Returns HTTP status.</p>
 
     <h4>
@@ -133,7 +177,7 @@
     <h5>
         <code>anno/forkAnnotation.action</code>
     </h5>
-    <p><code>"content":{"objectID":ID}</code> Include complete
+    <p><code>"content="{"objectID":ID}"</code> Include complete
         new version, even unchanged properties.</p>
     <p>Returns HTTP status.</p>
 
@@ -146,13 +190,13 @@
     <h5>
         <code>anno/saveForkAnnotation.action</code>
     </h5>
-    <p><code>"content":{"objectID":ID}</code> Include complete
+    <p><code>"content="{"objectID":ID}"</code> Include complete
         new version, even unchanged properties.</p>
     <p>Returns HTTP status.</p>
+    </section>
 
-
-
-
-    <h2>Version 1</h2>
-    <a href="https://centerfordigitalhumanities.github.io/rerum-cloud/api.html">API is developing here for now...</a>
+    <section>
+        <h2>Version 1</h2>
+        <a href="https://centerfordigitalhumanities.github.io/rerum-cloud/api.html">API is developing here for now...</a>
+    </section>
 </div>
