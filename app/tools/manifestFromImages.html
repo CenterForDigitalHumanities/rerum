@@ -1,11 +1,11 @@
 <div class="container">
-    <p ng-show="stillLocal" class="ng-hide"> 
+    <p ng-show="!stillLocal"> 
         Your manifest has been saved into RERUM.  To perform edits from this point forwards please visit the
         <a href="#/edit">Edit Manifest Page</a>.
     </p>
     <form ng-submit="loadImages(imgString,cHeight);" >
-        <label>Images</label>
-        <input class="u-full-width" type="text" ng-model="imgString"
+        <label ng-show="stillLocal">Images</label>
+        <input ng-show="stillLocal" class="u-full-width" type="text" ng-model="imgString"
                ng-model-options="{ updateOn: 'blur' }"><i></i>
         <p ng-show="stillLocal">
             Enter a list of URLs to available images, separated by a comma(","). Any
@@ -32,8 +32,8 @@
             <label>Manifest Creator</label>
             <input class="u-full-width" type="text" ng-model="mCreator.value"
                ng-model-options="{ updateOn: 'blur' }"><i></i>
-            <label>Something Custom</label>
-            TODO: We could allow them to add custom manifest.metadata[] objects <br>
+<!--            <label>Something Custom</label>
+            TODO: We could allow them to add custom manifest.metadata[] objects <br>-->
         </div>
         <button type="submit" ng-show="stillLocal">Create Manifest</button>
 
@@ -41,10 +41,10 @@
                 ng-click="preview()">
             Preview manifest
         </button>
-        <a class="button" ng-show="stillLocal" class="ng-hide" href="#/edit">
+        <a class="button" ng-show="!stillLocal" href="#/edit">
             Edit this manifest ({{canvases.length}} canvas{{(canvases.length===1)&&""||"es"}})
         </a>
-        <button type="button" ng-show="canvases.length" ng-show="stillLocal"
+        <button type="button" ng-show="canvases.length && stillLocal"
                 ng-click="saveManifest(obj)">
             Save this manifest
         </button>
