@@ -1,8 +1,4 @@
-<!DOCTYPE html>
-<!--
-Read a T-PEN (or other similarly formed) transcription with images as available
--->
-<div>
+<div class="container">
     <style scoped>
         img {
             width: 100%;
@@ -57,7 +53,6 @@ Read a T-PEN (or other similarly formed) transcription with images as available
         }
 
         .text-annotation {
-            font-family: 'Junicode', serif;
             font-size: 1.2rem;
         }
 
@@ -73,12 +68,72 @@ Read a T-PEN (or other similarly formed) transcription with images as available
         .text-annotation:hover canvas {
             opacity: 1;
         }
-        .card {
+        .note {
             background-color: rgba(255,255,255,.7);
         }
-        .terminal .card {
-            background-color: rgba(0,0,0,.7);
+        .btn-group, .btn-group-vertical {
+            position: relative;
+            display: -webkit-inline-box;
+            display: -webkit-inline-flex;
+            display: -ms-inline-flexbox;
+            display: inline-flex;
+            vertical-align: middle;
         }
+        .btn-group>.btn:first-child:not(:last-child):not(.dropdown-toggle) {
+            border-bottom-right-radius: 0;
+            border-top-right-radius: 0;
+        }
+        .btn-group>.btn:first-child {
+            margin-left: 0;
+        }
+        .btn-group>.btn {
+            position: relative;
+            -webkit-box-flex: 0;
+            -webkit-flex: 0 1 auto;
+            -ms-flex: 0 1 auto;
+            flex: 0 1 auto;
+        }
+        .btn {
+            display: inline-block;
+            font-weight: 400;
+            line-height: 1.25;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            border: 1px solid transparent;
+            padding: .5rem 1rem;
+            font-size: 1rem;
+            border-radius: .25rem;
+            -webkit-transition: all .2s ease-in-out;
+            -o-transition: all .2s ease-in-out;
+            transition: all .2s ease-in-out;
+        }
+        [data-toggle=buttons]>.btn input[type=checkbox], [data-toggle=buttons]>.btn input[type=radio], [data-toggle=buttons]>.btn-group>.btn input[type=checkbox], [data-toggle=buttons]>.btn-group>.btn input[type=radio] {
+            position: absolute;
+            clip: rect(0,0,0,0);
+            pointer-events: none;
+        }
+        .btn-info.active, .btn-info:active, .show>.btn-info.dropdown-toggle {
+            color: #fff;
+            background-color: #31b0d5;
+            background-image: none;
+            border-color: #2aabd2;
+        }
+        .btn-info {
+            color: #fff;
+            background-color: #5bc0de;
+            border-color: #5bc0de;
+        }
+        .btn-info:hover {
+            color: #fff;
+            background-color: #31b0d5;
+            border-color: #2aabd2;
+        }
+
 
 /* special case CSS to test injecting stylesheets */
 em[decoration='double-underline'] {
@@ -103,36 +158,36 @@ monogram[shape='oval']{
 
     </style>
     <div ng-if="obj['@id']">
-        <div class="card">
-            <h3 class="card-header">{{obj.label || "[ no label ]"}}
-                <a title="clear manifest" href="#/read" class="btn btn-sm btn-outline-danger">
-            <i class="fa fa-bomb"></i>
+        <div class="note">
+            <h3 class="note-header text">{{obj.label || "[ no label ]"}}
+                <a title="clear manifest" href="#/read" class="button">
+                    <i class="fa fa-bomb"></i>
         </a>
             </h3>
-            <div class="card-block">
+            <div class="note-block text">
                 {{description}}
                 <code ng-hide='description'>[ no description ]</code>
-                <div class="btn-group btn-group-sm btn-block" ng-show="languages.length" data-toggle="buttons">
+                <div class="btn-group u-full-width" ng-show="languages.length" data-toggle="buttons">
                     <label class="btn btn-info" ng-class="{'active':screen.language===l}" ng-repeat="l in languages" ng-click="setDescription(obj.description,l)">
                         <input type="radio" ng-model="screen.language" ng-value="l" >
                         {{l}}
                     </label>
                 </div>
             </div>
-            <div class="card-block" ng-if="obj.metadata" style="max-height: 12rem;overflow: auto;">
-                <dl class="row">
-                <dt ng-repeat-start="(k,v) in obj.metadata" class="col-sm-3 text-truncate">
+            <div class="note-block" ng-if="obj.metadata" style="max-height: 12rem;overflow: auto;">
+                <dl>
+                <dt ng-repeat-start="(k,v) in obj.metadata">
                     {{v.label || k}}
                 </dt>
-                <dd class="col-sm-9" ng-bind-html="trust(v.value || v['@value'] || v || obj.metadata[k])" ng-repeat-end>
+                <dd class="text" ng-bind-html="trust(v.value || v['@value'] || v || obj.metadata[k])" ng-repeat-end>
                 </dd>
                 </dl>
             </div>
-            <div class="btn-group card-footer">
-                <button role="button" class="btn btn-secondary" ng-click="screen.canvas=obj.sequences[0].canvases[obj.sequences[0].canvases.indexOf(screen.canvas)-1]" ng-hide="obj.sequences[0].canvases.indexOf(screen.canvas)<1">previous</button>
-                <select class="btn btn-secondary" ng-show="obj.sequences[0].canvases.length" ng-model="screen.canvas" ng-options="canvas.label for canvas in obj.sequences[0].canvases"></select>
-                <button role="button" class="btn btn-secondary" ng-click="screen.canvas=obj.sequences[0].canvases[obj.sequences[0].canvases.indexOf(screen.canvas)+1]" ng-hide="obj.sequences[0].canvases.indexOf(screen.canvas)>(obj.sequences[0].canvases.length-2)">next</button>
-                <button role="button" class="btn btn-outline-primary" ng-if="screen.canvas.otherContent[0].resources" ng-click="cycleView()">{{screen.views[screen.viewing]}}</button>
+            <div class="btn-group note-footer">
+                <button role="button" ng-click="screen.canvas=obj.sequences[0].canvases[obj.sequences[0].canvases.indexOf(screen.canvas)-1]" ng-hide="obj.sequences[0].canvases.indexOf(screen.canvas)<1">previous</button>
+                <select ng-show="obj.sequences[0].canvases.length" ng-model="screen.canvas" ng-options="canvas.label for canvas in obj.sequences[0].canvases"></select>
+                <button role="button" ng-click="screen.canvas=obj.sequences[0].canvases[obj.sequences[0].canvases.indexOf(screen.canvas)+1]" ng-hide="obj.sequences[0].canvases.indexOf(screen.canvas)>(obj.sequences[0].canvases.length-2)">next</button>
+                <button role="button" ng-if="screen.canvas.otherContent[0].resources" ng-click="cycleView()">{{screen.views[screen.viewing]}}</button>
             </div>
         </div>
         <div style="position:relative;" ng-mouseleave="hideBacksplash()">
@@ -142,17 +197,16 @@ monogram[shape='oval']{
                 <div class="annotation" ng-mouseenter="moveBacksplash(a.on,screen.canvas)" data-content="{{ trust(a.resource['cnt:chars']) }}" ng-repeat="a in screen.canvas.otherContent[0].resources" ng-if="a['@type']==='oa:Annotation'" ng-style={{getStyle(a.on,screen.canvas)}} data-uri="{{a['@id']}}">
                 </div>
             </div>
-            <div ng-show="screen.viewing==='annotations'" class="card">
-                <div class="card-block">
+            <div ng-show="screen.viewing==='annotations'" class="note">
+                <div class="note-block">
                     <div class="text-annotation" ng-mouseenter="moveBacksplash(a.on,screen.canvas)" data-content="{{ a.resource['cnt:chars'] }}" ng-repeat="a in screen.canvas.otherContent[0].resources" ng-if="a['@type']==='oa:Annotation'" data-uri="{{a['@id']}}">
-                        <strong>{{ a.label }}</strong> <span data-ng-bind-html="trust(a.resource['cnt:chars'] || a.resource['chars'] || a.resource['@value'])"></span>
+                        <strong>{{ a.label }}</strong> <span class="text" data-ng-bind-html="trust(a.resource['cnt:chars'] || a.resource['chars'] || a.resource['@value'])"></span>
                         <code ng-hide="a.resource['cnt:chars'] || a.resource['chars'] || a.resource['@value']">[ no transcription ]</code>
                         <img selector="a.on" ng-if="a.on.indexOf('xywh')>0">
                     </div>
                 </div>
             </div>
         </div>
-        {{ obj.sequences[0].canvases.length }}
     </div>
     <div ng-if="!obj['@id']">
         <div class="input-group">
