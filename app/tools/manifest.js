@@ -257,6 +257,7 @@ rerum.controller('buildManifestController', function ($scope, $uibModal, Context
     $scope.previewManifest =  "";
     $scope.stillLocal = true;
     $scope.manifestID = "";
+    $scope.imagesVisible = true;
 
     $scope.editList = function (parent,prop) {
         var self = this;
@@ -320,10 +321,16 @@ rerum.controller('buildManifestController', function ($scope, $uibModal, Context
 
     $scope.preview = function(){
         $scope.previewManifest = JSON.stringify($scope.obj,null,4);
+        if(!$scope.stillLocal){
+            $scope.imagesVisible = true;
+        }
     };
 
     $scope.closePreview = function(){
         $scope.previewManifest = "";
+        if(!$scope.stillLocal){
+            $scope.imagesVisible = false;
+        }
     };
 
     $scope.defaultCanvas = function(index,event){
@@ -378,11 +385,13 @@ rerum.controller('buildManifestController', function ($scope, $uibModal, Context
                 console.log("Successfully saved manifest.");
                 $scope.stillLocal = false;
                 $scope.manifestID = data["@id"];
+                $scope.imagesVisible = false;
                 //inform user of a successful save, have the UI react accordingly
             });
             savePromise.error(function(data, status, headers, config){ //maniest did not save
                 console.log("Could not save manifest");
                 $scope.stillLocal = true;
+                $scope.imagesVisible = true;
                 //inform user of an unseuccesful save, have the UI react accordingly
             });
     };
