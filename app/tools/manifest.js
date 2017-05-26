@@ -255,7 +255,7 @@ rerum.controller('buildManifestController', function ($scope, $uibModal, Context
     $scope.mLabel = "New RERUM Manifest";
     $scope.mCreator = {"label":"Manifest Creator", "value":"OngCDH@SLU_RERUM_"};
     $scope.previewManifest =  "";
-    $scope.savedToStore = false;
+    $scope.stillLocal = true;
 
     $scope.editList = function (parent,prop) {
         var self = this;
@@ -306,7 +306,7 @@ rerum.controller('buildManifestController', function ($scope, $uibModal, Context
         });
         Knowns.manifest.label = $scope.mLabel;
         Knowns.manifest.sequences[0].canvases = $scope.canvases;
-        Knowns.manifest.metdata.push($scope.mCreator);
+        Knowns.manifest.metadata.push($scope.mCreator);
         if(!$scope.canvases.length){
             $scope.msg = {
                 type:"error",
@@ -368,14 +368,19 @@ rerum.controller('buildManifestController', function ($scope, $uibModal, Context
     };
 
     $scope.saveManifest = function(){
-        var manifestToSave = Knowns.manifest; //This is the mainfest we have been manipulating in this $scope
-        rerumService.save(manifestToSave) //Rerum service to $post into anno store
-            .success(function(data, status, headers, config){ //manifest saved
-                $scope.savedToStore = true;
+        var manifestToSave = $scope.obj; //This is the mainfest we have been manipulating in this $scope
+        console.log("I want to save this manifest");
+        console.log(manifestToSave);
+        var savePromise = rerumService.save(manifestToSave); //Rerum service to $post into anno store
+        //Cannot access success or fail from the save here.
+            savePromise.success(function(data, status, headers, config){ //manifest saved
+                console.log("Successfully saved manifest.");
+                $scope.stillLocal = false;
                 //inform user of a successful save, have the UI react accordingly
-            })
-            .fail(function(data, status, headers, config){ //maniest did not save
-                $scope.savedToStore = false;
+            });
+            savePromise.error(function(data, status, headers, config){ //maniest did not save
+                console.log("Could not save manifest");
+                $scope.stillLocal = true;
                 //inform user of an unseuccesful save, have the UI react accordingly
             });
     };

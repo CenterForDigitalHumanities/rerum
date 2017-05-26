@@ -1,3 +1,5 @@
 nbproject
 META-INF
 WEB-INF
+/dist/
+/build/

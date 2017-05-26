@@ -408,10 +408,22 @@ angular.module('utils', [])
         };
         this.save = function(obj) {
             var url = obj['@id'] ?
-                "http://165.134.241.141/annotationstore/anno/updateAnnotation.action" :
-                "http://165.134.241.141/annotationstore/anno/saveNewAnnotation.action";
+                "http://165.134.156.141/annotationstore/anno/updateAnnotation.action?content=" :
+                "http://165.134.156.141/annotationstore/anno/saveNewAnnotation.action?content=";
+            var obj_str = JSON.stringify(obj); //Serialize JSON data into a string.
+            var parameters = {"content":obj_str};
+            url += obj_str;
             //   var url = "api/res/"+obj['@id']; // live server test
-            return $http.post(url, { content: obj });
+               //THIS DID NOT WORK
+//            return $http({
+//                    method: 'POST',
+//                    url: url,
+//                    data: parameters,
+//                    headers: {
+//                        'Content-Type': 'application/x-www-form-urlencoded'
+//                    }
+//                });
+            return $http.post(url);
         };
     }).directive('selector', function() {
         return {
