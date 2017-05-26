@@ -256,6 +256,7 @@ rerum.controller('buildManifestController', function ($scope, $uibModal, Context
     $scope.mCreator = {"label":"Manifest Creator", "value":"OngCDH@SLU_RERUM_"};
     $scope.previewManifest =  "";
     $scope.stillLocal = true;
+    $scope.manifestID = "";
 
     $scope.editList = function (parent,prop) {
         var self = this;
@@ -376,6 +377,7 @@ rerum.controller('buildManifestController', function ($scope, $uibModal, Context
             savePromise.success(function(data, status, headers, config){ //manifest saved
                 console.log("Successfully saved manifest.");
                 $scope.stillLocal = false;
+                $scope.manifestID = data["@id"];
                 //inform user of a successful save, have the UI react accordingly
             });
             savePromise.error(function(data, status, headers, config){ //maniest did not save
