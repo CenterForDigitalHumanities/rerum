@@ -1,24 +1,28 @@
 <div class="container">
-    <form ng-submit="loadImages(imgString,cHeight);" ng-show="previewManifest" class="ng-hide">
-        <label>Images</label>
-        <input class="u-full-width" type="text" ng-model="imgString"
+    <p ng-show="!stillLocal"> 
+        Your manifest ({{manifestID}}) has been saved into RERUM.  To perform edits from this point forwards please visit the
+        <a href="#/edit">Edit Manifest Page</a>.
+    </p>
+    <form ng-submit="loadImages(imgString,cHeight);" >
+        <label ng-show="stillLocal">Images</label>
+        <input ng-show="stillLocal" class="u-full-width" type="text" ng-model="imgString"
                ng-model-options="{ updateOn: 'blur' }"><i></i>
-        <p>
+        <p ng-show="stillLocal">
             Enter a list of URLs to available images, separated by a comma(","). Any
             images that we cannot resolve will result in unannotated Canvases. The
             SharedCanvas Manifest that you create is editable. By default, the image
             names will be used as Canvas labels and they will be sequenced in the
             order they are input.
         </p>
-        <label>Canvas Dimensions</label>
-        <input class="u-full-width" type="number" ng-model="cHeight"
+        <label ng-show="stillLocal">Canvas Dimensions</label>
+        <input class="u-full-width" type="number" ng-show="stillLocal" ng-model="cHeight"
                ng-model-options="{ updateOn: 'blur' }"><i></i>
-        <p>
+        <p ng-show="stillLocal">
             Incoming images will be scaled to the height set and the initial width will
             be based off the natural ratio of the full image.
         </p>
-        <label>Manifest Metadata</label>
-        <div id="metadataFields">
+        <label ng-show="stillLocal">Manifest Metadata</label>
+        <div ng-show="stillLocal" id="metadataFields">
             <p>
                 You can supply some basic metadata for your manifest here.
             </p>
@@ -28,19 +32,19 @@
             <label>Manifest Creator</label>
             <input class="u-full-width" type="text" ng-model="mCreator.value"
                ng-model-options="{ updateOn: 'blur' }"><i></i>
-            <label>Something Custom</label>
-            TODO: We could allow them to add custom manifest.metadata[] objects <br>
+<!--            <label>Something Custom</label>
+            TODO: We could allow them to add custom manifest.metadata[] objects <br>-->
         </div>
-        <button type="submit" >Create Manifest</button>
+        <button type="submit" ng-show="stillLocal">Create Manifest</button>
 
         <button type="button" ng-show="canvases.length"
                 ng-click="preview()">
             Preview manifest
         </button>
-        <a class="button" ng-show="canvases.length" href="#/edit">
+        <a class="button" ng-show="!stillLocal" href="#/edit">
             Edit this manifest ({{canvases.length}} canvas{{(canvases.length===1)&&""||"es"}})
         </a>
-        <button type="button" ng-show="canvases.length"
+        <button type="button" ng-show="canvases.length && stillLocal"
                 ng-click="saveManifest(obj)">
             Save this manifest
         </button>
@@ -55,7 +59,7 @@
         <img ng-src="{{::c.images[0].resource['@id']||c.images[0]}}" ng-load="defaultCanvas($index,$event)">
         <small class="help-block">{{c.width}} x {{c.height}}</small>
     </thumbs-canvas> -->
-    <figure ng-repeat="c in ::canvases track by c.images[0].resource['@id']">
+    <figure class="imagePreview" ng-show="imagesVisible" ng-repeat="c in ::canvases track by c.images[0].resource['@id']">
         <figcaption>{{::c.label.substring(0,10)}}</figcaption>
         <img ng-src="{{::c.images[0].resource['@id']||c.images[0]}}" ng-load="defaultCanvas($index,$event)">
         <small class="help-block">{{c.width}} x {{c.height}}</small>
