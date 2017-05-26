@@ -12,6 +12,12 @@ rerum.config(['$routeProvider', '$locationProvider',
                 .when('/api', {
                     templateUrl: 'app/api/api.html'
                 })
+                .when('/future', {
+                    templateUrl: 'app/future/future.html'
+                })
+                .when('/annotation', {
+                    templateUrl: 'app/annotations/annotations.html'
+                })
                 .when('/objects', {
                     templateUrl: 'app/objects/objects.html'
             })
