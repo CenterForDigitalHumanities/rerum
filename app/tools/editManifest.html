@@ -1,36 +1,38 @@
-<div>
-	<h3>Build out IIIF compliant manifest</h3>
-	<label>Loaded Manifest</label> {{obj.label || obj['@id'] || 'none'}}
+<div class="container">
+	<h3>Alter an existing manifest.</h3>
+	<label>Loaded Manifest</label> {{obj.label || obj['@id'] || 'No Manifest Loaded'}}
 	<button class="btn btn-default" type="button" ng-click="saveManifest(obj)">
 	{{(obj['@id'].indexOf('new')===0) && 'Save Manifest' || 'Update'}}
 	</button>
-	<div ng-if="!obj.label" class="form-group">
-		<label>Brand New:</label>
+	<div ng-if="!obj.label && !obj['@id']" class="form-group">
+<!--		<label>Brand New:</label>
 		<div class="positioned">
 		<input type="text" ng-model="obj.label" ng-model-options="{ updateOn: 'blur' }"
 			placeholder="Label for a new Manifest"><i></i>
-		</div>
+		</div>-->
 		<label>File:</label>
 		<div class="btn-block">
-		<div class="fileUpload positioned btn">
-		    <span>Upload</span>
-			<input type="file" ng-model="obj" ng-change="obj['@id']='new'"
-				class="upload" placeholder="Manifest JSON"><i></i>
-		</div>
-		{{obj['@id']}}
-	</div>
+                    <div class="fileUpload positioned btn">
+                        <span>Upload</span>
+                        <input type="file" on-read-file="uploadManifestFile($fileContent)" />
+                        <!-- See rerum.directive('onReadFile' in manifest.js for info on $fileContent  -->
+                    </div>
+                    {{obj['@id']}}
+                </div>
 		<label>URI:</label>
 		<div class="positioned">
-		<input type="text" ng-model="uri" ng-blur="resolve(uri,obj)" class="btn-block"
+		<input type="text" ng-model="uriManifest" ng-blur="" class="btn-block"
 			placeholder="URI for this remote Manifest"><i></i>
+                <button ng-click = "submitManifestURI();">Use This URI</button>
 		</div>
 		<label>JSON:</label>
 		<div class="positioned">
-		<textarea ng-model="json" class="btn-block" rows="4"
+		<textarea ng-model="jsonManifest" class="btn-block" rows="4"
 			placeholder="Type or paste the JSON for this new Manifest"></textarea><i></i>
+                <button ng-click = "submitJSONManifest();">Use This JSON</button>
 		</div>
 	</div>
-	<div ng-show="obj.label">
+	<div ng-show="manifestValidated">
 		<form class="col-sm-6">
 			<property for="obj" is="k" ng-repeat="(k,v) in obj"></property>
 <!-- 			<add-property obj="obj"></add-property> -->
@@ -40,10 +42,11 @@
 				<label>@id</label>
 				<span>{{obj['@id']}}</span>
 			</div>
+                    <!-- DO we make these textareas as a first-pass editor? -->
 			<label>Manifest</label>
 			<pre class="pre-scrollable">{{obj|json}}</pre>
-			<label>Context</label>
-			<pre class="pre-scrollable">{{context|json}}</pre>
+			<label ng-show="contextVisible">Context</label>
+			<pre ng-show="contextVisible" class="pre-scrollable">{{context|json}}</pre>
 		</div>
 	</div>
 </div>
