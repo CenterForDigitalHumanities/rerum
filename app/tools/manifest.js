@@ -253,7 +253,7 @@ rerum.controller('buildManifestController', function ($scope, $uibModal, Context
     $scope.adding = Knowns.adding;
     $scope.cHeight = 1000;
     $scope.mLabel = obj.label || "New RERUM Manifest";
-    $scope.mCreator = obj.metadata[0] || {"label":"Manifest Creator", "value":"OngCDH@SLU_RERUM_"};
+    $scope.mCreator = {"label":"Manifest Creator", "value":"OngCDH@SLU_RERUM_"}; //How could we incorportate one of these that already exists?
     $scope.previewManifest =  "";
     $scope.stillLocal = true;
     $scope.manifestID = "";
