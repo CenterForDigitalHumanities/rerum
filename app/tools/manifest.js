@@ -294,28 +294,21 @@ rerum.controller('buildManifestController', function ($scope, $uibModal, Context
     
     //Here, the input could be an object or a string.
     $scope.validJSONManifest = function(input){
-        console.log("Validating manifest");
         if(typeof input ===  "string"){
             input = input.trim();
             try{
-                console.log("It is a tstring, so parse it");
-                console.log(input);
                 input = JSON.parse(input);
                 return true;
             }
             catch(e){
-                console.log("parsing failed");
                 return false;
             }
         }
         else if (typeof input === "object"){
-            console.log("The input is already an object, just assign it as the manifest.");
             if(input.constructor === {}.contructor){
-                console.log("It is a complete object");
                 return true;
             }
             else{
-                console.log("It is an incomplete object");
                 return false;
             }
         }
@@ -331,9 +324,7 @@ rerum.controller('buildManifestController', function ($scope, $uibModal, Context
     };
     
     $scope.validURI = function(input){
-        console.log("checking if URI is valid..." + input);
         if(input.indexOf("http://") > -1 || input.indexOf("https://") > -1){
-            console.log("yes");
             return true;
         }
         else{
@@ -360,11 +351,9 @@ rerum.controller('buildManifestController', function ($scope, $uibModal, Context
      
     $scope.submitManifestURI = function(){
         var potentialURI = $scope.uriManifest["@id"];
-        console.log("Submitting URI "+$scope.uriManifest);
         if($scope.validURI(potentialURI)){
             var potentialManifest = $scope.resolveURI(potentialURI);
             if($scope.validJSONManifest(potentialManifest)){
-                console.log("URI manifest is valid");
                 $scope.obj = JSON.parse(potentialManifest);
                 $scope.manifestValidated = true;
                 //Check if it is a RERUM manifest?
@@ -381,13 +370,10 @@ rerum.controller('buildManifestController', function ($scope, $uibModal, Context
      };
      
     $scope.submitJSONManifest = function(){
-        console.log("submitted json manifest");
         var potentialJSON = $scope.jsonManifest.json;
         if($scope.validJSONManifest(potentialJSON)){
-            console.log("considered a valid manifest");
             $scope.obj = JSON.parse(potentialJSON);
             $scope.manifestValidated = true;
-            console.log("visible to user");
             //check if it is a rerum manifest?
         }
         else{
