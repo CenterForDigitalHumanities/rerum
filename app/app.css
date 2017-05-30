@@ -117,3 +117,8 @@ figure img{
     height: 500px;
     font-family: sans-serif;
 }
+
+#jsonManifestInput{
+    width: 345px;
+    height: 145px;
+}
