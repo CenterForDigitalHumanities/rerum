@@ -427,6 +427,8 @@ rerum.controller('buildManifestController', function ($scope, $uibModal, Context
     };
   
     $scope.saveManifest = function(){
+        //TODO: editManifest also uses this.  If we are saving a manifest already in rerum, perform an update instead.
+        
         var manifestToSave = $scope.obj; //This is the mainfest we have been manipulating in this $scope
         console.log("I want to save this manifest");
         console.log(manifestToSave);

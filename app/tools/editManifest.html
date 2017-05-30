@@ -1,7 +1,7 @@
 <div class="container">
 	<h3>Alter an existing manifest.</h3>
 	<label>Loaded Manifest</label> {{obj.label || obj['@id'] || 'No Manifest Loaded'}}
-	<button class="btn btn-default" type="button" ng-click="saveManifest(obj)">
+	<button ng-show="obj['@id']" class="btn btn-default" type="button" ng-click="saveManifest(obj)">
 	{{(obj['@id'].indexOf('new')===0) && 'Save Manifest' || 'Update'}}
 	</button>
         <button ng-show="!contextVisible" ng-click="showContext()"> See @context</button>
