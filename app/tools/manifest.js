@@ -259,7 +259,7 @@ rerum.controller('buildManifestController', function ($scope, $uibModal, Context
     $scope.manifestID = "";
     $scope.imagesVisible = true;
     $scope.filManifest = "";
-    $scope.jsonManifest = "";
+    $scope.jsonManifest = {"json":{}};
     $scope.uriManifest = {"@id" : ""};
     $scope.manifestValidated = false;
     $scope.contextvisible = false;   
@@ -289,8 +289,7 @@ rerum.controller('buildManifestController', function ($scope, $uibModal, Context
             }
         });
     };
-
-    
+ 
     /* varius validators */
     
     //Here, the input could be an object or a string.
@@ -299,7 +298,8 @@ rerum.controller('buildManifestController', function ($scope, $uibModal, Context
         if(typeof input ===  "string"){
             input = input.trim();
             try{
-                console.log("It is a tstring, so parse it")
+                console.log("It is a tstring, so parse it");
+                console.log(input);
                 input = JSON.parse(input);
                 return true;
             }
@@ -347,7 +347,6 @@ rerum.controller('buildManifestController', function ($scope, $uibModal, Context
     $scope.uploadManifestFile = function($fileContent){
         var file = $fileContent;
         if($scope.validJSONManifest(file)){
-            
             $scope.fileManifest = JSON.parse(file);
             $scope.obj = $scope.fileManifest;
             $scope.manifestValidated = true;
@@ -357,7 +356,6 @@ rerum.controller('buildManifestController', function ($scope, $uibModal, Context
             $scope.fileManifest = "";
             $scope.obj = Knowns.manifest;
         }
-        
      };
      
     $scope.submitManifestURI = function(){
@@ -384,18 +382,17 @@ rerum.controller('buildManifestController', function ($scope, $uibModal, Context
      
     $scope.submitJSONManifest = function(){
         console.log("submitted json manifest");
-        var potentialJSON = $scope.jsonManifest;
+        var potentialJSON = $scope.jsonManifest.json;
         if($scope.validJSONManifest(potentialJSON)){
             console.log("considered a valid manifest");
-            $scope.jsonManifest = JSON.parse(potentialJSON);
-            $scope.obj = $scope.jsonManifest;
+            $scope.obj = JSON.parse(potentialJSON);
             $scope.manifestValidated = true;
-            console.log("visible to user")
+            console.log("visible to user");
             //check if it is a rerum manifest?
         }
         else{
             alert("The manifest provided is not valid and cannot be used.  Fix the JSON errors and try again.");
-            $scope.jsonManifest = "";
+            $scope.jsonManifest.json = {};
             $scope.obj = Knowns.manifest;
         }
      };
@@ -524,9 +521,9 @@ rerum.controller('buildManifestController', function ($scope, $uibModal, Context
        $scope.contextVisible = true;  
      };
      
-     $scope.hideContext = function(){
-         $scope.contextVisible = false;  
-     };
+    $scope.hideContext = function(){
+        $scope.contextVisible = false;  
+    };
      
 });
 
@@ -672,21 +669,21 @@ rerum.directive('property', function ($compile) {
             || props[scope.is]
             || props[scope.for[scope.is]]
             || 'unknown';
-            if(type.indexOf('list')>-1){
-                scope.$watchCollection('for[is]',function(newVal,oldVal){
+        if(type.indexOf('list')>-1){
+            scope.$watchCollection('for[is]',function(newVal,oldVal){
                 if (newVal && newVal.length) {
-                        // maybe just a k-v pair setup, like metadata
-                        if (angular.isDefined(scope.for[scope.is].length
-                            && !scope.for[scope.is][0]['@id']
-                            && scope.for[scope.is][0].label
-                            && scope.for[scope.is][0]['@value'])) {
-                            type = "pairs";
-                        }
-                        el.html(getTemplate(type));
-                        $compile(el.contents())(scope);
+                    // maybe just a k-v pair setup, like metadata
+                    if (angular.isDefined(scope.for[scope.is].length
+                        && !scope.for[scope.is][0]['@id']
+                        && scope.for[scope.is][0].label
+                        && scope.for[scope.is][0]['@value'])) {
+                        type = "pairs";
                     }
-                });
-            }
+                    el.html(getTemplate(type));
+                    $compile(el.contents())(scope);
+                }
+            });
+        }
         scope.labelClass = attrs.labelClass;
         if (scope.is === '@id' && scope.for['@type'] === 'sc:Canvas') {
             var insert = '<figure class="pull-right">'
