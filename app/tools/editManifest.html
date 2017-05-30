@@ -4,8 +4,8 @@
 	<button ng-show="obj['@id']" class="btn btn-default" type="button" ng-click="saveManifest(obj)">
 	{{(obj['@id'].indexOf('new')===0) && 'Save Manifest' || 'Update'}}
 	</button>
-        <button ng-show="!contextVisible" ng-click="showContext()"> See @context</button>
-        <button ng-show="contextVisible" ng-click="hideContext()"> Hide @context</button>
+        <button ng-show="!contextVisible && obj['@id']" ng-click="showContext()"> See @context</button>
+        <button ng-show="contextVisible && obj['@id']" ng-click="hideContext()"> Hide @context</button>
 	<div ng-if="!obj.label && !obj['@id']" class="form-group">
 <!--		<label>Brand New:</label>
 		<div class="positioned">
@@ -29,20 +29,20 @@
 		</div>
 		<label>JSON:</label>
 		<div class="positioned">
-		<textarea ng-model="jsonManifest" class="btn-block" rows="4"
-			placeholder="Type or paste the JSON for this new Manifest"></textarea><i></i>
-                <button ng-click = "submitJSONManifest();">Use This JSON</button>
+                    <textarea ng-model="jsonManifest" class="btn-block" rows="4"
+                            placeholder="Type or paste the JSON for this new Manifest"></textarea><i></i>
+                    <button ng-click = "submitJSONManifest();">Use This JSON</button>
 		</div>
 	</div>
 	<div ng-show="manifestValidated">
 		<form class="col-sm-6">
-			<property for="obj" is="k" ng-repeat="(k,v) in obj"></property>
-<!-- 	<add-property obj="obj"></add-property> -->
+                    <property for="obj" is="k" ng-repeat="(k,v) in obj"></property>
+                <!-- 	<add-property obj="obj"></add-property> -->
 		</form>
 		<div class="col-sm-6">
                     <div class="form-group">
-                            <label>@id</label>
-                            <span>{{obj['@id']}}</span>
+                        <label>@id</label>
+                        <span>{{obj['@id']}}</span>
                     </div>
                 <!-- DO we make these textareas as a first-pass editor? -->
                     <label>Manifest</label>

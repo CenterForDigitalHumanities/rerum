@@ -407,12 +407,13 @@ angular.module('utils', [])
                 });
         };
         this.save = function(obj) {
+            //TODO: editManifest also uses this.  Do we need to check if this is a RERUM manifest before attempting an update? 
             var url = obj['@id'] ?
                 "http://165.134.156.141/annotationstore/anno/updateAnnotation.action?content=" :
                 "http://165.134.156.141/annotationstore/anno/saveNewAnnotation.action?content=";
             var obj_str = JSON.stringify(obj); //Serialize JSON data into a string.
-            var parameters = {"content":obj_str};
             url += obj_str;
+            // var parameters = {"content":obj_str};
             //   var url = "api/res/"+obj['@id']; // live server test
                //THIS DID NOT WORK
 //            return $http({

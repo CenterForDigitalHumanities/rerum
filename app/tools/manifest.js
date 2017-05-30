@@ -427,22 +427,17 @@ rerum.controller('buildManifestController', function ($scope, $uibModal, Context
     };
   
     $scope.saveManifest = function(){
-        //TODO: editManifest also uses this.  If we are saving a manifest already in rerum, perform an update instead.
         
         var manifestToSave = $scope.obj; //This is the mainfest we have been manipulating in this $scope
-        console.log("I want to save this manifest");
-        console.log(manifestToSave);
         var savePromise = rerumService.save(manifestToSave); //Rerum service to $post into anno store
         //Cannot access success or fail from the save here.
             savePromise.success(function(data, status, headers, config){ //manifest saved
-                console.log("Successfully saved manifest.");
                 $scope.stillLocal = false;
                 $scope.manifestID = data["@id"];
                 $scope.imagesVisible = false;
                 //inform user of a successful save, have the UI react accordingly
             });
             savePromise.error(function(data, status, headers, config){ //maniest did not save
-                console.log("Could not save manifest");
                 $scope.stillLocal = true;
                 $scope.imagesVisible = true;
                 //inform user of an unseuccesful save, have the UI react accordingly

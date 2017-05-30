@@ -111,8 +111,9 @@ figure img{
     white-space: nowrap !important;
 }
 
-/*textareas that allow manifest alterations*/
+/* textareas that allow manifest alterations */
 .editor{
     width: 800px;
     height: 500px;
+    font-family: sans-serif;
 }
