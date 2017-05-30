@@ -228,6 +228,7 @@ angular.module('utils', [])
             }
         };
         this.resolveURI = function(uri) {
+            console.log("resolving uri...");
             if (typeof uri !== "string" || uri.indexOf("://") === -1) {
                 throw Error(uri + " does not appear to be a valid URI");
             }

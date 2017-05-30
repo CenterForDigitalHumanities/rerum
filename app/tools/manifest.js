@@ -295,21 +295,27 @@ rerum.controller('buildManifestController', function ($scope, $uibModal, Context
     
     //Here, the input could be an object or a string.
     $scope.validJSONManifest = function(input){
+        console.log("Validating manifest");
         if(typeof input ===  "string"){
             input = input.trim();
             try{
+                console.log("It is a tstring, so parse it")
                 input = JSON.parse(input);
                 return true;
             }
             catch(e){
+                console.log("parsing failed");
                 return false;
             }
         }
         else if (typeof input === "object"){
+            console.log("The input is already an object, just assign it as the manifest.");
             if(input.constructor === {}.contructor){
+                console.log("It is a complete object");
                 return true;
             }
             else{
+                console.log("It is an incomplete object");
                 return false;
             }
         }
@@ -319,19 +325,21 @@ rerum.controller('buildManifestController', function ($scope, $uibModal, Context
         //hit the IIIF validator endpoint and return that result.  That could
         //this could maybe be a RERUM service in this app.
     };
+       
+    $scope.validRerumManifest = function(input){
+        //Hit an advanced internal RERUM viewer/validator ?
+    };
     
-    $scope.isRerumManifest = function (input){
-        var idToCheck = input["@id"] || $scope.obj["@id"] || "";
-        if(idToCheck.indexOf("/annotationstore/annotation/") >-1 || idToCheck.indexOf("rerum.io") > -1){
+    $scope.validURI = function(input){
+        console.log("checking if URI is valid...");
+        if(input.indexOf("http://") > -1 || input.indexOf("https://") > -1){
+            console.log("yes");
             return true;
         }
         else{
+            console.log("no");
             return false;
         }
-    };
-    
-    $scope.validRerumManifest = function(input){
-        //Hit an advanced internal RERUM viewer/validator ?
     };
     
     /* End validators.  Check you don't repeat a rerumService */
@@ -359,12 +367,14 @@ rerum.controller('buildManifestController', function ($scope, $uibModal, Context
             $scope.uriManifest = potentialURI;
             var potentialManifest = resolveURI($scope.uriManifest);
             if($scope.validJSONManifest(potentialManifest)){
+                console.log("URI manifest is valid");
                 $scope.obj = JSON.parse(potentialManifest);
                 $scope.manifestValidated = true;
                 //Check if it is a RERUM manifest?
             }           
         }
         else{
+            alert("URI resolved manifest is not valid JSON");
             $scope.uriManifest = "";
             $scope.obj = Knowns.manifest;
         }
@@ -372,18 +382,21 @@ rerum.controller('buildManifestController', function ($scope, $uibModal, Context
      };
      
     $scope.submitJSONManifest = function(){
+        console.log("submitted json manifest");
         var potentialJSON = $scope.jsonManifest;
         if($scope.validJSONManifest(potentialJSON)){
+            console.log("considered a valid manifest");
             $scope.jsonManifest = JSON.parse(potentialJSON);
             $scope.obj = $scope.jsonManifest;
             $scope.manifestValidated = true;
+            console.log("visible to user")
             //check if it is a rerum manifest?
         }
         else{
+            alert("The manifest provided is not valid and cannot be used.  Fix the JSON errors and try again.");
             $scope.jsonManifest = "";
             $scope.obj = Knowns.manifest;
         }
-        
      };
          
      /* End gatherers */
