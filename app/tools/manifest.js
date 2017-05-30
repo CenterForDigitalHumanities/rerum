@@ -253,14 +253,14 @@ rerum.controller('buildManifestController', function ($scope, $uibModal, Context
     $scope.adding = Knowns.adding;
     $scope.cHeight = 1000;
     $scope.mLabel = obj.label || "New RERUM Manifest";
-    $scope.mCreator = {"label":"Manifest Creator", "value":"OngCDH@SLU_RERUM_"}; //How could we incorportate one of these that already exists?
+    $scope.mCreator = {"label":"Manifest Creator", "value":"OngCDH@SLU_RERUM_"};
     $scope.previewManifest =  "";
     $scope.stillLocal = true;
     $scope.manifestID = "";
     $scope.imagesVisible = true;
     $scope.filManifest = "";
     $scope.jsonManifest = "";
-    $scope.uriManifest = "";
+    $scope.uriManifest = {"@id" : ""};
     $scope.manifestValidated = false;
     $scope.contextvisible = false;   
 
@@ -331,13 +331,12 @@ rerum.controller('buildManifestController', function ($scope, $uibModal, Context
     };
     
     $scope.validURI = function(input){
-        console.log("checking if URI is valid...");
+        console.log("checking if URI is valid..." + input);
         if(input.indexOf("http://") > -1 || input.indexOf("https://") > -1){
             console.log("yes");
             return true;
         }
         else{
-            console.log("no");
             return false;
         }
     };
@@ -362,23 +361,25 @@ rerum.controller('buildManifestController', function ($scope, $uibModal, Context
      };
      
     $scope.submitManifestURI = function(){
-        var potentialURI = $scope.uriManifest;
+        var potentialURI = $scope.uriManifest["@id"];
+        console.log("Submitting URI "+$scope.uriManifest);
         if($scope.validURI(potentialURI)){
-            $scope.uriManifest = potentialURI;
-            var potentialManifest = resolveURI($scope.uriManifest);
+            var potentialManifest = $scope.resolveURI(potentialURI);
             if($scope.validJSONManifest(potentialManifest)){
                 console.log("URI manifest is valid");
                 $scope.obj = JSON.parse(potentialManifest);
                 $scope.manifestValidated = true;
                 //Check if it is a RERUM manifest?
-            }           
+            }
+            else{
+                alert("URI resolved manifest is not valid JSON.  Please check for errors. ");
+            }
         }
         else{
-            alert("URI resolved manifest is not valid JSON");
+            alert("URI "+potentialURI+" was not valid");
             $scope.uriManifest = "";
             $scope.obj = Knowns.manifest;
-        }
-        
+        }     
      };
      
     $scope.submitJSONManifest = function(){
@@ -437,6 +438,10 @@ rerum.controller('buildManifestController', function ($scope, $uibModal, Context
             };
         }
         $scope.imgStr = "";
+    };
+    
+    $scope.resolveURI = function(){
+        rerumService.resolveURI($scope.uriManifest["@id"]);
     };
   
     $scope.saveManifest = function(){
