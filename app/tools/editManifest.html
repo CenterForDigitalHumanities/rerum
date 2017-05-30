@@ -4,6 +4,8 @@
 	<button class="btn btn-default" type="button" ng-click="saveManifest(obj)">
 	{{(obj['@id'].indexOf('new')===0) && 'Save Manifest' || 'Update'}}
 	</button>
+        <button ng-show="!contextVisible" ng-click="showContext()"> See @context</button>
+        <button ng-show="contextVisible" ng-click="hideContext()"> Hide @context</button>
 	<div ng-if="!obj.label && !obj['@id']" class="form-group">
 <!--		<label>Brand New:</label>
 		<div class="positioned">
@@ -35,18 +37,20 @@
 	<div ng-show="manifestValidated">
 		<form class="col-sm-6">
 			<property for="obj" is="k" ng-repeat="(k,v) in obj"></property>
-<!-- 			<add-property obj="obj"></add-property> -->
+<!-- 	<add-property obj="obj"></add-property> -->
 		</form>
 		<div class="col-sm-6">
-			<div class="form-group">
-				<label>@id</label>
-				<span>{{obj['@id']}}</span>
-			</div>
-                    <!-- DO we make these textareas as a first-pass editor? -->
-			<label>Manifest</label>
-			<pre class="pre-scrollable">{{obj|json}}</pre>
-			<label ng-show="contextVisible">Context</label>
-			<pre ng-show="contextVisible" class="pre-scrollable">{{context|json}}</pre>
+                    <div class="form-group">
+                            <label>@id</label>
+                            <span>{{obj['@id']}}</span>
+                    </div>
+                <!-- DO we make these textareas as a first-pass editor? -->
+                    <label>Manifest</label>
+                    <textarea class="editor">{{obj|json}}</textarea>
+                    <!--<pre class="pre-scrollable">{{obj|json}}</pre>-->
+                    <label ng-show="contextVisible">Context</label>
+                    <textarea ng-show="contextVisible" class="editor">{{context|json}}</textarea>
+                    <!--<pre ng-show="contextVisible" class="pre-scrollable">{{context|json}}</pre>-->
 		</div>
 	</div>
 </div>
