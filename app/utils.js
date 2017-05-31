@@ -228,6 +228,7 @@ angular.module('utils', [])
             }
         };
         this.resolveURI = function(uri) {
+            console.log("resolving uri...");
             if (typeof uri !== "string" || uri.indexOf("://") === -1) {
                 throw Error(uri + " does not appear to be a valid URI");
             }
@@ -406,23 +407,41 @@ angular.module('utils', [])
                     return err;
                 });
         };
+        this.checkRerum = function(input){
+            var idToCheck = input["@id"] || "";
+            if(idToCheck.indexOf("/annotationstore/annotation/") >-1 || idToCheck.indexOf("rerum.io") > -1){
+                return true;
+            }
+            else{
+                return false;
+            }
+        };
         this.save = function(obj) {
-            var url = obj['@id'] ?
-                "http://165.134.156.141/annotationstore/anno/updateAnnotation.action?content=" :
-                "http://165.134.156.141/annotationstore/anno/saveNewAnnotation.action?content=";
+            var isRerum = this.checkRerum(obj); //Does the @id tell us it is in rerum?
+            var updating = false;
+            var url = "";
+            if(obj['@id']){ //Is it an object for updating
+                updating = true;
+            }
+            if(isRerum && updating){ //It is a RERUM object for updating
+                url = "http://165.134.156.141/annotationstore/anno/updateAnnotation.action?content=";
+            }
+            else if(!updating){ //It is an object meant to be saved
+                url = "http://165.134.156.141/annotationstore/anno/saveNewAnnotation.action?content=";
+            }
             var obj_str = JSON.stringify(obj); //Serialize JSON data into a string.
-            var parameters = {"content":obj_str};
             url += obj_str;
-            //   var url = "api/res/"+obj['@id']; // live server test
-               //THIS DID NOT WORK
-//            return $http({
-//                    method: 'POST',
-//                    url: url,
-//                    data: parameters,
-//                    headers: {
-//                        'Content-Type': 'application/x-www-form-urlencoded'
-//                    }
-//                });
+            if(!isRerum && updating){ //It is an update on an foreign manifest.  It can't get over Trump's wall.  
+                var conf=confirm("The manifest you are trying to update does not appear to be in RERUM.  The update cannot be performed. \n Would you like to save this manifest into RERUM?");
+                if(conf){
+                    delete obj['@id']; //get rid of key:val, we do not want to preserve it.
+                    obj_str = JSON.stringify(obj); 
+                    url = "http://165.134.156.141/annotationstore/anno/saveNewAnnotation.action?content=" + obj_str; //It is now a domestic manifest
+                }
+                else{
+                    return false;
+                }
+            }
             return $http.post(url);
         };
     }).directive('selector', function() {

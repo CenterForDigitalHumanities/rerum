@@ -182,3 +182,15 @@ dd {
     margin-bottom: .5rem;
     margin-left: 2rem;
 }
+
+/* textareas that allow manifest alterations */
+.editor{
+    width: 800px;
+    height: 500px;
+    font-family: sans-serif;
+}
+
+#jsonManifestInput{
+    width: 345px;
+    height: 145px;
+}

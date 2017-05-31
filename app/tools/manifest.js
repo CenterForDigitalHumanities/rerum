@@ -252,13 +252,21 @@ rerum.controller('buildManifestController', function ($scope, $uibModal, Context
     $scope.types = Knowns.type;
     $scope.adding = Knowns.adding;
     $scope.cHeight = 1000;
-    $scope.mLabel = "New RERUM Manifest";
+    $scope.mLabel = obj.label || "New RERUM Manifest";
     $scope.mCreator = {"label":"Manifest Creator", "value":"OngCDH@SLU_RERUM_"};
     $scope.previewManifest =  "";
     $scope.stillLocal = true;
     $scope.manifestID = "";
     $scope.imagesVisible = true;
+    $scope.filManifest = "";
+    $scope.jsonManifest = {"json":{}};
+    $scope.uriManifest = {"@id" : ""};
+    $scope.manifestValidated = false;
+    $scope.contextvisible = false;   
 
+/*
+ *   Edit already existing manifests
+ */
     $scope.editList = function (parent,prop) {
         var self = this;
         var modal = $uibModal.open({
@@ -281,6 +289,103 @@ rerum.controller('buildManifestController', function ($scope, $uibModal, Context
             }
         });
     };
+ 
+    /* varius validators */
+    
+    //Here, the input could be an object or a string.
+    $scope.validJSONManifest = function(input){
+        if(typeof input ===  "string"){
+            input = input.trim();
+            try{
+                input = JSON.parse(input);
+                return true;
+            }
+            catch(e){
+                return false;
+            }
+        }
+        else if (typeof input === "object"){
+            if(input.constructor === {}.contructor){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+    };
+    
+    $scope.validIIIFManifest = function(input){
+        //hit the IIIF validator endpoint and return that result.  That could
+        //this could maybe be a RERUM service in this app.
+    };
+       
+    $scope.validRerumManifest = function(input){
+        //Hit an advanced internal RERUM viewer/validator ?
+    };
+    
+    $scope.validURI = function(input){
+        if(input.indexOf("http://") > -1 || input.indexOf("https://") > -1){
+            return true;
+        }
+        else{
+            return false;
+        }
+    };
+    
+    /* End validators.  Check you don't repeat a rerumService */
+    
+    /* manifest gatherers */
+    $scope.uploadManifestFile = function($fileContent){
+        var file = $fileContent;
+        if($scope.validJSONManifest(file)){
+            $scope.fileManifest = JSON.parse(file);
+            $scope.obj = $scope.fileManifest;
+            $scope.manifestValidated = true;
+            //Check if it is a RERUM manifest?
+        }
+        else{
+            $scope.fileManifest = "";
+            $scope.obj = Knowns.manifest;
+        }
+     };
+     
+    $scope.submitManifestURI = function(){
+        var potentialURI = $scope.uriManifest["@id"];
+        if($scope.validURI(potentialURI)){
+            var potentialManifest = $scope.resolveURI(potentialURI);
+            if($scope.validJSONManifest(potentialManifest)){
+                $scope.obj = JSON.parse(potentialManifest);
+                $scope.manifestValidated = true;
+                //Check if it is a RERUM manifest?
+            }
+            else{
+                alert("URI resolved manifest is not valid JSON.  Please check for errors. ");
+            }
+        }
+        else{
+            alert("URI "+potentialURI+" was not valid");
+            $scope.uriManifest = "";
+            $scope.obj = Knowns.manifest;
+        }     
+     };
+     
+    $scope.submitJSONManifest = function(){
+        var potentialJSON = $scope.jsonManifest.json;
+        if($scope.validJSONManifest(potentialJSON)){
+            $scope.obj = JSON.parse(potentialJSON);
+            $scope.manifestValidated = true;
+            //check if it is a rerum manifest?
+        }
+        else{
+            alert("The manifest provided is not valid and cannot be used.  Fix the JSON errors and try again.");
+            $scope.jsonManifest.json = {};
+            $scope.obj = Knowns.manifest;
+        }
+     };
+         
+     /* End gatherers */
+     
+/* End Manifest Edit stuff */
 
 /**
  * create manifest from comma separated list of img urls
@@ -316,23 +421,30 @@ rerum.controller('buildManifestController', function ($scope, $uibModal, Context
             };
         }
         $scope.imgStr = "";
-
     };
-
-    $scope.preview = function(){
-        $scope.previewManifest = JSON.stringify($scope.obj,null,4);
-        if(!$scope.stillLocal){
-            $scope.imagesVisible = true;
-        }
+    
+    $scope.resolveURI = function(){
+        rerumService.resolveURI($scope.uriManifest["@id"]);
     };
-
-    $scope.closePreview = function(){
-        $scope.previewManifest = "";
-        if(!$scope.stillLocal){
-            $scope.imagesVisible = false;
-        }
+  
+    $scope.saveManifest = function(){
+        
+        var manifestToSave = $scope.obj; //This is the mainfest we have been manipulating in this $scope
+        var savePromise = rerumService.save(manifestToSave); //Rerum service to $post into anno store
+        //Cannot access success or fail from the save here.
+            savePromise.success(function(data, status, headers, config){ //manifest saved
+                $scope.stillLocal = false;
+                $scope.manifestID = data["@id"];
+                $scope.imagesVisible = false;
+                //inform user of a successful save, have the UI react accordingly
+            });
+            savePromise.error(function(data, status, headers, config){ //maniest did not save
+                $scope.stillLocal = true;
+                $scope.imagesVisible = true;
+                //inform user of an unseuccesful save, have the UI react accordingly
+            });
     };
-
+    
     $scope.defaultCanvas = function(index,event){
         var img = event.target;
         // {} to preserve original inits
@@ -374,28 +486,31 @@ rerum.controller('buildManifestController', function ($scope, $uibModal, Context
                 height: $scope.cHeight
             });
     };
+    
+    /* End Manifest Create stuff */
+    
+    $scope.preview = function(){
+        $scope.previewManifest = JSON.stringify($scope.obj,null,4);
+        if(!$scope.stillLocal){
+            $scope.imagesVisible = true;
+        }
+    };
 
-    $scope.saveManifest = function(){
-        var manifestToSave = $scope.obj; //This is the mainfest we have been manipulating in this $scope
-        console.log("I want to save this manifest");
-        console.log(manifestToSave);
-        var savePromise = rerumService.save(manifestToSave); //Rerum service to $post into anno store
-        //Cannot access success or fail from the save here.
-            savePromise.success(function(data, status, headers, config){ //manifest saved
-                console.log("Successfully saved manifest.");
-                $scope.stillLocal = false;
-                $scope.manifestID = data["@id"];
-                $scope.imagesVisible = false;
-                //inform user of a successful save, have the UI react accordingly
-            });
-            savePromise.error(function(data, status, headers, config){ //maniest did not save
-                console.log("Could not save manifest");
-                $scope.stillLocal = true;
-                $scope.imagesVisible = true;
-                //inform user of an unseuccesful save, have the UI react accordingly
-            });
+    $scope.closePreview = function(){
+        $scope.previewManifest = "";
+        if(!$scope.stillLocal){
+            $scope.imagesVisible = false;
+        }
     };
     
+    $scope.showContext = function(){
+       $scope.contextVisible = true;  
+     };
+     
+    $scope.hideContext = function(){
+        $scope.contextVisible = false;  
+    };
+     
 });
 
 rerum.controller('thumbsController', function ($scope, Display) {
@@ -418,24 +533,21 @@ rerum.controller('thumbsController', function ($scope, Display) {
 });
 
 rerum.directive('ngLoad', function($parse){
-        return {
-            restrict: 'A',
-            compile: function($element, attr) {
-                var fn = $parse(attr['ngLoad']);
-                return function(scope, element, attr) {
-                element.on('load', function (event) {
-                        scope.$apply(function() {
-                        fn(scope, {$event: event});
+    return {
+        restrict: 'A',
+        compile: function($element, attr) {
+            var fn = $parse(attr['ngLoad']);
+            return function(scope, element, attr) {
+            element.on('load', function (event) {
+                    scope.$apply(function() {
+                    fn(scope, {$event: event});
 
-                        });
                     });
-                };
-
-            }
-        };
-
-    });
-
+                });
+            };
+        }
+    };
+});
 
 rerum.directive('addProperty',function(){
     return {
@@ -461,6 +573,7 @@ rerum.directive('addProperty',function(){
         }
     };
 });
+
 rerum.directive('property', function ($compile) {
     var getTemplate = function (type, insert) {
         var tmpl = ['<div class="form-group clearfix">'
@@ -513,8 +626,7 @@ rerum.directive('property', function ($compile) {
                 // or display only
             default :
                 input = '<span class="text-overflow">{{for[is]}}</span>'
-        }
-        ;
+        };
         tmpl[1] = '<div class="positioned">' + input + '<i></i></div>';
         return tmpl.join('');
     };
@@ -543,21 +655,21 @@ rerum.directive('property', function ($compile) {
             || props[scope.is]
             || props[scope.for[scope.is]]
             || 'unknown';
-            if(type.indexOf('list')>-1){
-                scope.$watchCollection('for[is]',function(newVal,oldVal){
+        if(type.indexOf('list')>-1){
+            scope.$watchCollection('for[is]',function(newVal,oldVal){
                 if (newVal && newVal.length) {
-                        // maybe just a k-v pair setup, like metadata
-                        if (angular.isDefined(scope.for[scope.is].length
-                            && !scope.for[scope.is][0]['@id']
-                            && scope.for[scope.is][0].label
-                            && scope.for[scope.is][0]['@value'])) {
-                            type = "pairs";
-                        }
-                        el.html(getTemplate(type));
-                        $compile(el.contents())(scope);
+                    // maybe just a k-v pair setup, like metadata
+                    if (angular.isDefined(scope.for[scope.is].length
+                        && !scope.for[scope.is][0]['@id']
+                        && scope.for[scope.is][0].label
+                        && scope.for[scope.is][0]['@value'])) {
+                        type = "pairs";
                     }
-                });
-            }
+                    el.html(getTemplate(type));
+                    $compile(el.contents())(scope);
+                }
+            });
+        }
         scope.labelClass = attrs.labelClass;
         if (scope.is === '@id' && scope.for['@type'] === 'sc:Canvas') {
             var insert = '<figure class="pull-right">'
@@ -598,4 +710,26 @@ rerum.directive('thumbsCanvas', function () {
        controller: "thumbsController",
        templateUrl: "app/thumbsCanvas.html"
    };
+});
+
+//  https://veamospues.wordpress.com/2014/01/27/reading-files-with-angularjs/
+//  http://jsfiddle.net/alexsuch/6aG4x/535/
+// Designed to work with $scope.uploadManifest() here, which works to control $fileManifest.  Perhaps this could be a rerumService.
+rerum.directive('onReadFile', function ($parse) {
+  return {
+    restrict: 'A',
+    scope: false,
+    link: function(scope, element, attrs) {
+      var fn = $parse(attrs.onReadFile);
+      element.on('change', function(onChangeEvent) {
+        var reader = new FileReader();
+        reader.onload = function(onLoadEvent) {
+          scope.$apply(function() {
+            fn(scope, {$fileContent:onLoadEvent.target.result});
+          });
+        };
+        reader.readAsText((onChangeEvent.srcElement || onChangeEvent.target).files[0]);
+      });
+    }
+  };
 });
