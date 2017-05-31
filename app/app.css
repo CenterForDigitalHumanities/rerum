@@ -99,16 +99,88 @@ body pre {
 figure img{
     max-height:300px;
 }
-.card {
-    margin-bottom: 2.5rem;
-    box-shadow: 0 1px 3px rgba(0,0,0,.12), 0 1px 2px rgba(0,0,0,.24);
-    padding: 1.5rem;
-}
 .row {
     display: flex;
 }
 .nowrap {
     white-space: nowrap !important;
+}
+
+.note {
+    position:relative;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    box-shadow: 0 1px 3px rgba(0,30,60,.12), 0 1px 2px rgba(0,30,60,.24);
+    margin-bottom: 2.5rem;
+}
+.note>.note-header{
+    color: #333;
+    background-color: #f5f5f5;
+    border-color: #ddd;
+    padding: .6rem 1rem;
+    border-bottom: 1px solid transparent;
+}
+.note>.note-block{
+    padding: 1rem;
+    font-family: monospace;
+}
+.note>.note-header:after,.note>.note-header:before{
+    position:absolute;
+    top:11px;left:-16px;
+    right:100%;
+    width:0;
+    height:0;
+    display:block;
+    content:" ";
+    border-color:transparent;
+    border-style:solid solid outset;
+    pointer-events:none;
+}
+.note>.note-header:after{
+    border-width:7px;
+    border-right-color:#f7f7f7;
+    margin-top:1px;
+    margin-left:2px;
+}
+.note>.note-header:before{
+    border-right-color:#ddd;
+    border-width:8px;
+}
+.note-footer{
+    background-color: #f5f5f5;
+    padding: .75rem 1.25rem;
+    border-top: 1px solid rgba(0,0,0,.125);
+    width:100%;
+}
+.text {
+    font-family: 'Junicode', serif !important;
+}
+code{
+    color: #001e3c;
+    background-color: #d6ebff;
+    border-color: #a3d1ff;
+}
+section>h2{
+    position:relative;
+    background-color: #f5f5f5;
+}
+section>h2::before{
+    content:"";
+    position:absolute;
+    background-color: #f5f5f5;
+    top:0;left:-5rem;
+    border-bottom-left-radius: 5rem;
+    border-top-left-radius: 5rem;
+    height:100%;
+    width:5rem;
+}
+
+dt {
+    font-weight: 700;
+}
+dd {
+    margin-bottom: .5rem;
+    margin-left: 2rem;
 }
 
 /* textareas that allow manifest alterations */
