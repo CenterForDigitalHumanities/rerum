@@ -155,6 +155,11 @@ figure img{
 .text {
     font-family: 'Junicode', serif !important;
 }
+.card {
+    margin-bottom: 2.5rem;
+    padding: 1rem;
+    box-shadow: 0 1px 3px rgba(0,30,60,.12), 0 1px 2px rgba(0,30,60,.24);
+}
 code{
     color: #001e3c;
     background-color: #d6ebff;
