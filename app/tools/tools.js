@@ -40,11 +40,11 @@ rerum.controller('toolsController', function ($scope) {
             notes: "The only line-by-line transcription tool that is OAC and IIIF compliant in an open environment."
         },
         {
-            label: "Mirador",
-            link: "https://projectmirador.org",
-            version: "2.1",
-            tags: ["viewer","annotator","manuscripts","iiif"],
-            notes: "The official viewer for the IIIF standard and sc:Manifest objects."
+            label: "Mirador Twig",
+            link: "https://github.com/CenterForDigitalHumanities/mirador",
+            version: "2.x",
+            tags: ["viewer","manuscripts","iiif"],
+            notes: "The fork for OngCDH which supports non-IIIF images."
         },
         {
             label: "Broken Books",
