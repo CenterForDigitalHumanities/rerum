@@ -262,7 +262,7 @@ rerum.controller('buildManifestController', function ($scope, $uibModal, Context
     $scope.jsonManifest = {"json":{}};
     $scope.uriManifest = {"@id" : ""};
     $scope.manifestValidated = false;
-    $scope.contextvisible = false;   
+    $scope.contextvisible = false;
 
 /*
  *   Edit already existing manifests
@@ -289,9 +289,9 @@ rerum.controller('buildManifestController', function ($scope, $uibModal, Context
             }
         });
     };
- 
+
     /* varius validators */
-    
+
     //Here, the input could be an object or a string.
     $scope.validJSONManifest = function(input){
         if(typeof input ===  "string"){
@@ -313,16 +313,16 @@ rerum.controller('buildManifestController', function ($scope, $uibModal, Context
             }
         }
     };
-    
+
     $scope.validIIIFManifest = function(input){
         //hit the IIIF validator endpoint and return that result.  That could
         //this could maybe be a RERUM service in this app.
     };
-       
+
     $scope.validRerumManifest = function(input){
         //Hit an advanced internal RERUM viewer/validator ?
     };
-    
+
     $scope.validURI = function(input){
         if(input.indexOf("http://") > -1 || input.indexOf("https://") > -1){
             return true;
@@ -331,9 +331,9 @@ rerum.controller('buildManifestController', function ($scope, $uibModal, Context
             return false;
         }
     };
-    
+
     /* End validators.  Check you don't repeat a rerumService */
-    
+
     /* manifest gatherers */
     $scope.uploadManifestFile = function($fileContent){
         var file = $fileContent;
@@ -348,7 +348,7 @@ rerum.controller('buildManifestController', function ($scope, $uibModal, Context
             $scope.obj = Knowns.manifest;
         }
      };
-     
+
     $scope.submitManifestURI = function(){
         var potentialURI = $scope.uriManifest["@id"];
         if($scope.validURI(potentialURI)){
@@ -366,9 +366,9 @@ rerum.controller('buildManifestController', function ($scope, $uibModal, Context
             alert("URI "+potentialURI+" was not valid");
             $scope.uriManifest = "";
             $scope.obj = Knowns.manifest;
-        }     
+        }
      };
-     
+
     $scope.submitJSONManifest = function(){
         var potentialJSON = $scope.jsonManifest.json;
         if($scope.validJSONManifest(potentialJSON)){
@@ -382,9 +382,9 @@ rerum.controller('buildManifestController', function ($scope, $uibModal, Context
             $scope.obj = Knowns.manifest;
         }
      };
-         
+
      /* End gatherers */
-     
+
 /* End Manifest Edit stuff */
 
 /**
@@ -422,29 +422,28 @@ rerum.controller('buildManifestController', function ($scope, $uibModal, Context
         }
         $scope.imgStr = "";
     };
-    
+
     $scope.resolveURI = function(){
         rerumService.resolveURI($scope.uriManifest["@id"]);
     };
-  
+
     $scope.saveManifest = function(){
-        
+
         var manifestToSave = $scope.obj; //This is the mainfest we have been manipulating in this $scope
         var savePromise = rerumService.save(manifestToSave); //Rerum service to $post into anno store
         //Cannot access success or fail from the save here.
             savePromise.success(function(data, status, headers, config){ //manifest saved
-                $scope.stillLocal = false;
-                $scope.manifestID = data["@id"];
+                var newID = data["@id"].split("/").pop();
+                $scope.obj["@id"] = "http://object.rerum.io/" + newID;
                 $scope.imagesVisible = false;
                 //inform user of a successful save, have the UI react accordingly
             });
             savePromise.error(function(data, status, headers, config){ //maniest did not save
-                $scope.stillLocal = true;
                 $scope.imagesVisible = true;
                 //inform user of an unseuccesful save, have the UI react accordingly
             });
     };
-    
+
     $scope.defaultCanvas = function(index,event){
         var img = event.target;
         // {} to preserve original inits
@@ -486,31 +485,27 @@ rerum.controller('buildManifestController', function ($scope, $uibModal, Context
                 height: $scope.cHeight
             });
     };
-    
+
     /* End Manifest Create stuff */
-    
+
     $scope.preview = function(){
         $scope.previewManifest = JSON.stringify($scope.obj,null,4);
-        if(!$scope.stillLocal){
-            $scope.imagesVisible = true;
-        }
+        $scope.imagesVisible = false;
     };
 
     $scope.closePreview = function(){
         $scope.previewManifest = "";
-        if(!$scope.stillLocal){
-            $scope.imagesVisible = false;
-        }
+        $scope.imagesVisible = true;
     };
-    
+
     $scope.showContext = function(){
-       $scope.contextVisible = true;  
+       $scope.contextVisible = true;
      };
-     
+
     $scope.hideContext = function(){
-        $scope.contextVisible = false;  
+        $scope.contextVisible = false;
     };
-     
+
 });
 
 rerum.controller('thumbsController', function ($scope, Display) {

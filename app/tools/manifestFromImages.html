@@ -1,28 +1,28 @@
 <div class="container">
-    <p ng-show="!stillLocal">
+    <p ng-show="obj['@id']">
         Your manifest ({{manifestID}}) has been saved into RERUM.  To perform edits from this point forwards please visit the
         <a href="#/edit">Edit Manifest Page</a>.
     </p>
-    <form ng-submit="loadImages(imgString,cHeight);" >
-        <label ng-show="stillLocal">Images</label>
-        <input ng-show="stillLocal" class="u-full-width" type="text" ng-model="imgString"
+    <form ng-submit="loadImages(imgString,cHeight);" ng-hide="obj['@id']">
+        <label>Images</label>
+        <input class="u-full-width" type="text" ng-model="imgString"
                ng-model-options="{ updateOn: 'blur' }"><i></i>
-        <p ng-show="stillLocal">
+        <p>
             Enter a list of URLs to available images, separated by a comma(","). Any
             images that we cannot resolve will result in unannotated Canvases. The
             SharedCanvas Manifest that you create is editable. By default, the image
             names will be used as Canvas labels and they will be sequenced in the
             order they are input.
         </p>
-        <label ng-show="stillLocal">Canvas Dimensions</label>
-        <input class="u-full-width" type="number" ng-show="stillLocal" ng-model="cHeight"
+        <label>Canvas Dimensions</label>
+        <input class="u-full-width" type="number" ng-model="cHeight"
                ng-model-options="{ updateOn: 'blur' }"><i></i>
-        <p ng-show="stillLocal">
+        <p>
             Incoming images will be scaled to the height set and the initial width will
             be based off the natural ratio of the full image.
         </p>
-        <label ng-show="stillLocal">Manifest Metadata</label>
-        <div ng-show="stillLocal" id="metadataFields">
+        <label>Manifest Metadata</label>
+        <div id="metadataFields">
             <p>
                 You can supply some basic metadata for your manifest here.
             </p>
@@ -35,23 +35,23 @@
 <!--            <label>Something Custom</label>
             TODO: We could allow them to add custom manifest.metadata[] objects <br>-->
         </div>
-        <button type="submit" ng-show="stillLocal">Create Manifest</button>
+        <button type="submit">Create Manifest</button>
 
         <button type="button" ng-show="canvases.length"
                 ng-click="preview()">
             Preview manifest
         </button>
-        <a class="button" ng-show="!stillLocal" href="#/edit">
-            Edit this manifest ({{canvases.length}} canvas{{(canvases.length===1)&&""||"es"}})
-        </a>
-        <button type="button" ng-show="canvases.length && stillLocal"
+        <button type="button" ng-show="canvases.length"
                 ng-click="saveManifest(obj)">
             Save this manifest
         </button>
 
     </form>
+    <a class="button" href="#/edit" ng-show="obj['@id']">
+        Edit this manifest ({{canvases.length}} canvas{{(canvases.length===1)&&""||"es"}})
+    </a>
 
-<pre style="position:relative;" ng-show="previewManifest"><div class="closeManifestPreview" ng-click="closePreview();">X</div><code>{{previewManifest}}</code></pre>
+    <pre style="position:relative;" ng-show="previewManifest"><div class="closeManifestPreview" ng-click="closePreview();">X</div><code>{{previewManifest}}</code></pre>
     <!--<thumbs-canvas slides="c in ::canvases track by c.images[0].resource['@id']">
         <img ng-src="{{::c.images[0].resource['@id']||c.images[0]}}" ng-load="defaultCanvas($index,$event)">
         <small class="help-block">{{c.width}} x {{c.height}}</small>
