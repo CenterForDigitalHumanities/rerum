@@ -427,10 +427,12 @@ angular.module('utils', [])
                 updating = true;
             }
             if(isRerum && updating){ //It is a RERUM object for updating
-                url = "http://api.rerum.io/updateAnnotation.action?content=";
+                url = "http://165.134.241.141/annotationstore/anno/updateAnnotation.action?content=";
+//                url = "http://api.rerum.io/updateAnnotation.action?content=";
             }
             else if(!updating){ //It is an object meant to be saved
-                url = "http://api.rerum.io/saveNewAnnotation.action?content=";
+                url = "http://165.134.241.141/annotationstore/anno/saveNewAnnotation.action?content=";
+//                url = "http://api.rerum.io/saveNewAnnotation.action?content=";
             }
             var obj_str = JSON.stringify(obj); //Serialize JSON data into a string.
             url += obj_str;
@@ -439,7 +441,8 @@ angular.module('utils', [])
                 if(conf){
                     delete obj['@id']; //get rid of key:val, we do not want to preserve it.
                     obj_str = JSON.stringify(obj);
-                    url = "http://api.rerum.io/saveNewAnnotation.action?content=" + obj_str; //It is now a domestic manifest
+                    url = "http://165.134.241.141/annotationstore/anno/saveNewAnnotation.action?content=" + obj_str; //It is now a domestic manifest
+//                    url = "http://api.rerum.io/saveNewAnnotation.action?content=" + obj_str; //It is now a domestic manifest
                 }
                 else{
                     return false;
