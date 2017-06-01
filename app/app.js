@@ -165,6 +165,18 @@ rerum.controller('welcomeController', function ($scope, $location, hotkeys) {
             }
         });
 });
+rerum.directive('scrollto',
+    function ($anchorScroll, $location) {
+        return {
+            link: function (scope, element, attrs) {
+                element.on("click",function (e) {
+                    e.preventDefault();
+                    $location.hash(attrs["scrollto"]);
+                    $anchorScroll();
+                });
+            }
+        };
+    });
 
 /*
  * Mock Data

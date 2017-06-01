@@ -6,6 +6,25 @@
     color:#001e3c;
 }
 
+a[scrollto]{
+    cursor: pointer;
+}
+
+a[scrollto].top::before{
+    content: "↑";
+    transition: all 1s;
+    position: relative;
+    top:0;
+}
+a[scrollto].top:hover::before{
+    animation:top .5s;
+}
+@keyframes top {
+    100% {
+        top: -.6rem;
+    }
+}
+
 .disabled {
     cursor: not-allowed;
     pointer-events: none;
