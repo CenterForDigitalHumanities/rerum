@@ -1,5 +1,5 @@
 <div class="container">
-    <p ng-show="!stillLocal"> 
+    <p ng-show="!stillLocal">
         Your manifest ({{manifestID}}) has been saved into RERUM.  To perform edits from this point forwards please visit the
         <a href="#/edit">Edit Manifest Page</a>.
     </p>
@@ -50,11 +50,8 @@
         </button>
 
     </form>
-    
-    <pre style="position:relative;" ng-show="previewManifest">
-        <div class="closeManifestPreview" ng-click="closePreview();">X</div>
-        <code>{{previewManifest}}</code>
-    </pre>
+
+<pre style="position:relative;" ng-show="previewManifest"><div class="closeManifestPreview" ng-click="closePreview();">X</div><code>{{previewManifest}}</code></pre>
     <!--<thumbs-canvas slides="c in ::canvases track by c.images[0].resource['@id']">
         <img ng-src="{{::c.images[0].resource['@id']||c.images[0]}}" ng-load="defaultCanvas($index,$event)">
         <small class="help-block">{{c.width}} x {{c.height}}</small>
