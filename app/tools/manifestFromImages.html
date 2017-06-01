@@ -56,7 +56,7 @@
         <img ng-src="{{::c.images[0].resource['@id']||c.images[0]}}" ng-load="defaultCanvas($index,$event)">
         <small class="help-block">{{c.width}} x {{c.height}}</small>
     </thumbs-canvas> -->
-    <figure class="imagePreview" ng-show="imagesVisible" ng-repeat="c in ::canvases track by c.images[0].resource['@id']">
+    <figure class="imagePreview" ng-show="imagesVisible" ng-repeat="c in canvases track by c.images[0].resource['@id']">
         <figcaption>{{::c.label.substring(0,10)}}</figcaption>
         <img ng-src="{{::c.images[0].resource['@id']||c.images[0]}}" ng-load="defaultCanvas($index,$event)">
         <small class="help-block">{{c.width}} x {{c.height}}</small>
