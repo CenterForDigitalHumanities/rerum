@@ -111,7 +111,7 @@ body pre {
     right: 1rem;
     font-weight: bold;
     font-size: 3rem;
-    top: 1rem;
+    top: 0;
     cursor: pointer;
 }
 
