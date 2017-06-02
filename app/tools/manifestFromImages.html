@@ -1,6 +1,6 @@
 <div class="container">
     <p ng-show="obj['@id']">
-        Your manifest ({{manifestID}}) has been saved into RERUM.  To perform edits from this point forwards please visit the
+        Your manifest ({{obj['@id']}}) has been saved into RERUM.  To perform edits from this point forwards please visit the
         <a href="#/edit">Edit Manifest Page</a>.
     </p>
     <form ng-submit="loadImages(imgString,cHeight);" ng-hide="obj['@id']">

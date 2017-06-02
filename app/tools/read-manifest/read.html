@@ -68,7 +68,7 @@
         .text-annotation:hover canvas {
             opacity: 1;
         }
-        .note {
+        .u-see-thru {
             background-color: rgba(255,255,255,.7);
         }
         .btn-group, .btn-group-vertical {
@@ -158,7 +158,7 @@ monogram[shape='oval']{
 
     </style>
     <div ng-if="obj['@id']">
-        <div class="note">
+        <div class="note u-see-thru">
             <h3 class="note-header text">{{obj.label || "[ no label ]"}}
                 <a title="clear manifest" href="#/read" class="button">
                     <i class="fa fa-bomb"></i>
@@ -209,32 +209,28 @@ monogram[shape='oval']{
         </div>
     </div>
     <div ng-if="!obj['@id']">
-        <div class="input-group">
-        <input type="url" placeholder="Paste or type a URI for any Manifest" class="form-control" ng-model="screen.murl">
-        <span class="input-group-btn">
-        <a class="btn btn-outline-primary" ng-href="#/read?url={{screen.murl}}">Load it</a>
-        </span>
+        <div class="row">
+            <input type="url" placeholder="Paste or type a URI for any Manifest" class="form-control" ng-model="screen.murl">
+        <a class="button" ng-href="#/read?url={{screen.murl}}">Load it</a>
         </div>
         <span ng-if="universe">
-            <button role="button" class="btn btn-primary" ng-show="universe.label!=='IIIF Universe'" ng-click="getUniverse()">
+            <button role="button" class="button" ng-show="universe.label!=='IIIF Universe'" ng-click="getUniverse()">
                 <i class="fa fa-globe fa-rotate-90"></i>
             </button>
-        <select class="btn btn-outline-primary" ng-options="c['@id'] as c.label for c in universe.collections" ng-model='collectionID' ng-change="updateCollection(collectionID)">
+        <select class="" ng-options="c['@id'] as c.label for c in universe.collections" ng-model='collectionID' ng-change="updateCollection(collectionID)">
             <option value="">{{universe.label}}</option>
         </select>
-        <select class="btn btn-outline-primary" ng-show="collection.manifests" ng-options="m['@id'] as m.label || $index for m in collection.manifests" ng-model='screen.murl'>
+        <select class="" ng-show="collection.manifests" ng-options="m['@id'] as m.label || $index for m in collection.manifests" ng-model='screen.murl'>
             <option value="">{{collection.label || " Select a Manifest "}}</option>
         </select>
         </span>
-        <p class="text-muted">or try these examples:</p>
-        <a class="btn btn-outline-primary" href="#/read?url=http://t-pen.org/TPEN/manifest/4080">T-PEN (unauthorized)</a>
-        <a class="btn btn-outline-primary" href="#/read?url=http://165.134.241.141/annotationstore/annotation/577d2cace4b075dfb3779f08">Broken Books (no transcription, custom data)</a>
-        <a class="btn btn-outline-primary" href="#/read?url=http://www.e-codices.unifr.ch/metadata/iiif/bge-cl0015/manifest.json">e-codices (Classic IIIF, no text)</a>
+        <p class="">or try these examples:</p>
+        <a class="button" href="#/read?url=http://t-pen.org/TPEN/manifest/4080">T-PEN (unauthorized)</a>
+        <a class="button" href="#/read?url=http://165.134.241.141/annotationstore/annotation/577d2cace4b075dfb3779f08">Broken Books (no transcription, custom data)</a>
+        <a class="button" href="#/read?url=http://www.e-codices.unifr.ch/metadata/iiif/bge-cl0015/manifest.json">e-codices (Classic IIIF, no text)</a>
         <p ng-if="obj.error" ng-class="obj.error &&'alert alert-danger'">
             {{obj.error.status}} {{obj.error.statusText}}
         </p>
-        <pre ng-class="{'alert alert-danger':obj.status}">
-            {{ obj }}
-        </pre>
+        <pre><code style="background-color:{{obj.status&&'rgba(255,15,15,.3);'}};">{{ obj | json }}</code> {{obj.status}}</pre>
     </div>
 </div>
