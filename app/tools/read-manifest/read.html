@@ -210,8 +210,8 @@ monogram[shape='oval']{
     </div>
     <div ng-if="!obj['@id']">
         <div class="row">
-            <input type="url" placeholder="Paste or type a URI for any Manifest" class="form-control" ng-model="screen.murl">
-        <a class="button" ng-href="#/read?url={{screen.murl}}">Load it</a>
+            <input type="url" placeholder="Paste or type a URI for any Manifest" class="six columns" ng-model="screen.murl">
+            <a class="button" ng-href="#/read?url={{screen.murl}}">Load it</a>
         </div>
         <span ng-if="universe">
             <button role="button" class="button" ng-show="universe.label!=='IIIF Universe'" ng-click="getUniverse()">
