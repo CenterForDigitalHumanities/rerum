@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<!--
+ author: bhaberbe
+
+Offer many validation schemas for many types of objects with feedback on the issues
+
+-->
+<html>
+    <head>
+        <title>Data Validation</title>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+        <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="https://cdn.rawgit.com/dhg/Skeleton/master/css/skeleton.css">
+        <link rel="stylesheet" href="app/lib/loading-bar.css" media="screen">
+        <link rel="stylesheet" href="app/lib/hotkeys.min.css" media="screen">
+        <link rel="stylesheet" href="assets/fonts.css" media="screen">
+        <link rel="stylesheet" href="app/app.css" media="screen">
+        <link rel="stylesheet" href="app/tools/parse-rect/parse-rect.css" media="screen">
+        <link rel="stylesheet" href="app/tools/crop-page/crop-page.css" media="screen">
+        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+        <link rel="apple-touch-icon" sizes="57x57" href="apple-icon-57x57.png">
+        <link rel="apple-touch-icon" sizes="60x60" href="apple-icon-60x60.png">
+        <link rel="apple-touch-icon" sizes="72x72" href="apple-icon-72x72.png">
+        <link rel="apple-touch-icon" sizes="76x76" href="apple-icon-76x76.png">
+        <link rel="apple-touch-icon" sizes="114x114" href="apple-icon-114x114.png">
+        <link rel="apple-touch-icon" sizes="120x120" href="apple-icon-120x120.png">
+        <link rel="apple-touch-icon" sizes="144x144" href="apple-icon-144x144.png">
+        <link rel="apple-touch-icon" sizes="152x152" href="apple-icon-152x152.png">
+        <link rel="apple-touch-icon" sizes="180x180" href="apple-icon-180x180.png">
+        <link rel="icon" type="image/png" sizes="192x192"  href="android-icon-192x192.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+        <link rel="manifest" href="/manifest.json">
+    </head>
+    <body>
+        <div class="container" ng-controller="validationController">
+            <p>
+                There are many data types that are supported through RERUM.  Here, you can tell if your data can be validated against various schemas.
+            </p>
+            <div ng-show="showChoices" id="validationChoices">
+                <div class="row">
+                    <a class="whichValidation" which="image" ng-click="showImageSection()"> Validate an Image </a>
+                    <a class="whichValidation" which="json" ng-click="showJSONSection()"> Validate JSON </a>
+                    <a class="whichValidation" which="iiif" ng-click="showIIIFSection()"> Validate IIIF</a>
+                </div>
+                <div class="row">
+                    <a class="whichValidation" which="xml" ng-click="showXMLSection()"> Validate XML </a>
+                    <a class="whichValidation" which="tei" ng-click="showTEISection()"> Validate TEI </a>
+                    <a class="whichValidation" which="mei" ng-click="showMEISection()"> Validate MEI </a>
+                </div>
+            </div>
+            <div which="image" class="validationChoice six columns card">
+                <h4>Image validation</h4>
+                <p class="explain"> Check if an image can be resolved and what filetype that image is. </p>
+                <input type="text" placeholder="Image URL" ng-model="IMAGEURI"/> <button ng-click="validateImage()"> </button>
+<!--                <div class="btn-block">
+                    <div class="fileUpload positioned btn">
+                        <span>Upload Image</span>
+                        <input type="file" on-read-file="validateImage($fileContent)" />
+                         See rerum.directive('onReadFile' in manifest.js for info on $fileContent  
+                    </div>
+                </div>-->
+                <div id="imageFileType">
+                    {{imageFileType}}
+                </div>
+            </div>    
+            <div which="json" class="validationChoice six columns card">
+                <h4>JSON validation</h4>
+                <p class="explain"> Upload a JSON file, enter a URL that resolves to JSON or copy and paste JSON into an area below.  The data will be validated. </p>
+                <input ng-model="JSONURI" type="text" />
+                <textarea ng-model="JSONOBJECT"></textarea>
+                <input type="text" placeholder="Image URL" /> <button ng-click="validateJSON()"> </button>
+                <div class="btn-block">
+                    <div class="fileUpload positioned btn">
+                        <span>Upload JSON</span>
+                        <input type="file" on-read-file="validateJSON($fileContent)" />
+                        <!-- See rerum.directive('onReadFile' in manifest.js for info on $fileContent  -->
+                    </div>
+                </div>
+            </div>    
+            <div which="iiif" class="validationChoice six columns card">
+                <h4>IIIF validation</h4>
+                <p class="explain"> Upload a IIIF document, enter a URL that resolves to a IIIF document or copy and paste a IIIF document into the area below.  
+                    The data will be validated. 
+                </p>
+                    <input ng-model="IIIFURI" type="text" />
+                    <textarea ng-model="IIIFOBJECT"></textarea>
+                    <button ng-click="validateIIIF()"> </button>
+                    <div class="btn-block">
+                        <div class="fileUpload positioned btn">
+                            <span>Upload IIIF Document</span>
+                            <input type="file" on-read-file="validateIIIF($fileContent)" />
+                            <!-- See rerum.directive('onReadFile' in manifest.js for info on $fileContent  -->
+                        </div>
+                    </div>
+            </div>  
+<!--            <div which="xml" class="validationChoice six columns card">
+                <h4>XML validation</h4>
+                    <p class="explain"> Upload a XML file or copy and paste XML into the area below.  The data will be validated. </p>
+                    <input type="text" />
+                    <textarea></textarea>
+                    <div class="btn-block">
+                        <div class="fileUpload positioned btn">
+                            <span>Upload</span>
+                            <input type="file" on-read-file="validateXML($fileContent)" />
+                             See rerum.directive('onReadFile' in manifest.js for info on $fileContent  
+                        </div>
+                    </div>
+            </div>   
+            <div which="tei" class="validationChoice six columns card">
+                <h4>TEI validation</h4>
+                    <p class="explain"> Upload a TEI file or copy and paste TEI into the area below.  The data will be validated. </p>
+                    <input type="text" />
+                    <textarea></textarea>
+                    <div class="btn-block">
+                        <div class="fileUpload positioned btn">
+                            <span>Upload</span>
+                            <input type="file" on-read-file="validateTEI($fileContent)" />
+                             See rerum.directive('onReadFile' in manifest.js for info on $fileContent  
+                        </div>
+                    </div>
+            </div>   
+            <div which="mei" class="validationChoice six columns card">
+                <h4>MEI validation</h4>
+                    <p class="explain"> Upload a MEI file or copy and paste MEI into the area below.  The data will be validated. </p>
+                    <input type="text" />
+                    <textarea></textarea>
+                    <div class="btn-block">
+                        <div class="fileUpload positioned btn">
+                            <span>Upload</span>
+                            <input type="file" on-read-file="validateMEI($fileContent)" />
+                             See rerum.directive('onReadFile' in manifest.js for info on $fileContent  
+                        </div>
+                    </div>
+            </div>-->
+        </div>
+    </body>
+</html>

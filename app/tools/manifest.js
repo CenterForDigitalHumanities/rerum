@@ -293,43 +293,25 @@ rerum.controller('buildManifestController', function ($scope, $uibModal, Context
     /* varius validators */
 
     //Here, the input could be an object or a string.
-    $scope.validJSONManifest = function(input){
-        if(typeof input ===  "string"){
-            input = input.trim();
-            try{
-                input = JSON.parse(input);
-                return true;
-            }
-            catch(e){
-                return false;
-            }
-        }
-        else if (typeof input === "object"){
-            if(input.constructor === {}.contructor){
-                return true;
-            }
-            else{
-                return false;
-            }
-        }
-    };
+    
 
-    $scope.validIIIFManifest = function(input){
+    $scope.validIIIF = function(input){
         //hit the IIIF validator endpoint and return that result.  That could
         //this could maybe be a RERUM service in this app.
+        rerumService.validateIIIF(input);
     };
 
     $scope.validRerumManifest = function(input){
         //Hit an advanced internal RERUM viewer/validator ?
+        rerumService.validateRerumManifest(input);
+    };
+    
+    $scope.validJSON = function(input){
+        rerumService.validateJSON(input);
     };
 
     $scope.validURI = function(input){
-        if(input.indexOf("http://") > -1 || input.indexOf("https://") > -1){
-            return true;
-        }
-        else{
-            return false;
-        }
+        rerumService.validateURI(input);
     };
 
     /* End validators.  Check you don't repeat a rerumService */
@@ -337,7 +319,7 @@ rerum.controller('buildManifestController', function ($scope, $uibModal, Context
     /* manifest gatherers */
     $scope.uploadManifestFile = function($fileContent){
         var file = $fileContent;
-        if($scope.validJSONManifest(file)){
+        if($scope.validJSONM(file)){
             $scope.fileManifest = JSON.parse(file);
             $scope.obj = $scope.fileManifest;
             $scope.manifestValidated = true;
@@ -353,7 +335,7 @@ rerum.controller('buildManifestController', function ($scope, $uibModal, Context
         var potentialURI = $scope.uriManifest["@id"];
         if($scope.validURI(potentialURI)){
             var potentialManifest = $scope.resolveURI(potentialURI);
-            if($scope.validJSONManifest(potentialManifest)){
+            if($scope.validJSON(potentialManifest)){
                 $scope.obj = JSON.parse(potentialManifest);
                 $scope.manifestValidated = true;
                 //Check if it is a RERUM manifest?
@@ -371,7 +353,7 @@ rerum.controller('buildManifestController', function ($scope, $uibModal, Context
 
     $scope.submitJSONManifest = function(){
         var potentialJSON = $scope.jsonManifest.json;
-        if($scope.validJSONManifest(potentialJSON)){
+        if($scope.validJSON(potentialJSON)){
             $scope.obj = JSON.parse(potentialJSON);
             $scope.manifestValidated = true;
             //check if it is a rerum manifest?
@@ -525,6 +507,109 @@ rerum.controller('thumbsController', function ($scope, Display) {
        $scope.display['cache' + page.id + 'tip'] = tip;
        return tip;
    };
+});
+
+rerum.controller('validationController', function ($scope, $uibModal, Context, Knowns, rerumService, obj) {
+    $scope.showingImage = false;
+    $scope.showingJSON = false;
+    $scope.showingIIIF = false;
+    $scope.showingRerum = false;
+    $scope.showingXML = false;
+    $scope.showingTEI = false;
+    $scope.showingMEI = false;
+    $scope.showChoices = true;
+    $scope.imageFileType = "";
+    
+    $scope.validImage = false;
+    $scope.validJSON = false;
+    $scope.validIIIF = false;
+    $scope.validXML = false;
+    $scope.validTEI = false;
+    $scope.validMEI = false;
+    $scope.validRerum = false;
+    
+    $scope.IMAGEURI = "";
+    $scope.IIIFURI = "";
+    $scope.JSONURI = "";
+    $scope.RERUMURI = "";
+    $scope.JSONOBJECT = {};
+    $scope.IIIFOBJECT = {};
+    $scope.RERUMOBJECT = {};
+    
+    /* Validation functions, scope to rerum services*/
+    $scope.validateIIIF = function(){
+        //hit the IIIF validator endpoint and return that result.  That could
+        //this could maybe be a RERUM service in this app.
+        var input = $scope.IIIFURI;
+        $scope.validIIIF = rerumService.validateIIIF(input);
+    };
+    $scope.validateRerumManifest = function(){
+        //Hit an advanced internal RERUM viewer/validator ?
+        var input = RERUMURI;
+        $scope.validRerum = rerumService.validateRerumManifest(input);
+    };
+    $scope.validateJSON = function(){
+        var input = JSONURI;
+        $scope.validJSON = rerumService.validateJSON(input);
+    };
+    $scope.validateImage = function(){
+        var input=IMAGEURI;
+        $scope.imageFileType = rerumService.validateImage(input);
+    };
+    $scope.validateURI = function(input){
+        $scope.validURI = rerumService.validateURI(input);
+    };
+    
+    //TODO
+    $scope.validateXML = function(){
+       $scope.validXML = rerumService.validateXML(input);
+    };
+    $scope.validateTEI = function(){
+       $scope.validTEI = rerumService.validateTEI(input);
+    };
+    $scope.validateMEI = function(){
+       $scope.validMEI = rerumService.validateMEI(input);
+    };
+    
+    
+    /* Hide/show sections */
+    $scope.showImageSection = function(){
+       $scope.showImage = true;
+     };
+    $scope.hideImageSection = function(){
+        $scope.showImage = false;
+    };
+    $scope.showJSONSection = function(){
+       $scope.showJSON = true;
+     };
+    $scope.hideJSONSection = function(){
+        $scope.hideJSONshowJSON = false;
+    };
+    $scope.showIIIFSection = function(){
+       $scope.showIIIF = true;
+     };
+    $scope.hideIIIFSection = function(){
+        $scope.showIIIF = false;
+    };
+    $scope.showXMLSection = function(){
+       $scope.showXML = true;
+     };
+    $scope.hideXMLSection = function(){
+        $scope.showXML = false;
+    };
+    $scope.showTEISection = function(){
+       $scope.showTEI = true;
+     };
+    $scope.hideTEISection = function(){
+        $scope.showTEI = false;
+    };
+    $scope.showMEISection = function(){
+       $scope.showMEI = true;
+     };
+    $scope.hideMEISection = function(){
+        $scope.showMEI = false;
+    };
+    
 });
 
 rerum.directive('ngLoad', function($parse){

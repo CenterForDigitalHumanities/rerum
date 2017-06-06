@@ -1,0 +1,38 @@
+<div class="col-xs-12 form-group">
+    <div class="btn-group btn-group-xs">
+        <button class="btn btn-default" ng-click="showImages = false" ng-class="{active:!showImages}">
+            <i class="fa fa-file-text-o"></i>
+        </button>
+        <button class="btn btn-default" ng-click="showImages=true" ng-class="{active:showImages}">
+            <i class="fa fa-file-image-o"></i>
+        </button>
+        <!--        <button class="btn btn-default" ng-click="showAll=true;showImages=false;"
+                        ng-class="{active:showImages}">
+                    <i class="fa fa-file-image-o"></i>
+                </button>-->
+    </div>
+    <div class="btn-group btn-group-xs">
+        <button class="btn btn-default" ng-click="tileSize = 'sm-tiles'" ng-class="{active:tileSize !== 'lg-tiles'}">
+            <i class="fa fa-th"></i>
+        </button>
+        <button class="btn btn-default" ng-click="tileSize = 'lg-tiles'" ng-class="{active:tileSize === 'lg-tiles'}">
+            <i class="fa fa-th-large"></i>
+        </button>
+    </div>
+    <div class="grid pre-scrollable" ng-class="tileSize" ng-controller="buildManifestController">
+        <div ng-repeat="slide in slides.manifest.canvasses" ng-init="thisPage = getPageByCanvas(slide,slides)">
+            <div class="thumbs animate" tooltip-placement="left" tooltip-trigger="mouseenter" tooltip-html-unsafe="{{getBoundaryTip(thisPage)}}">
+                <shared-canvas ng-show="showImages||showAll" canvas="slide"> </shared-canvas>
+                <page ng-hide="showImages">
+                    <div class="line" annotation-id="{{line.id}}" ng-repeat="line in (display['text' + thisPage.id + (display.linebreak||'line')] || getLineText(thisPage,true)) track by line.id">{{line.text}}</div>
+                </page>
+                <div class="caption">
+                    <button class="pull-right btn btn-xs btn-primary hidden-sm hidden-xs" ng-click="viewCanvas([slide],slides)">
+                        <i class="fa fa-eye"></i>
+                    </button>
+                    {{slide.title||$index}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

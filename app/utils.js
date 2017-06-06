@@ -229,7 +229,7 @@ angular.module('utils', [])
         };
         this.resolveURI = function(uri) {
             console.log("resolving uri...");
-            if (typeof uri !== "string" || uri.indexOf("://") === -1) {
+            if (typeof uri !== "string" || !this.validateURI(uri)) {
                 throw Error(uri + " does not appear to be a valid URI");
             }
             return $http.get(uri);
@@ -407,20 +407,12 @@ angular.module('utils', [])
                     return err;
                 });
         };
-        this.checkRerum = function(input){
-            var idToCheck = input["@id"] || "";
-            if(idToCheck.indexOf("/annotationstore/annotation/") >-1 || idToCheck.indexOf("rerum.io") > -1){
-                return true;
-            }
-            else{
-                return false;
-            }
-        };
+        
         this.save = function(obj) {
             // for alpha, automatically add a flag for anything coming in from rerum
             obj._rerum_alpha = true;
 
-            var isRerum = this.checkRerum(obj); //Does the @id tell us it is in rerum?
+            var isRerum = this.validateRerumManifest(obj); //Does the @id tell us it is in rerum?
             var updating = false;
             var url = "";
             if(obj['@id']){ //Is it an object for updating
@@ -450,6 +442,117 @@ angular.module('utils', [])
             }
             return $http.post(url);
         };
+        
+        /* Various Validators */
+        this.validateJSON = function(input){
+            if(typeof input ===  "string"){
+                input = input.trim();
+                try{
+                    input = JSON.parse(input);
+                    return true;
+                }
+                catch(e){
+                    return false;
+                }
+            }
+            else if (typeof input === "object"){
+                if(input.constructor === {}.contructor){
+                    return true;
+                }
+                else{
+                    return false;
+                }
+            }
+        };
+
+        this.validateURI = function(input){
+            if(input.indexOf("http://") > -1 || input.indexOf("https://") > -1){
+                return true;
+            }
+            else{
+                return false;
+            }
+        };
+        
+        //Resolve image headers and return HTTP Response Code or file type is successful
+            //Could be a user uploaded image or URL?
+         this.validateImage = function(input){
+            if (typeof input == "string" && !this.validateURI(input)) {
+                throw Error(input + " does not appear to be a valid URI");
+            }
+            
+            if(typeof input == "string"){
+                $http.get(uri)
+                .success(function(data, status, headers, config) {
+                    return headers()['Content-Type'];
+                })
+                .error(function(data, status, headers, config) {
+                    return status;
+                });
+            }
+            //What about file upload
+            else{
+                return 500;
+            }
+        };
+        
+        this.validateIIIF = function(input){
+            //Hit the IIIF validatory API
+            var url = "";
+            if(typeof input == "string" && validURI(input)){
+                url = "http://iiif.io/api/presentation/validator/service/validate?version=2.0&url="+input;
+            }
+            else{
+                if(input["@id"]){
+                     url = "http://iiif.io/api/presentation/validator/service/validate?version=2.0&url="+input["@id"];
+                }
+            }
+            if(validURI(url)){
+                $http.get(url)
+                .success(function(data, status, headers, config) {
+//                data is JSON to parse for feedback
+//                {
+//                    "url": "<SUBMITTED URL>",
+//                    "error": "<ERROR MESSAGE>",
+//                    "okay": 1,
+//                    "warnings": []
+//                }
+                    if(data.okay === 1){
+                        return true;
+                    }
+                    else{
+                        return false;
+                    }
+                })
+                .error(function(data, status, headers, config) {
+                    return false;
+                });
+            }
+            else{
+                return false;
+            }
+        };
+        
+        this.validateRerumManifest = function(input){
+            var idToCheck = input["@id"] || "";
+            if(idToCheck.indexOf("/annotationstore/annotation/") >-1 || idToCheck.indexOf("rerum.io") > -1){
+                return true;
+            }
+            else{
+                return false;
+            }
+        };
+        
+        this.validateXML = function(input){
+            //TODO
+        };
+        this.validateTEI = function(input){
+            //TODO
+        };
+        this.validateMEI = function(input){
+            //TODO
+        };
+        
     }).directive('selector', function() {
         return {
             scope: {
