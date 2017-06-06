@@ -30,6 +30,18 @@ rerum.config(['$routeProvider',
                     },
                     obj: function(){return false;}
                 }
+            })
+            .when('/validate', {
+                templateUrl: 'app/tools/validator_blackbox/validate.html',
+                controller: 'validationController',
+                resolve: {
+                    context: function (Context) {
+                        return Context.getJSON.success(function (c) {
+                            // cached for later consumption
+                        });
+                    },
+                    obj: function(){return false;}
+                }
             });
     }]);
 
@@ -545,8 +557,7 @@ rerum.controller('validationController', function ($scope, $uibModal, Context, K
     
     /* Validation functions, scope to rerum services*/
     $scope.validateIIIF = function(){
-        //hit the IIIF validator endpoint and return that result.  That could
-        //this could maybe be a RERUM service in this app.
+        //hit the IIIF validator endpoint and return that result. 
         var input = $scope.IIIFURI;
         $scope.validIIIF = rerumService.validateIIIF(input);
         if($scope.validIIIF){
@@ -558,7 +569,6 @@ rerum.controller('validationController', function ($scope, $uibModal, Context, K
         return $scope.validIIIF;
     };
     $scope.validateRerumManifest = function(input){
-        //Hit an advanced internal RERUM viewer/validator ?
         if(input){
             //This was a file upload
             $scope.validRerum = rerumService.validateRerumManifest(input);

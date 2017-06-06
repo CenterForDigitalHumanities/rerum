@@ -85,6 +85,13 @@ rerum.controller('toolsController', function ($scope) {
             version: "0.0.1",
             tags: ["transcriber","manuscripts","manifest","iiif"],
             notes: "A very early proof-of-concept of a completely stand-alone front-end based on T-PEN for 3.0 planning."
+        },
+        {
+            label: "Validators",
+            link: "#/validate",
+            version: "0.5",
+            tags: ["IIIF","JSON","RERUM","validation"],
+            notes: "Various validation tools for data types involved with RERUM."
         }
     ]};
 });

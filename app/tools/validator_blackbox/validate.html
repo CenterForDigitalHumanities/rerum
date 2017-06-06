@@ -35,7 +35,7 @@ Offer many validation schemas for many types of objects with feedback on the iss
         <link rel="manifest" href="/manifest.json">
     </head>
     <body>
-        <div class="container" ng-controller="validationController">
+        <div class="container">
             <p>
                 There are many data types that are supported through RERUM.  Here, you can tell if your data can be validated against various schemas.
             </p>
@@ -63,11 +63,10 @@ Offer many validation schemas for many types of objects with feedback on the iss
                         <div class="fileUpload positioned btn">
                             <span>Upload RERUM Document</span>
                             <input type="file" on-read-file="validateRerumManifest($fileContent)" />
-                             See rerum.directive('onReadFile' in manifest.js for info on $fileContent  
                         </div>
                     </div>
                     <div id="RERUMResponse">
-                    {{RERUMMessage}}
+                        {{RERUMMessage}}
                     </div>
             </div>  
             <div which="iiif" ng-show="showIIIFSection" class="validationChoice six columns card">
