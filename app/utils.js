@@ -444,6 +444,8 @@ angular.module('utils', [])
         };
         
         /* Various Validators */
+        //Offer IIIF Image API validation here http://iiif.io/api/image/validator/  ?
+        
         this.validateJSON = function(input){
             if(typeof input ===  "string"){
                 input = input.trim();
@@ -477,12 +479,11 @@ angular.module('utils', [])
         //Resolve image headers and return HTTP Response Code or file type is successful
             //Could be a user uploaded image or URL?
          this.validateImage = function(input){
-            if (typeof input == "string" && !this.validateURI(input)) {
+            if (typeof input === "string" && !this.validateURI(input)) {
                 throw Error(input + " does not appear to be a valid URI");
             }
-            
-            if(typeof input == "string"){
-                $http.get(uri)
+            if(typeof input === "string"){
+                $http.get(input)
                 .success(function(data, status, headers, config) {
                     return headers()['Content-Type'];
                 })
@@ -517,7 +518,7 @@ angular.module('utils', [])
 //                    "okay": 1,
 //                    "warnings": []
 //                }
-                    if(data.okay === 1){
+                    if(data.okay){
                         return true;
                     }
                     else{
