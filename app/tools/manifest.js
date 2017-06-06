@@ -549,12 +549,13 @@ rerum.controller('validationController', function ($scope, $uibModal, Context, K
         //this could maybe be a RERUM service in this app.
         var input = $scope.IIIFURI;
         $scope.validIIIF = rerumService.validateIIIF(input);
-        if($scope.IIIF){
+        if($scope.validIIIF){
             $scope.IIIFMessage="This has passed IIIF Presentation API Validation.";
         }
         else{
             $scope.IIIFMessage="This has failed IIIF Presentation API Validation.";
         }
+        return $scope.validIIIF;
     };
     $scope.validateRerumManifest = function(input){
         //Hit an advanced internal RERUM viewer/validator ?

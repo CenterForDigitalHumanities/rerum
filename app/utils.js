@@ -535,7 +535,20 @@ angular.module('utils', [])
         };
         
         this.validateRerumManifest = function(input){
-            var idToCheck = input["@id"] || "";
+            var idToCheck = "";
+            if(typeof input ===  "string"){
+                input = input.trim();
+                try{
+                    input = JSON.parse(input);
+                    idToCheck = input["@id"] || "";
+                }
+                catch(e){
+                    idToCheck = "";
+                }
+            }
+            else if (typeof input === "object"){
+                idToCheck = input["@id"] || "";
+            }
             if(idToCheck.indexOf("/annotationstore/annotation/") >-1 || idToCheck.indexOf("rerum.io") > -1){
                 return true;
             }
