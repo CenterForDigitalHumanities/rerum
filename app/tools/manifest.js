@@ -522,13 +522,13 @@ rerum.controller('thumbsController', function ($scope, Display) {
 });
 
 rerum.controller('validationController', function ($scope, $uibModal, Context, Knowns, rerumService, obj) {
-    $scope.showingImage = false;
-    $scope.showingJSON = false;
-    $scope.showingIIIF = false;
-    $scope.showingRerum = false;
-    $scope.showingXML = false;
-    $scope.showingTEI = false;
-    $scope.showingMEI = false;
+    $scope.showImage = false;
+    $scope.showJSON = false;
+    $scope.showIIIF = false;
+    $scope.showRerum = false;
+    $scope.showXML = false;
+    $scope.showTEI = false;
+    $scope.showMEI = false;
     $scope.showChoices = true;
     $scope.imageFileType = "";
     
@@ -549,15 +549,21 @@ rerum.controller('validationController', function ($scope, $uibModal, Context, K
     $scope.JSONOBJECT = {};
     $scope.IIIFOBJECT = {};
     $scope.RERUMOBJECT = {};
+    $scope.XMLTEXT = "";
+    $scope.MEITEXT = "";
+    $scope.TEITEXT = "";
     
     $scope.RERUMMessage = "";
     $scope.JSONMessage = "";
     $scope.IIIFMessage = "";
+    $scope.XMLMessage = "";
+    $scope.TEIMessage = "";
+    $scope.MEIMessage = "";
     $scope.imageFileMessage = "";
     
     /* Validation functions, scope to rerum services*/
     $scope.validateIIIF = function(){
-        //hit the IIIF validator endpoint and return that result. 
+        //hit the IIIF validator endpoint and return that result. Validator only supports URIs
         var input = $scope.IIIFURI;
         $scope.validIIIF = rerumService.validateIIIF(input);
         if($scope.validIIIF){
@@ -644,61 +650,163 @@ rerum.controller('validationController', function ($scope, $uibModal, Context, K
     };
     $scope.validateImage = function(){
         var input=$scope.IMAGEURI;
+        //This actually returns a message from the service, so we don't need to make a scoped var for that here.
         $scope.imageFileMessage = rerumService.validateImage(input);
     };
     $scope.validateURI = function(input){
         $scope.validURI = rerumService.validateURI(input);
     };
     
-    //TODO
-    $scope.validateXML = function(){
-       $scope.validXML = rerumService.validateXML(input);
+    //TODO, these are not built out quite yet.
+    $scope.validateXML = function(input){
+        if(input){
+            //This was a file upload
+            $scope.validXML = rerumService.validateXML(input);
+            if($scope.validXML){
+                $scope.XMLMessage="This has passed XML Validation.";
+            }
+            else{
+                $scope.XMLMessage="This has failed XML Validation.";
+            }
+        }
+        else{ //It is a URI or string from a textarea
+            input = $scope.XMLTEXT;
+            $scope.validXML = rerumService.validateXML(input);
+            if($scope.validXML){
+                $scope.XMLMessage="This has passed XML Validation.";
+            }
+            else{
+                $scope.XMLMessage="This has failed XML Validation.";
+            }
+        }
+        return $scope.validXML;
     };
-    $scope.validateTEI = function(){
-       $scope.validTEI = rerumService.validateTEI(input);
+    $scope.validateTEI = function(input){
+       if(input){
+            //This was a file upload
+            $scope.validTEI = rerumService.validateTEI(input);
+            if($scope.validTEI){
+                $scope.TEIMessage="This has passed TEI Validation.";
+            }
+            else{
+                $scope.TEIMessage="This has failed TEI Validation.";
+            }
+        }
+        else{ //It is a URI or string from a textarea
+            input = $scope.TEITEXT;
+            $scope.validTEI = rerumService.validateTEI(input);
+            if(input){
+                //This was a file upload
+                if($scope.validTEI){
+                    $scope.TEIMessage="This has passed TEI Validation.";
+                }
+                else{
+                    $scope.TEIMessage="This has failed TEI Validation.";
+                }
+            }
+        }
+        return $scope.validTEI;
     };
-    $scope.validateMEI = function(){
-       $scope.validMEI = rerumService.validateMEI(input);
+    $scope.validateMEI = function(input){
+       if(input){
+            //This was a file upload
+            $scope.validMEI = rerumService.validateMEI(input);
+            if($scope.validMEI){
+                $scope.MEIMessage="This has passed MEI Validation.";
+            }
+            else{
+                $scope.MEIMessage="This has failed MEI Validation.";
+            }
+        }
+        else{ //It is a URI or string from a textarea
+            input = $scope.MEITEXT;
+            $scope.validMEI = rerumService.validateMEI(input);
+            if($scope.validMEI){
+                $scope.MEIMessage="This has passed MEI Validation.";
+            }
+            else{
+                $scope.MEIMessage="This has failed MEI Validation.";
+            }
+        }
+        return $scope.validMEI;
     };
     
     
     /* Hide/show sections */
-    $scope.showImageSection = function(){
-       $scope.showImage = true;
-     };
-    $scope.hideImageSection = function(){
+    
+    $scope.sectionToggle = function(){
         $scope.showImage = false;
+        $scope.showJSON = false;
+        $scope.showIIIF = false;
+        $scope.showRerum = false;
+        $scope.showXML = false;
+        $scope.showTEI = false;
+        $scope.showMEI = false;
+        
+//        $scope.RERUMMessage = "";
+//        $scope.JSONMessage = "";
+//        $scope.IIIFMessage = "";
+//        $scope.XMLMessage = "";
+//        $scope.TEIMessage = "";
+//        $scope.MEIMessage = "";
+//        $scope.imageFileMessage = "";
     };
+    $scope.showRERUMSection = function(){
+        $scope.sectionToggle();
+        $scope.showRerum = true;
+    };
+//    $scope.hideRERUMSection = function(){
+//        $scope.sectionToggle();
+//        $scope.showRerum = false;
+//    };
+    $scope.showImageSection = function(){
+        $scope.sectionToggle();
+        $scope.showImage = true;
+     };
+//    $scope.hideImageSection = function(){
+//        $scope.sectionToggle();
+//        $scope.showImage = false;
+//    };
     $scope.showJSONSection = function(){
+        $scope.sectionToggle();
        $scope.showJSON = true;
      };
-    $scope.hideJSONSection = function(){
-        $scope.hideJSONshowJSON = false;
-    };
+//    $scope.hideJSONSection = function(){
+//        $scope.sectionToggle();
+//        $scope.hideJSONshowJSON = false;
+//    };
     $scope.showIIIFSection = function(){
+        $scope.sectionToggle();
        $scope.showIIIF = true;
      };
-    $scope.hideIIIFSection = function(){
-        $scope.showIIIF = false;
-    };
+//    $scope.hideIIIFSection = function(){
+//        $scope.sectionToggle();
+//        $scope.showIIIF = false;
+//    };
     $scope.showXMLSection = function(){
+        $scope.sectionToggle();
        $scope.showXML = true;
      };
-    $scope.hideXMLSection = function(){
-        $scope.showXML = false;
-    };
+//    $scope.hideXMLSection = function(){
+//        $scope.sectionToggle();
+//        $scope.showXML = false;
+//    };
     $scope.showTEISection = function(){
-       $scope.showTEI = true;
+        $scope.sectionToggle();
+        $scope.showTEI = true;
      };
-    $scope.hideTEISection = function(){
-        $scope.showTEI = false;
-    };
+//    $scope.hideTEISection = function(){
+//        $scope.sectionToggle();
+//        $scope.showTEI = false;
+//    };
     $scope.showMEISection = function(){
+        $scope.sectionToggle();
        $scope.showMEI = true;
      };
-    $scope.hideMEISection = function(){
-        $scope.showMEI = false;
-    };
+//    $scope.hideMEISection = function(){
+//        $scope.sectionToggle();
+//        $scope.showMEI = false;
+//    };
     
 });
 

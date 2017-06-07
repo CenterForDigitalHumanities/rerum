@@ -480,20 +480,21 @@ angular.module('utils', [])
             //Could be a user uploaded image or URL?
          this.validateImage = function(input){
             if (typeof input === "string" && !this.validateURI(input)) {
-                throw Error(input + " does not appear to be a valid URI");
+                return input + " does not appear to be a valid URI";
+                //throw Error(input + " does not appear to be a valid URI");
             }
             if(typeof input === "string"){
                 $http.get(input)
                 .success(function(data, status, headers, config) {
-                    return headers()['Content-Type'];
+                    return "Image resolution successful.  Type: "+headers()['Content-Type'];
                 })
                 .error(function(data, status, headers, config) {
-                    return status;
+                    return "Could not resolve image.  Status: "+status;
                 });
             }
             //What about file upload
             else{
-                return 500;
+                return "Unknown data type.  Could not resolve image.";
             }
         };
         
@@ -558,13 +559,16 @@ angular.module('utils', [])
         };
         
         this.validateXML = function(input){
-            //TODO
+            var oParser = new DOMParser();
+            var oDOM = oParser.parseFromString(input, "text/xml");
+            var message = oDOM.documentElement.nodeName == "parsererror" ? false : true;
+            return message;
         };
         this.validateTEI = function(input){
-            //TODO
+            return this.validateXML(input);
         };
         this.validateMEI = function(input){
-            //TODO
+            return this.validateXML(input);
         };
         
     }).directive('selector', function() {

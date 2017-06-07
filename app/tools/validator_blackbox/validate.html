@@ -41,20 +41,21 @@ Offer many validation schemas for many types of objects with feedback on the iss
             </p>
             <div ng-show="showChoices" id="validationChoices">
                 <div class="row">
-                    <a class="whichValidation" which="image" ng-click="showImageSection()"> Validate Image </a>
-                    <a class="whichValidation" which="json" ng-click="showJSONSection()"> Validate JSON </a>
-                    <a class="whichValidation" which="iiif" ng-click="showIIIFSection()"> Validate IIIF</a>
-                    <a class="whichValidation" which="rerum" ng-click="showRERUMSection()"> Validate as RERUM Object</a>
+                    <button class="whichValidation" which="image" ng-click="showImageSection()"> Validate Image </button>
+                    <button class="whichValidation" which="json" ng-click="showJSONSection()"> Validate JSON </button>
+                    <button class="whichValidation" which="iiif" ng-click="showIIIFSection()"> Validate IIIF</button>
+                    <button class="whichValidation" which="rerum" ng-click="showRERUMSection()"> Validate as RERUM Object</button>
                 </div>
-<!--                <div class="row">
-                    <a class="whichValidation" which="xml" ng-click="showXMLSection()"> Validate XML </a>
-                    <a class="whichValidation" which="tei" ng-click="showTEISection()"> Validate TEI </a>
-                    <a class="whichValidation" which="mei" ng-click="showMEISection()"> Validate MEI </a>
-                </div>-->
+                <div class="row">
+                    <button class="whichValidation" which="xml" ng-click="showXMLSection()"> Validate XML </button>
+                    <button class="whichValidation" which="tei" ng-click="showTEISection()"> Validate TEI </button>
+                    <button class="whichValidation" which="mei" ng-click="showMEISection()"> Validate MEI </button>
+                </div>
             </div>
-            <div which="rerum" ng-show="showRERUMSection" class="validationChoice six columns card">
+            <div which="rerum" ng-show="showRerum" class="validationChoice six columns card">
                 <h4>RERUM Object validation</h4>
-                <p class="explain"> Upload a RERUM document, enter a RERUM URL that resolves to a RERUM document or copy and paste a RERUM document into the area below.  
+                <p class="explain"> 
+                    Upload a RERUM document, enter a RERUM URL that resolves to a RERUM document or copy and paste a RERUM document into the area below.  
                     The data will be validated. 
                 </p>
                     <textarea ng-model="RERUMURI"></textarea>
@@ -69,10 +70,10 @@ Offer many validation schemas for many types of objects with feedback on the iss
                         {{RERUMMessage}}
                     </div>
             </div>  
-            <div which="iiif" ng-show="showIIIFSection" class="validationChoice six columns card">
+            <div which="iiif" ng-show="showIIIF" class="validationChoice six columns card">
                 <h4>IIIF validation</h4>
                 <p class="explain"> 
-                    Check against the IIIF Presentation API validator.  This must be a URI.
+                    Check against the IIIF Presentation API validator.  This must be a resolvable URI.  This is the only input the validator supports.
                 </p>
                 <input type="text" ng-model="IIIFURI" placeholder="Enter a URI"/>
                 <button class="validationProcess" ng-click="validateIIIF()"> </button>
@@ -80,7 +81,7 @@ Offer many validation schemas for many types of objects with feedback on the iss
                     {{IIIFMessage}}
                 </div>
             </div>  
-            <div which="json" ng-show="showJSONSection" class="validationChoice six columns card">
+            <div which="json" ng-show="showJSON" class="validationChoice six columns card">
                 <h4>JSON validation</h4>
                 <p class="explain"> Upload a JSON file, enter a URL that resolves to JSON or copy and paste JSON into an area below.  The data will be validated. </p>
                 <textarea ng-model="JSONURI"></textarea>
@@ -89,14 +90,13 @@ Offer many validation schemas for many types of objects with feedback on the iss
                     <div class="fileUpload positioned btn">
                         <span>Upload JSON</span>
                         <input type="file" on-read-file="validateJSON($fileContent)" />
-                        <!-- See rerum.directive('onReadFile' in manifest.js for info on $fileContent  -->
                     </div>
                 </div>
                 <div id="JSONResponse">
                     {{JSONMessage}}
                 </div>
             </div>    
-            <div which="image" ng-show="showImageSection" class="validationChoice six columns card">
+            <div which="image" ng-show="showImage" class="validationChoice six columns card">
                 <h4>Image validation</h4>
                 <p class="explain"> Check if an image can be resolved and what file type that image is. </p>
                 <input type="text" placeholder="Image URL" ng-model="IMAGEURI"/> 
@@ -112,47 +112,49 @@ Offer many validation schemas for many types of objects with feedback on the iss
                     {{imageFileMessage}}
                 </div>
             </div>    
-            
-            
-<!--            <div which="xml" class="validationChoice six columns card">
+                       
+            <div ng-show="showXML" which="xml" class="validationChoice six columns card">
                 <h4>XML validation</h4>
                     <p class="explain"> Upload a XML file or copy and paste XML into the area below.  The data will be validated. </p>
-                    <input type="text" />
-                    <textarea></textarea>
+                    <textarea ng-model="XMLTEXT"></textarea>
                     <div class="btn-block">
                         <div class="fileUpload positioned btn">
                             <span>Upload</span>
                             <input type="file" on-read-file="validateXML($fileContent)" />
-                             See rerum.directive('onReadFile' in manifest.js for info on $fileContent  
                         </div>
                     </div>
+                    <div id="XMLResponse">
+                        {{XMLMessage}}
+                    </div>
             </div>   
-            <div which="tei" class="validationChoice six columns card">
+            <div ng-show="showTEI" which="tei" class="validationChoice six columns card">
                 <h4>TEI validation</h4>
                     <p class="explain"> Upload a TEI file or copy and paste TEI into the area below.  The data will be validated. </p>
-                    <input type="text" />
-                    <textarea></textarea>
+                    <textarea ng-model="TEITEXT"></textarea>
                     <div class="btn-block">
                         <div class="fileUpload positioned btn">
                             <span>Upload</span>
                             <input type="file" on-read-file="validateTEI($fileContent)" />
-                             See rerum.directive('onReadFile' in manifest.js for info on $fileContent  
                         </div>
                     </div>
+                    <div id="TEIResponse">
+                        {{TEIMessage}}
+                    </div>
             </div>   
-            <div which="mei" class="validationChoice six columns card">
+            <div ng-show="showMEI" which="mei" class="validationChoice six columns card">
                 <h4>MEI validation</h4>
                     <p class="explain"> Upload a MEI file or copy and paste MEI into the area below.  The data will be validated. </p>
-                    <input type="text" />
-                    <textarea></textarea>
+                    <textarea ng-model="MEITEXT"></textarea>
                     <div class="btn-block">
                         <div class="fileUpload positioned btn">
                             <span>Upload</span>
                             <input type="file" on-read-file="validateMEI($fileContent)" />
-                             See rerum.directive('onReadFile' in manifest.js for info on $fileContent  
                         </div>
                     </div>
-            </div>-->
+                    <div id="MEIResponse">
+                        {{MEIMessage}}
+                    </div>
+            </div>
         </div>
     </body>
 </html>
