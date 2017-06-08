@@ -20,12 +20,14 @@ rerum.config(['$routeProvider', '$locationProvider',
                 })
                 .when('/objects', {
                     templateUrl: 'app/objects/objects.html'
-            })
-            .when('/about', {
-                templateUrl: 'app/about/about.html'
-            })
-            .otherwise(({redirectTo: '/welcome'}));
+                })
+                .when('/about', {
+                    templateUrl: 'app/about/about.html'
+                })
+                .otherwise(({redirectTo: '/welcome'}));
     }]);
+rerum.value('Backend_ip', '165.134.241.141');
+rerum.value('Backend_path', '165.134.241.141/annotationstore/anno/');
 rerum.value('Terminal', false); // set Apple IIe style
 rerum.value('config', {
     buffer: .05, // percent of canvas height

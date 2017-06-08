@@ -195,7 +195,7 @@ angular.module('utils', [])
             return toret;
         };
     })
-    .service('rerumService', function($cacheFactory, Lists, $http, $q) {
+    .service('rerumService', function($cacheFactory, Lists, Backend_ip, Backend_path, $http, $q) {
         var service = this;
         var rcache = {}; // cache without $cacheFactory, so I can see all the values
         var rerumCache = {
@@ -408,6 +408,7 @@ angular.module('utils', [])
                 });
         };
         
+        // TODO: **Destined for the api_blackbox**
         this.save = function(obj) {
             // for alpha, automatically add a flag for anything coming in from rerum
             obj._rerum_alpha = true;
@@ -419,11 +420,11 @@ angular.module('utils', [])
                 updating = true;
             }
             if(isRerum && updating){ //It is a RERUM object for updating
-                url = "http://165.134.241.141/annotationstore/anno/updateAnnotation.action?content=";
+                url = Backend_path+"updateAnnotation.action?content=";
 //                url = "http://api.rerum.io/updateAnnotation.action?content=";
             }
             else if(!updating){ //It is an object meant to be saved
-                url = "http://165.134.241.141/annotationstore/anno/saveNewAnnotation.action?content=";
+                url = Backend_path+"saveNewAnnotation.action?content=";
 //                url = "http://api.rerum.io/saveNewAnnotation.action?content=";
             }
             var obj_str = JSON.stringify(obj); //Serialize JSON data into a string.
@@ -433,7 +434,7 @@ angular.module('utils', [])
                 if(conf){
                     delete obj['@id']; //get rid of key:val, we do not want to preserve it.
                     obj_str = JSON.stringify(obj);
-                    url = "http://165.134.241.141/annotationstore/anno/saveNewAnnotation.action?content=" + obj_str; //It is now a domestic manifest
+                    url = Backend_path+"saveNewAnnotation.action?content=" + obj_str; //It is now a domestic manifest
 //                    url = "http://api.rerum.io/saveNewAnnotation.action?content=" + obj_str; //It is now a domestic manifest
                 }
                 else{
