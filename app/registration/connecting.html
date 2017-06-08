@@ -1,0 +1,34 @@
+<div class="container">    
+    <h1>Connecting to RERUM</h1>
+    <p>
+        To limit the possibility of abuse without putting too many obstacles up,
+        writing to the annotation store is restricted to servers (no CORS) who have
+        registered their IP (no ranges or named referrers). This is not permanent,
+        but the full plans for RERUM can be found <a href="#/future">elsewhere on the site</a>.
+    </p>
+    <p>
+        The current public iteration of the RERUM annotation store is hosted on
+        a virtual server in the development area of OngCDH at Saint Louis University.
+        The backend is written in Java and MongoDB, with all requests currently over
+        HTTP.
+    </p>
+    <p>
+        All read requests (GET) are open by default. To write to RERUM, Follow
+        these simple steps:
+    </p>
+    <ol>
+        <li>
+            Ensure your requests are all coming from a single server or proxy and
+            <a target="_blank" href="#register">
+                register the IP address.
+            </a>
+            here in RERUM.  
+        </li>
+        <li>
+            Follow the API (<a href="#api">API page</a>) to create a new object or
+            update an existing one and you will receive the location of the new
+            object in the response. Your registered information is stored with
+            all successful writes to the annotation store.
+        </li>
+    </ol>
+</div>
