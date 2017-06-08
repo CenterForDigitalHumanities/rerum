@@ -218,3 +218,46 @@ dd {
     width: 345px;
     height: 145px;
 }
+
+/* Validate CSS */
+#validationChoices{
+    
+}
+
+.validationChoice{
+    float: none;
+    margin: 0 auto;
+}
+
+.validationProcess{
+    display: block;
+    margin: 0 auto;
+    position: relative;
+}
+
+.validationInput, .validationInputArea{
+    width: 100%;
+}
+
+.validationInputArea{
+    height: 300px;
+}
+
+.whichValidation{
+    margin-right: 10px;
+}
+
+.validateUpload{
+    margin-top: 50px;
+}
+
+.validateUpload::before{
+    content:"or";
+    position: relative;
+    top: -23px;
+    left: 50%;
+}
+
+.validationResponse{
+    white-space: pre-line;
+}

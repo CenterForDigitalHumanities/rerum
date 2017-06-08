@@ -30,6 +30,18 @@ rerum.config(['$routeProvider',
                     },
                     obj: function(){return false;}
                 }
+            })
+            .when('/validate', {
+                templateUrl: 'app/tools/validator_blackbox/validate.html',
+                controller: 'validationController',
+                resolve: {
+                    context: function (Context) {
+                        return Context.getJSON.success(function (c) {
+                            // cached for later consumption
+                        });
+                    },
+                    obj: function(){return false;}
+                }
             });
     }]);
 
@@ -293,43 +305,25 @@ rerum.controller('buildManifestController', function ($scope, $uibModal, Context
     /* varius validators */
 
     //Here, the input could be an object or a string.
-    $scope.validJSONManifest = function(input){
-        if(typeof input ===  "string"){
-            input = input.trim();
-            try{
-                input = JSON.parse(input);
-                return true;
-            }
-            catch(e){
-                return false;
-            }
-        }
-        else if (typeof input === "object"){
-            if(input.constructor === {}.contructor){
-                return true;
-            }
-            else{
-                return false;
-            }
-        }
-    };
+    
 
-    $scope.validIIIFManifest = function(input){
+    $scope.validIIIF = function(input){
         //hit the IIIF validator endpoint and return that result.  That could
         //this could maybe be a RERUM service in this app.
+        return rerumService.validateIIIF(input);
     };
 
     $scope.validRerumManifest = function(input){
         //Hit an advanced internal RERUM viewer/validator ?
+        return rerumService.validateRerumManifest(input);
+    };
+    
+    $scope.validJSON = function(input){
+        return rerumService.validateJSON(input);
     };
 
     $scope.validURI = function(input){
-        if(input.indexOf("http://") > -1 || input.indexOf("https://") > -1){
-            return true;
-        }
-        else{
-            return false;
-        }
+        return rerumService.validateURI(input);
     };
 
     /* End validators.  Check you don't repeat a rerumService */
@@ -337,7 +331,7 @@ rerum.controller('buildManifestController', function ($scope, $uibModal, Context
     /* manifest gatherers */
     $scope.uploadManifestFile = function($fileContent){
         var file = $fileContent;
-        if($scope.validJSONManifest(file)){
+        if($scope.validJSONM(file)){
             $scope.fileManifest = JSON.parse(file);
             $scope.obj = $scope.fileManifest;
             $scope.manifestValidated = true;
@@ -353,7 +347,7 @@ rerum.controller('buildManifestController', function ($scope, $uibModal, Context
         var potentialURI = $scope.uriManifest["@id"];
         if($scope.validURI(potentialURI)){
             var potentialManifest = $scope.resolveURI(potentialURI);
-            if($scope.validJSONManifest(potentialManifest)){
+            if($scope.validJSON(potentialManifest)){
                 $scope.obj = JSON.parse(potentialManifest);
                 $scope.manifestValidated = true;
                 //Check if it is a RERUM manifest?
@@ -371,7 +365,7 @@ rerum.controller('buildManifestController', function ($scope, $uibModal, Context
 
     $scope.submitJSONManifest = function(){
         var potentialJSON = $scope.jsonManifest.json;
-        if($scope.validJSONManifest(potentialJSON)){
+        if($scope.validJSON(potentialJSON)){
             $scope.obj = JSON.parse(potentialJSON);
             $scope.manifestValidated = true;
             //check if it is a rerum manifest?
@@ -424,7 +418,7 @@ rerum.controller('buildManifestController', function ($scope, $uibModal, Context
     };
 
     $scope.resolveURI = function(){
-        rerumService.resolveURI($scope.uriManifest["@id"]);
+        return rerumService.resolveURI($scope.uriManifest["@id"]);
     };
 
     $scope.saveManifest = function(){
@@ -525,6 +519,363 @@ rerum.controller('thumbsController', function ($scope, Display) {
        $scope.display['cache' + page.id + 'tip'] = tip;
        return tip;
    };
+});
+
+rerum.controller('validationController', function ($scope, $uibModal, Context, Knowns, rerumService, obj) {
+    $scope.showImage = false;
+    $scope.showJSON = false;
+    $scope.showIIIF = false;
+    $scope.showRerum = false;
+    $scope.showXML = false;
+    $scope.showTEI = false;
+    $scope.showMEI = false;
+    $scope.showChoices = true;
+    $scope.imageFileType = "";
+    
+    $scope.validImage = false;
+    $scope.validJSON = false;
+    $scope.validIIIF = false;
+    $scope.validIIIFImage = false;
+    $scope.validXML = false;
+    $scope.validTEI = false;
+    $scope.validMEI = false;
+    $scope.validRerum = false;
+    
+    $scope.IMAGEURI = "";
+    $scope.IIIFURI = "";
+    $scope.IIIFIMAGEURI = "";
+    $scope.JSONURI = "";
+    $scope.RERUMURI = "";
+    $scope.JSONOBJECT = {};
+    $scope.IIIFOBJECT = {};
+    $scope.RERUMOBJECT = {};
+    $scope.XMLTEXT = "";
+    $scope.MEITEXT = "";
+    $scope.TEITEXT = "";
+    
+    $scope.RERUMMessage = "";
+    $scope.JSONMessage = "";
+    $scope.IIIFMessage = "";
+    $scope.XMLMessage = "";
+    $scope.TEIMessage = "";
+    $scope.MEIMessage = "";
+    $scope.imageFileMessage = "";
+    
+    /* Validation functions, scope to rerum services*/
+    $scope.validateIIIF = function(){
+        //hit the IIIF validator endpoint and return that result. Validator only supports URIs
+        var input = $scope.IIIFURI;
+        var IIIFpromise = rerumService.validateIIIF(input);
+        IIIFpromise
+        .success(function(data, status, headers, config) {
+//                data is JSON to parse for feedback
+//                {
+//                    "url": "<SUBMITTED URL>",
+//                    "error": "<ERROR MESSAGE>",
+//                    "okay": 1,
+//                    "warnings": []
+//                }
+                    if(data.warnings.length === 0){
+                        data.warnings = ["none"];
+                    }
+                    if(data.okay){
+                        $scope.validIIIF = true;
+                        $scope.IIIFMessage="This has passed IIIF Presentation API Validation.\n \n\
+                        Warnings: \n\
+                        "+data.warnings;
+                    }
+                    else{
+                        $scope.validIIIF =  false;
+                        $scope.IIIFMessage="This has failed IIIF Presentation API Validation.\n \n\
+                        Error: \n\
+                        "+data.error+"\nWarnings:\n"+data.warnings;
+                    }
+                })
+                .error(function(data, status, headers, config) {
+                    $scope.validIIIF =  false;
+                    $scope.IIIFMessage="Error validating, could not connect.  \n\
+                    Status:"+status;
+                });
+            return $scope.validIIIF;
+    };
+    $scope.validateRerumManifest = function(input){
+        if(input){
+            //This was a file upload
+            $scope.validRerum = rerumService.validateRerumManifest(input);
+            if($scope.validRerum){
+                $scope.RERUMMessage="This file upload has passed RERUM Validation.";
+            }
+            else{
+                $scope.RERUMMessage="This file upload has failed RERUM Validation.";
+            }
+            return $scope.validJSON;
+        }
+        else{ //It is a URI or string from a textarea
+            input = $scope.RERUMURI;
+            if($scope.validateURI(input)){ //URI string.  resolve and test
+                var resolvedObjPromise = $scope.resolveURI(input);
+                resolvedObjPromise
+                .success(function(data, status, headers, config) {
+                    $scope.validRerum = rerumService.validateRerumManifest(data);
+                    if($scope.validRerum){
+                        $scope.RERUMMessage="This has passed RERUM Validation.";
+                    }
+                    else{
+                        $scope.RERUMMessage="This has failed RERUM Validation.";
+                    }
+                    return $scope.validRerum;
+                })
+                .error(function(data, status, headers, config) {
+                    $scope.validRerum = false;
+                    $scope.RERUMMessage="Could not resolve URL.  Canno perform RERUM validation.";
+                    return $scope.validRerum;
+                });
+            }
+            else{ //string object
+                $scope.validRerum = rerumService.validateRerumManifest(input);
+                if($scope.validRerum){
+                    $scope.RERUMMessage="This has passed RERUM Validation.";
+                }
+                else{
+                    $scope.RERUMMessage="This has failed RERUM Validation.";
+                }
+                return $scope.validRerum;
+            }
+        }
+    };
+    $scope.validateJSON = function(input){
+        if(input){
+            //This was a file upload
+            $scope.validJSON = rerumService.validateJSON(input);
+            if($scope.validJSON){
+                    $scope.JSONMessage="This file upload passed JSON Validation.";
+                }
+                else{
+                    $scope.JSONMessage="This file upload has failed JSON Validation.";
+                }
+            return $scope.validJSON;
+        }
+        else{ //It is a URI or string from a textarea
+            input = $scope.JSONURI;
+            if($scope.validateURI(input)){ //URI string.  resolve and test
+                var resolvedObj = $scope.resolveURI(input);
+                resolvedObj
+                    .success(function(data, status, headers, config) {
+                        $scope.validJSON = rerumService.validateJSON(resolvedObj);
+                        if($scope.validJSON){
+                            $scope.JSONMessage="This has passed JSON Validation.";
+                        }
+                        else{
+                            $scope.JSONMessage="This has failed JSON Validation.";
+                        }
+                        return $scope.validJSON;
+                    })
+                    .error(function(data, status, headers, config) {
+                        $scope.JSONMessage="Could not resolve the URI, cannot validate as JSON.  \nStatus: \n\
+                        "+status;
+                        return false;
+                    });
+            }
+            else{ //string object
+                $scope.validJSON = rerumService.validateJSON(input);
+                if($scope.validJSON){
+                    $scope.JSONMessage="This has passed JSON Validation.";
+                }
+                else{
+                    $scope.JSONMessage="This has failed JSON Validation.";
+                }
+                return $scope.validJSON;
+            }
+        }
+    };
+    
+    $scope.validateImage = function(){
+        var input=$scope.IMAGEURI;
+        if($scope.validateURI(input)){
+            var getPromise = rerumService.validateImage(input);
+            getPromise
+            .success(function(data, status, headers, config) {
+                $scope.imageFileMessage = "Image resolution successful.";
+                $scope.validImage = true;
+                return $scope.validImage;
+                //+headers()['Content-Type'];
+            })
+            .error(function(data, status, headers, config) {
+                if(status === -1){
+                    status = "Could not resolve the image.  \nCORS blocked the request!";
+                }
+                $scope.imageFileMessage = "Could not resolve image.  \nStatus: "+status;
+                $scope.validImage = false;
+                return $scope.validImage;
+            });
+        }
+        else{
+            $scope.imageFileMessage = "Could not resolve image.  \nStatus: The URI was invalid.";
+            $scope.validImage = false;
+            return $scope.validImage;
+        }      
+    };
+    
+    $scope.validateURI = function(input){
+        $scope.validURI = rerumService.validateURI(input);
+        return $scope.validURI;
+    };
+    
+    //TODO, these are not built out quite yet.
+    $scope.validateXML = function(input){
+        if(input){
+            //This was a file upload
+            $scope.validXML = rerumService.validateXML(input);
+            if($scope.validXML){
+                $scope.XMLMessage="This file upload has passed XML Validation.";
+            }
+            else{
+                $scope.XMLMessage="This file upload has failed XML Validation.";
+            }
+        }
+        else{ //It is a URI or string from a textarea
+            input = $scope.XMLTEXT;
+            $scope.validXML = rerumService.validateXML(input);
+            if($scope.validXML){
+                $scope.XMLMessage="This has passed XML Validation.";
+            }
+            else{
+                $scope.XMLMessage="This has failed XML Validation.";
+            }
+        }
+        return $scope.validXML;
+    };
+    $scope.validateTEI = function(input){
+       if(input){
+            //This was a file upload
+            $scope.validTEI = rerumService.validateTEI(input);
+            if($scope.validTEI){
+                $scope.TEIMessage="This file upload has passed TEI Validation.";
+            }
+            else{
+                $scope.TEIMessage="This file upload has failed TEI Validation.";
+            }
+        }
+        else{ //It is a URI or string from a textarea
+            input = $scope.TEITEXT;
+            $scope.validTEI = rerumService.validateTEI(input);
+            if(input){
+                //This was a file upload
+                if($scope.validTEI){
+                    $scope.TEIMessage="This has passed TEI Validation.";
+                }
+                else{
+                    $scope.TEIMessage="This has failed TEI Validation.";
+                }
+            }
+        }
+        return $scope.validTEI;
+    };
+    $scope.validateMEI = function(input){
+       if(input){
+            //This was a file upload
+            $scope.validMEI = rerumService.validateMEI(input);
+            if($scope.validMEI){
+                $scope.MEIMessage="This file upload has passed MEI Validation.";
+            }
+            else{
+                $scope.MEIMessage="This file upload has failed MEI Validation.";
+            }
+        }
+        else{ //It is a URI or string from a textarea
+            input = $scope.MEITEXT;
+            $scope.validMEI = rerumService.validateMEI(input);
+            if($scope.validMEI){
+                $scope.MEIMessage="This has passed MEI Validation.";
+            }
+            else{
+                $scope.MEIMessage="This has failed MEI Validation.";
+            }
+        }
+        return $scope.validMEI;
+    };
+    
+    $scope.resolveURI = function(input){
+        return rerumService.resolveURI(input);
+    };
+    
+    
+    /* Hide/show sections */
+    
+    $scope.sectionToggle = function(){
+        $scope.showImage = false;
+        $scope.showJSON = false;
+        $scope.showIIIF = false;
+        $scope.showRerum = false;
+        $scope.showXML = false;
+        $scope.showTEI = false;
+        $scope.showMEI = false;
+        
+//        $scope.RERUMMessage = "";
+//        $scope.JSONMessage = "";
+//        $scope.IIIFMessage = "";
+//        $scope.XMLMessage = "";
+//        $scope.TEIMessage = "";
+//        $scope.MEIMessage = "";
+//        $scope.imageFileMessage = "";
+    };
+    $scope.showRERUMSection = function(){
+        $scope.sectionToggle();
+        $scope.showRerum = true;
+    };
+//    $scope.hideRERUMSection = function(){
+//        $scope.sectionToggle();
+//        $scope.showRerum = false;
+//    };
+    $scope.showImageSection = function(){
+        $scope.sectionToggle();
+        $scope.showImage = true;
+     };
+//    $scope.hideImageSection = function(){
+//        $scope.sectionToggle();
+//        $scope.showImage = false;
+//    };
+    $scope.showJSONSection = function(){
+        $scope.sectionToggle();
+       $scope.showJSON = true;
+     };
+//    $scope.hideJSONSection = function(){
+//        $scope.sectionToggle();
+//        $scope.hideJSONshowJSON = false;
+//    };
+    $scope.showIIIFSection = function(){
+        $scope.sectionToggle();
+       $scope.showIIIF = true;
+     };
+//    $scope.hideIIIFSection = function(){
+//        $scope.sectionToggle();
+//        $scope.showIIIF = false;
+//    };
+    $scope.showXMLSection = function(){
+        $scope.sectionToggle();
+       $scope.showXML = true;
+     };
+//    $scope.hideXMLSection = function(){
+//        $scope.sectionToggle();
+//        $scope.showXML = false;
+//    };
+    $scope.showTEISection = function(){
+        $scope.sectionToggle();
+        $scope.showTEI = true;
+     };
+//    $scope.hideTEISection = function(){
+//        $scope.sectionToggle();
+//        $scope.showTEI = false;
+//    };
+    $scope.showMEISection = function(){
+        $scope.sectionToggle();
+       $scope.showMEI = true;
+     };
+//    $scope.hideMEISection = function(){
+//        $scope.sectionToggle();
+//        $scope.showMEI = false;
+//    };
+    
 });
 
 rerum.directive('ngLoad', function($parse){

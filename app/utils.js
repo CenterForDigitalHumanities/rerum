@@ -229,7 +229,7 @@ angular.module('utils', [])
         };
         this.resolveURI = function(uri) {
             console.log("resolving uri...");
-            if (typeof uri !== "string" || uri.indexOf("://") === -1) {
+            if (typeof uri !== "string" || !this.validateURI(uri)) {
                 throw Error(uri + " does not appear to be a valid URI");
             }
             return $http.get(uri);
@@ -407,20 +407,12 @@ angular.module('utils', [])
                     return err;
                 });
         };
-        this.checkRerum = function(input){
-            var idToCheck = input["@id"] || "";
-            if(idToCheck.indexOf("/annotationstore/annotation/") >-1 || idToCheck.indexOf("rerum.io") > -1){
-                return true;
-            }
-            else{
-                return false;
-            }
-        };
+        
         this.save = function(obj) {
             // for alpha, automatically add a flag for anything coming in from rerum
             obj._rerum_alpha = true;
 
-            var isRerum = this.checkRerum(obj); //Does the @id tell us it is in rerum?
+            var isRerum = this.validateRerumManifest(obj); //Does the @id tell us it is in rerum?
             var updating = false;
             var url = "";
             if(obj['@id']){ //Is it an object for updating
@@ -450,6 +442,115 @@ angular.module('utils', [])
             }
             return $http.post(url);
         };
+               
+        /* Various Validators */
+        //Offer IIIF Image API validation here http://iiif.io/api/image/validator/  ?
+        
+        this.validateJSON = function(input){
+            if(typeof input ===  "string"){
+                input = input.trim();
+                try{
+                    input = JSON.parse(input);
+                    return true;
+                }
+                catch(e){
+                    return false;
+                }
+            }
+            else if (typeof input === "object"){
+                if(input.constructor === {}.contructor){
+                    return true;
+                }
+                else{
+                    return false;
+                }
+            }
+        };
+
+        this.validateURI = function(input){
+            input = input.trim();
+            if(input.substring(0,4) === "http"){
+                return true;
+            }
+            else{
+                return false;
+            }
+        };
+        
+        //Attempt to resolve the image for validation
+         this.validateImage = function(input){
+            if (typeof input === "string" && !this.validateURI(input)) {
+                return input + " does not appear to be a valid URI";
+                //throw Error(input + " does not appear to be a valid URI");
+            }
+            
+            if(typeof input === "string"){
+                return $http.get(input);
+                
+            }
+            //What about file upload
+            else{
+                return "Unknown data type.  Could not resolve image.";
+            }
+        };
+        
+        this.validateIIIF = function(input){
+            //Hit the IIIF validation API
+            var url = "";
+            if(typeof input === "string" && this.validateURI(input)){
+                url = "http://iiif.io/api/presentation/validator/service/validate?version=2.0&url="+input;
+            }
+            else{
+                if(input["@id"]){
+                     url = "http://iiif.io/api/presentation/validator/service/validate?version=2.0&url="+input["@id"];
+                }
+            }
+            if(this.validateURI(url)){
+                return $http.get(url);
+            }
+            else{
+                return false;
+            }
+        };
+        
+        this.validateRerumManifest = function(input){
+            //Will always come through as object, but could be a string version of that object.
+            var idToCheck = "";
+            if(typeof input ===  "string"){ //String object
+                input = input.trim();
+                try{
+                    input = JSON.parse(input);
+                    idToCheck = input["@id"] || "";
+                }
+                catch(e){
+                    idToCheck = "";
+                }
+            }
+            else if (typeof input === "object"){
+                idToCheck = input["@id"] || "";
+            }
+            //The goal is to simply check the object @id and see if it matches the RERUM pattern.  This needs to be improved.
+            if(idToCheck.indexOf("/annotationstore/annotation/") >-1 || idToCheck.indexOf("rerum.io") > -1){
+                return true;
+            }
+            else{
+                return false;
+            }
+        };
+        
+        this.validateXML = function(input){
+            var oParser = new DOMParser();
+            var oDOM = oParser.parseFromString(input, "text/xml");
+            var message = oDOM.documentElement.nodeName === "parsererror" ? false : true;
+            return message;
+        };
+        this.validateTEI = function(input){
+            return this.validateXML(input);
+        };
+        this.validateMEI = function(input){
+            return this.validateXML(input);
+        };
+        
     }).directive('selector', function() {
         return {
             scope: {
