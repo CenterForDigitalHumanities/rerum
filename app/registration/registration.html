@@ -1,13 +1,18 @@
 
-<div class="container">
+<div class="container" ng-controller="registrationController">
     <h3 class='title'>Server Registration</h3>
-    <p>RERUM authenticates only with a whitelist of application servers which
-        in turn are expected to verify their own contributions. The provenance of
-        each new annotation or object is marked with the server from which it came.
-        You must have a static IP for your application. If using several, please
-        complete this form several times.</p>
-    <form name="serverRegistration" ng-submit="submitRegistration({name:label,ip:ip,contact:contact})" ng-controller="registrationController">
-        <p class="invert {{msg.type}}">{{msg.text}}</p>
+    <p>
+        <span class="thanks">We are so glad you are interested in using Saint Louis University's annotation store, RERUM</span>
+        <br><br>
+            RERUM authenticates only with a whitelist of application servers which
+            in turn are expected to verify their own contributions. The provenance of
+            each new annotation or object is marked with the server from which it came.
+            Supply any label you would like stored with your IP address (because RERUM doesn't want to think of everyone as just a number).
+            The IP must be a static IP.  If the IP address registered with the web application or server changes, you will have to register
+            the new IP again.  If using several, please complete this form several times.
+    </p>
+    
+    <form name="serverRegistration" ng-submit="submitRegistration({'name':label,'ip':ip,'contact':contact})">
         <div class="form-group">
             <label>Server Label:</label>
         <div class="positioned">
@@ -26,4 +31,5 @@
             <input type="submit" value=" Submit " /><i></i>
         </div>
     </form>
+    <p>{{registrationReturn.registrationMessage}}</p>
 </div>
