@@ -442,7 +442,7 @@ angular.module('utils', [])
             }
             return $http.post(url);
         };
-        
+               
         /* Various Validators */
         //Offer IIIF Image API validation here http://iiif.io/api/image/validator/  ?
         
@@ -468,7 +468,8 @@ angular.module('utils', [])
         };
 
         this.validateURI = function(input){
-            if(input.indexOf("http://") > -1 || input.indexOf("https://") > -1){
+            input = input.trim();
+            if(input.substring(0,4) === "http"){
                 return true;
             }
             else{
@@ -476,21 +477,16 @@ angular.module('utils', [])
             }
         };
         
-        //Resolve image headers and return HTTP Response Code or file type is successful
-            //Could be a user uploaded image or URL?
+        //Attempt to resolve the image for validation
          this.validateImage = function(input){
             if (typeof input === "string" && !this.validateURI(input)) {
                 return input + " does not appear to be a valid URI";
                 //throw Error(input + " does not appear to be a valid URI");
             }
+            
             if(typeof input === "string"){
-                $http.get(input)
-                .success(function(data, status, headers, config) {
-                    return "Image resolution successful.  Type: "+headers()['Content-Type'];
-                })
-                .error(function(data, status, headers, config) {
-                    return "Could not resolve image.  Status: "+status;
-                });
+                return $http.get(input);
+                
             }
             //What about file upload
             else{
@@ -499,9 +495,9 @@ angular.module('utils', [])
         };
         
         this.validateIIIF = function(input){
-            //Hit the IIIF validatory API
+            //Hit the IIIF validation API
             var url = "";
-            if(typeof input == "string" && validURI(input)){
+            if(typeof input === "string" && this.validateURI(input)){
                 url = "http://iiif.io/api/presentation/validator/service/validate?version=2.0&url="+input;
             }
             else{
@@ -509,26 +505,8 @@ angular.module('utils', [])
                      url = "http://iiif.io/api/presentation/validator/service/validate?version=2.0&url="+input["@id"];
                 }
             }
-            if(validURI(url)){
-                $http.get(url)
-                .success(function(data, status, headers, config) {
-//                data is JSON to parse for feedback
-//                {
-//                    "url": "<SUBMITTED URL>",
-//                    "error": "<ERROR MESSAGE>",
-//                    "okay": 1,
-//                    "warnings": []
-//                }
-                    if(data.okay){
-                        return true;
-                    }
-                    else{
-                        return false;
-                    }
-                })
-                .error(function(data, status, headers, config) {
-                    return false;
-                });
+            if(this.validateURI(url)){
+                return $http.get(url);
             }
             else{
                 return false;
@@ -536,8 +514,9 @@ angular.module('utils', [])
         };
         
         this.validateRerumManifest = function(input){
+            //Will always come through as object, but could be a string version of that object.
             var idToCheck = "";
-            if(typeof input ===  "string"){
+            if(typeof input ===  "string"){ //String object
                 input = input.trim();
                 try{
                     input = JSON.parse(input);
@@ -550,6 +529,7 @@ angular.module('utils', [])
             else if (typeof input === "object"){
                 idToCheck = input["@id"] || "";
             }
+            //The goal is to simply check the object @id and see if it matches the RERUM pattern.  This needs to be improved.
             if(idToCheck.indexOf("/annotationstore/annotation/") >-1 || idToCheck.indexOf("rerum.io") > -1){
                 return true;
             }
@@ -561,7 +541,7 @@ angular.module('utils', [])
         this.validateXML = function(input){
             var oParser = new DOMParser();
             var oDOM = oParser.parseFromString(input, "text/xml");
-            var message = oDOM.documentElement.nodeName == "parsererror" ? false : true;
+            var message = oDOM.documentElement.nodeName === "parsererror" ? false : true;
             return message;
         };
         this.validateTEI = function(input){
