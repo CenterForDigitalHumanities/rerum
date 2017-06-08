@@ -1,28 +1,25 @@
 rerum.controller('registrationController', function ($scope, RegistrationService) {
+    $scope.registrationReturn = {registrationMessage:"Click Submit to Register", code:100};
     $scope.submitRegistration = function (form) {
         RegistrationService.register(form)
-            .then(function (data) {
-                $scope.msg = {text: data};
+            .then(function (promiseData) {
+                $scope.registrationReturn.registrationMessage = promiseData.data.info;
+                $scope.registrationReturn.code = promiseData.data.code;
             }, function (err) {
-                $scope.msg = {text: err.message, type: "msg-fail"};
+                $scope.registrationMessage = err.message;
+                $scope.registrationReturn = {text: err.message, type: "msg-fail"};
             });
     };
+    
 });
 
-rerum.service('RegistrationService', function ($http, $q) {
+rerum.service('RegistrationService', function ($http, $q, Backend_ip) {
     this.register = function (form) {
         var reg = /^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
         if (reg.test(form.ip)) {
-            return $http.post('acceptedServer/saveNewServer.action',
-                {
-                    "acceptedServer.name": form.name,
-                    "acceptedServer.ip": form.ip,
-                    "acceptedServer.contact": form.contact
-                }).success(function (data) {
-                return JSON.parse(data);
-            }).error(function (err) {
-                return err;
-            });
+            var variables = "acceptedServer.ip="+form.ip+"&acceptedServer.name="+form.name+"&acceptedServer.contact="+form.contact;
+            var postURL = "http://"+Backend_ip+'/annotationstore/acceptedServer/saveNewServer.action?'+variables;
+            return $http.post(postURL);
         } else {
             return $q.reject(new Error("Invalid server IP: " + form.ip));
         }

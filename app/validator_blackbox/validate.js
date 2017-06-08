@@ -1,6 +1,13 @@
 /* 
  * Modular Validation Black Box
  * @author: Bryan Haberberger (bhaberbe)
+ * 
+ * The dream is to make this an open API that people can hit through RERUM like
+ * rerum.io/validate?type=json&input={hello:"world"}
+ * rerum.io/validate?type=json&input=http://165.134.241.141/annotationstore/annotation/48594b3ffeaaee332
+ * 
+ * Right now, it is just registering the functionality in a service and a controller for the UI
+ * in validate.html
  */
 rerum.controller('validationController', function ($scope, rerumService, validationService) {
     $scope.showImage = false;

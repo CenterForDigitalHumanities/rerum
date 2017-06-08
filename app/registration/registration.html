@@ -1,5 +1,5 @@
 
-<div class="container">
+<div class="container" ng-controller="registrationController">
     <h3 class='title'>Server Registration</h3>
     <p>
         <span class="thanks">We are so glad you are interested in using Saint Louis University's annotation store, RERUM</span>
@@ -12,8 +12,7 @@
             the new IP again.  If using several, please complete this form several times.
     </p>
     
-    <form name="serverRegistration" ng-submit="submitRegistration({'name':label,'ip':ip,'contact':contact})" ng-controller="registrationController">
-        <p class="invert {{msg.type}}">{{msg.text}}</p>
+    <form name="serverRegistration" ng-submit="submitRegistration({'name':label,'ip':ip,'contact':contact})">
         <div class="form-group">
             <label>Server Label:</label>
         <div class="positioned">
@@ -32,4 +31,5 @@
             <input type="submit" value=" Submit " /><i></i>
         </div>
     </form>
+    <p>{{registrationReturn.registrationMessage}}</p>
 </div>
