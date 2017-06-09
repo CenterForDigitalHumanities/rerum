@@ -1,11 +1,13 @@
 /* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * The RERUM api handler.  RERUM methods for interacting with an API blackbox are defined here.
+ * If you plan to change the APIs, these methods' pointers must be updated.  This is the only place
+ * you need to do this, all CRUD operations run via these methods throughout the site. 
+ * 
+ * @author bhaberbe
  */
 
 
-rerum.service("API_Service", function($http, $q, rerumService, validationService, Backend_path, Backend_ip){
+rerum.service("API_Service", function($http, $q, rerumService, validationService, Backend_path, Backend_ip, API_Key){
         //This works as save/create and update
         this.save = function(obj) {
             // for alpha, automatically add a flag for anything coming in from rerum
@@ -95,8 +97,9 @@ rerum.service("API_Service", function($http, $q, rerumService, validationService
         };
         
         //Check a POST or PUT for the valid API key.  Could be in URL or body
+        //This could be in validationService
         this.validateAPIKey = function(requestURL, requestBody){
-          var keyToCheckFor = "som3_fr1gg1n_k3y";  
+          var keyToCheckFor = API_Key;
           //Check code TODO here
           return true;
         };
