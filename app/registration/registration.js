@@ -1,8 +1,8 @@
+
+
 rerum.controller('registrationController', function ($scope, RegistrationService) {
     $scope.registrationReturn = {registrationMessage:"Click Submit to Register", agentMessage:"", code:100, agentRegistrationID:"-1"};
     $scope.submitRegistration = function (form) {
-        //var promiseData = RegistrationService.registerAgent(form);
-        //var hello = "hello";
         var registrationPromise = RegistrationService.registerAgent(form);
         registrationPromise.then(function (promiseData) {
             $scope.registrationReturn.registrationMessage = promiseData.data.info;
@@ -28,12 +28,10 @@ rerum.controller('registrationController', function ($scope, RegistrationService
         
     };
 });
-    
 
-
-//Just hits the annotationstore registration in to the accepted server list
 rerum.service('RegistrationService', function ($http, $q, Backend_ip, API_Service) {
     
+//Just hits the annotationstore registration in to the accepted server list
     this.register = function (form) {
         var reg = /^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
         if (reg.test(form.ip)) {
@@ -46,6 +44,8 @@ rerum.service('RegistrationService', function ($http, $q, Backend_ip, API_Servic
     };
     
 //Actually create an Agent and return the registration promise data with the, or an error.
+//Need to respect the check against existing server IP entries.  DO NOT create an agent if the IP is already registered.
+//Think if DDOS situations and unlimited agents connected to IPs.  
     this.registerAgent = function(form){
         var variables = "";
         var registerNewServer = "";
@@ -66,7 +66,7 @@ rerum.service('RegistrationService', function ($http, $q, Backend_ip, API_Servic
         var registrationPromise = $http.post(registerNewServer);
         registrationPromise
             .success(function(data1, status, headers, config){ //Try to register server first, only make Agent for unique IPs
-                if(data1.code === 200){
+                if(data1.code === 200){ //OK
                     var newAgentPromise = API_Service.save(newAgent); //create a new agent
                     newAgentPromise //Need data from this promise to register the new server
                     .success(function(data2, status, headers, config){ //Created successfully
@@ -75,18 +75,17 @@ rerum.service('RegistrationService', function ($http, $q, Backend_ip, API_Servic
                            deferred.resolve({"agentID":newAgentID, "agentMessage":"A new Agent has been created for the IP provided.  The Agent ID is "+newAgentID+" ", "data":data1});
                         }
                         else{ //This is very bad.  Fail out
-                            deferred.reject(new Error("Could not retrieve new agent @id: " + data));
+                            deferred.reject(new Error("Could not retrieve new agent @id: " + data2));
                         }
-
                     })
                     .error(function(data, status, headers, config){
                            deferred.reject(new Error("Could not create new agent " + newAgent));
                     });
                 }
-                else if(data1.code === 406){//duplicate 
+                else if(data1.code === 406){//DUPLICATE
                     deferred.resolve({"agentID":"", "agentMessage":"An Agent already exists for this IP.", "data":data1});
                 }
-                else{//some outright failure
+                else{//some outright failure, this is very bad.  Fail out.
                      deferred.reject(new Error("Could not register server. "));
                 }
             })
