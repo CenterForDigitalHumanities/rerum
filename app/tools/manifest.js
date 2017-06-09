@@ -256,7 +256,7 @@ rerum.value('Knowns',{
     }
 });
 
-rerum.controller('buildManifestController', function ($scope, $uibModal, Context, Knowns, rerumService, obj) {
+rerum.controller('buildManifestController', function ($scope, $uibModal, Context, Knowns, rerumService, API_Service, obj) {
     Context.getJSON.success(function (c) {
         $scope.context = c['@context'][0];
     });
@@ -424,7 +424,7 @@ rerum.controller('buildManifestController', function ($scope, $uibModal, Context
     $scope.saveManifest = function(){
 
         var manifestToSave = $scope.obj; //This is the mainfest we have been manipulating in this $scope
-        var savePromise = rerumService.save(manifestToSave); //Rerum service to $post into anno store
+        var savePromise = API_Service.save(manifestToSave); //Rerum service to $post into anno store
         //Cannot access success or fail from the save here.
             savePromise.success(function(data, status, headers, config){ //manifest saved
                 var newID = data["@id"].split("/").pop();
