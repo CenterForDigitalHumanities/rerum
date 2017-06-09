@@ -3,16 +3,18 @@
  * If you plan to change the APIs, these methods' pointers must be updated.  This is the only place
  * you need to do this, all CRUD operations run via these methods throughout the site. 
  * 
+ * Each of these should return HTTP posts and/or HTTP codes since they all route through HTTP calls. 
+ * 
  * @author bhaberbe
  */
 
 
-rerum.service("API_Service", function($http, $q, rerumService, validationService, API_Path, Backend_ip, API_Key){
+rerum.service("API_Service", function($http, $q, rerumService, validationService, API_Path, API_Key){
         //This works as save/create and update
         this.save = function(obj) {
             // for alpha, automatically add a flag for anything coming in from rerum
             obj._rerum_alpha = true;
-            var isRerum = rerumService.validateRerumManifest(obj); //Does the @id tell us it is in rerum?
+            var isRerum = validationService.validateRerumManifest(obj); //Does the @id tell us it is in rerum?
             var updating = false;
             var url = "";
             if(obj['@id']){ //Is it an object for updating
@@ -34,7 +36,7 @@ rerum.service("API_Service", function($http, $q, rerumService, validationService
                     url = API_Path+"saveNewAnnotation.action?content=" + obj_str; //It is now a domestic manifest
                 }
                 else{
-                    return false;
+                    $q.reject(new Error("User cancelled action"));
                 }
             }
             return $http.post(url);
@@ -43,7 +45,7 @@ rerum.service("API_Service", function($http, $q, rerumService, validationService
         this.getObjectByID = function(obj_id){
             var paramObj = {"@id":obj_id};
             if(!validationService.validateJSON(paramObj)){
-                return 500;
+               $q.reject(new Error("failed json validation"));
             }
             var parameters = JSON.stringify(paramObj);
             var url = API_Path+"getAnnotationByProperties.action?content="+parameters;
@@ -51,7 +53,7 @@ rerum.service("API_Service", function($http, $q, rerumService, validationService
                 return $http.post(url);
             }
             else{
-                return 404;
+               $q.reject(new Error("Bad Object ID"));
             }
         };
         
@@ -66,7 +68,7 @@ rerum.service("API_Service", function($http, $q, rerumService, validationService
                 return $http.post(url);
             }
             else{
-                return 404;
+                $q.reject(new Error("Bad Object ID"));
             }
         };
         
@@ -86,14 +88,22 @@ rerum.service("API_Service", function($http, $q, rerumService, validationService
             }
         };
         
-        this.unsetObjectProperty = function(obj, prop){
-          //The way the newberry annotation store is built, this can be done with the update  
-          //When we build the back end into RERUM, we will account for set-unset-update as different things
+        //This has not been written in any of our APIs yet
+        this.batchDelete = function(id_array){
+            //TODO!
+            return 404;
         };
         
-        this.setObjectProperty = function(obj, prop){
-          //The way the newberry annotation store is built, this can be done with the update  
-          //When we build the back end into RERUM, we will account for set-unset-update as different things
+        this.unsetObjectProperty = function(obj, prop_array){
+            //The way the newberry annotation store is built, this can be done with the update  
+            //When we build the back end into RERUM, we will account for set-unset-update as different things
+            return 404;
+        };
+        
+        this.setObjectProperty = function(obj, prop_array){
+            //The way the newberry annotation store is built, this can be done with the update  
+            //When we build the back end into RERUM, we will account for set-unset-update as different things
+            return 404;
         };
         
         //Check a POST or PUT for the valid API key.  Could be in URL or body
@@ -101,7 +111,9 @@ rerum.service("API_Service", function($http, $q, rerumService, validationService
         this.validateAPIKey = function(requestURL, requestBody){
           var keyToCheckFor = API_Key;
           //Check code TODO here
-          return true;
+          return 404;
         };
+        
+        
         
 });
