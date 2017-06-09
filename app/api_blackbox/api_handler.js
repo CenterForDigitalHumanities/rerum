@@ -7,7 +7,7 @@
  */
 
 
-rerum.service("API_Service", function($http, $q, rerumService, validationService, Backend_path, Backend_ip, API_Key){
+rerum.service("API_Service", function($http, $q, rerumService, validationService, API_Path, Backend_ip, API_Key){
         //This works as save/create and update
         this.save = function(obj) {
             // for alpha, automatically add a flag for anything coming in from rerum
@@ -19,10 +19,10 @@ rerum.service("API_Service", function($http, $q, rerumService, validationService
                 updating = true;
             }
             if(isRerum && updating){ //It is a RERUM object for updating
-                url = Backend_path+"updateAnnotation.action?content=";
+                url = API_Path+"updateAnnotation.action?content=";
             }
             else if(!updating){ //It is an object meant to be saved
-                url = Backend_path+"saveNewAnnotation.action?content=";
+                url = API_Path+"saveNewAnnotation.action?content=";
             }
             var obj_str = JSON.stringify(obj); //Serialize JSON data into a string.
             url += obj_str;
@@ -31,7 +31,7 @@ rerum.service("API_Service", function($http, $q, rerumService, validationService
                 if(conf){
                     delete obj['@id']; //get rid of key:val, we do not want to preserve it.
                     obj_str = JSON.stringify(obj);
-                    url = Backend_path+"saveNewAnnotation.action?content=" + obj_str; //It is now a domestic manifest
+                    url = API_Path+"saveNewAnnotation.action?content=" + obj_str; //It is now a domestic manifest
                 }
                 else{
                     return false;
@@ -46,7 +46,7 @@ rerum.service("API_Service", function($http, $q, rerumService, validationService
                 return 500;
             }
             var parameters = JSON.stringify(paramObj);
-            var url = Backend_path+"getAnnotationByProperties.action?content="+parameters;
+            var url = API_Path+"getAnnotationByProperties.action?content="+parameters;
             if(obj_id){
                 return $http.post(url);
             }
@@ -61,7 +61,7 @@ rerum.service("API_Service", function($http, $q, rerumService, validationService
                 return 500;
             }
             var parameters = JSON.stringify(paramObj);
-            var url = Backend_path+"deleteAnnotationByAtID.action?content="+parameters;
+            var url = API_Path+"deleteAnnotationByAtID.action?content="+parameters;
             if(obj_id){
                 return $http.post(url);
             }
@@ -77,7 +77,7 @@ rerum.service("API_Service", function($http, $q, rerumService, validationService
                 return 500;
             }
             var parameters = JSON.stringify(obj_array);
-            var url = Backend_path+"deleteAnnotationByAtID.action?content="+parameters;
+            var url = API_Path+"deleteAnnotationByAtID.action?content="+parameters;
             if(obj_array){
                 return $http.post(url);
             }

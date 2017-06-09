@@ -195,7 +195,7 @@ angular.module('utils', [])
             return toret;
         };
     })
-    .service('rerumService', function($cacheFactory, Lists, Backend_ip, Backend_path, $http, $q) {
+    .service('rerumService', function($cacheFactory, Lists, Backend_ip, API_Path, $http, $q) {
         var service = this;
         var rcache = {}; // cache without $cacheFactory, so I can see all the values
         var rerumCache = {
