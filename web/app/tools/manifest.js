@@ -256,7 +256,7 @@ rerum.value('Knowns',{
     }
 });
 
-rerum.controller('buildManifestController', function ($scope, $uibModal, Context, Knowns, rerumService, API_Service, obj) {
+rerum.controller('buildManifestController', function ($scope, $uibModal, Context, Knowns, rerumService, validationService, API_Service, obj) {
     Context.getJSON.success(function (c) {
         $scope.context = c['@context'][0];
     });
@@ -309,20 +309,20 @@ rerum.controller('buildManifestController', function ($scope, $uibModal, Context
     $scope.validIIIF = function(input){
         //hit the IIIF validator endpoint and return that result.  That could
         //this could maybe be a RERUM service in this app.
-        return rerumService.validateIIIF(input);
+        return validationService.validateIIIF(input);
     };
 
     $scope.validRerumManifest = function(input){
         //Hit an advanced internal RERUM viewer/validator ?
-        return rerumService.validateRerumManifest(input);
+        return validationService.validateRerumManifest(input);
     };
     
     $scope.validJSON = function(input){
-        return rerumService.validateJSON(input);
+        return validationService.validateJSON(input);
     };
 
     $scope.validURI = function(input){
-        return rerumService.validateURI(input);
+        return validationService.validateURI(input);
     };
 
     /* End validators.  Check you don't repeat a rerumService */
@@ -347,15 +347,26 @@ rerum.controller('buildManifestController', function ($scope, $uibModal, Context
         var potentialURI = $scope.uriManifest["@id"];
         if($scope.validURI(potentialURI)){
             var potentialManifest = $scope.resolveURI(potentialURI);
-            if($scope.validJSON(potentialManifest)){
-                $scope.obj = JSON.parse(potentialManifest);
-                $scope.manifestValidated = true;
-                Knowns.manifest = $scope.obj;
-                //Check if it is a RERUM manifest?
-            }
-            else{
-                alert("URI resolved manifest is not valid JSON.  Please check for errors. ");
-            }
+            potentialManifest
+            .success(function(data, status, headers, config){
+                if($scope.validJSON(data)){
+                    if(typeof data === "string"){
+                        $scope.obj = JSON.parse(data);
+                    }
+                    else{
+                        $scope.obj = data;
+                    }
+                    $scope.manifestValidated = true;
+                    Knowns.manifest = $scope.obj;
+                    //Check if it is a RERUM manifest?
+                }
+                else{
+                    alert("URI resolved manifest is not valid JSON.  Please check for errors. ");
+                }
+            })
+            .error(function(data, status, headers, config){
+                alert("Error GETting manifest");
+            });
         }
         else{
             alert("URI "+potentialURI+" was not valid");

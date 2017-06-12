@@ -195,7 +195,7 @@ angular.module('utils', [])
             return toret;
         };
     })
-    .service('rerumService', function($cacheFactory, Lists, Backend_ip, API_Path, $http, $q) {
+    .service('rerumService', function($cacheFactory, Lists, Backend_ip, API_Path, validationService, $http, $q) {
         var service = this;
         var rcache = {}; // cache without $cacheFactory, so I can see all the values
         var rerumCache = {
@@ -229,7 +229,7 @@ angular.module('utils', [])
         };
         this.resolveURI = function(uri) {
             console.log("resolving uri...");
-            if (typeof uri !== "string" || !this.validateURI(uri)) {
+            if (typeof uri !== "string" || !validationService.validateURI(uri)) {
                 throw Error(uri + " does not appear to be a valid URI");
             }
             return $http.get(uri);

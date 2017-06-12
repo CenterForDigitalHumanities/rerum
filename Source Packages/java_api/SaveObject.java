@@ -34,8 +34,6 @@ public class SaveObject extends HttpServlet {
             connection.connect();
             DataOutputStream out = new DataOutputStream(connection.getOutputStream());
             //value to save
-            System.out.println("Content in save obj is");
-            System.out.println(request.getParameter("content"));
             out.writeBytes("content=" +  URLEncoder.encode(request.getParameter("content"), "utf-8"));
             out.flush();
             out.close(); // flush and close

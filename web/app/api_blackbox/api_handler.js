@@ -21,13 +21,13 @@ rerum.service("API_Service", function($http, $q, rerumService, validationService
             if(obj['@id']){ //Is it an object for updating
                 updating = true;
             }
-            if(isRerum && updating){ //It is a RERUM object for updating
-                //url = API_Path+"updateAnnotation.action?content=";
-                url = "updateObject";
-            }
-            else if(!updating){ //It is an object meant to be saved
-                url = "saveObject";
-            }
+//            if(isRerum && updating){ //It is a RERUM object for updating
+//                //url = API_Path+"updateAnnotation.action?content=";
+//                url = "updateObject";
+//            }
+//            else if(!updating){ //It is an object meant to be saved
+//                url = "saveObject";
+//            }
             var obj_str = JSON.stringify(obj); //Serialize JSON data into a string.
             //url += obj_str;
             if(!isRerum && updating){ //It is an update on an foreign manifest.  It can't get over Trump's wall.
@@ -35,7 +35,7 @@ rerum.service("API_Service", function($http, $q, rerumService, validationService
                 if(conf){
                     delete obj['@id']; //get rid of key:val, we do not want to preserve it.
                     obj_str = JSON.stringify(obj);
-                    url = "saveObject"; //It is now a domestic manifest
+                    //url = "saveObject"; //It is now a domestic manifest
                 }
                 else{
                     return 406;

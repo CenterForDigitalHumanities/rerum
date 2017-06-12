@@ -371,6 +371,7 @@ rerum.service("validationService", function($http, $q){
         //Offer IIIF Image API validation here http://iiif.io/api/image/validator/  ?
         
         this.validateJSON = function(input){
+            var testAgainst = {"hello":"world"};
             if(typeof input ===  "string"){
                 input = input.trim();
                 try{
@@ -382,12 +383,13 @@ rerum.service("validationService", function($http, $q){
                 }
             }
             else if (typeof input === "object"){
-                if(input.constructor === {}.contructor){
-                    return true;
-                }
-                else{
-                    return false;
-                }
+                return true;
+//                if(input.constructor === testAgainst.contructor){
+//                    return true;
+//                }
+//                else{
+//                    return false;
+//                }
             }
         };
 
