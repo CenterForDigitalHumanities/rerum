@@ -10,5 +10,5 @@ package java_api;
  * @author bhaberbe
  */
 public class Java_Constants {
-     public static String ANNOTATION_SERVER_ADDR = "http://165.134.241.141/annotationstore";
+     public static String ANNOTATION_SERVER_ADDR = "http://165.134.156.141/annotationstore";
 }

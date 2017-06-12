@@ -8,6 +8,7 @@ import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -33,7 +34,9 @@ public class SaveObject extends HttpServlet {
             connection.connect();
             DataOutputStream out = new DataOutputStream(connection.getOutputStream());
             //value to save
-            out.writeBytes("content=" + request.getParameter("content"));
+            System.out.println("Content in save obj is");
+            System.out.println(request.getParameter("content"));
+            out.writeBytes("content=" +  URLEncoder.encode(request.getParameter("content"), "utf-8"));
             out.flush();
             out.close(); // flush and close
             BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream(),"utf-8"));
@@ -49,13 +52,15 @@ public class SaveObject extends HttpServlet {
             response.setStatus(HttpServletResponse.SC_OK);
             response.setHeader("Content-Location", "absoluteURI");
             response.getWriter().print(sb.toString());
-        } catch (UnsupportedEncodingException ex) {
+        } 
+        catch (UnsupportedEncodingException ex) {
             System.out.println("Unsupported encoding exception.");
-            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, ex.getMessage());
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, ex.toString());
             response.getWriter().print(ex);
-        } catch (IOException ex) {
+        } 
+        catch (IOException ex) {
             System.out.println("IO exception.");
-            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, ex.getMessage());
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, ex.toString());
             response.getWriter().print(ex);
         }
     }

@@ -29,7 +29,6 @@ rerum.service("API_Service", function($http, $q, rerumService, validationService
                 url = "saveObject";
             }
             var obj_str = JSON.stringify(obj); //Serialize JSON data into a string.
-            params={"content": obj_str};
             //url += obj_str;
             if(!isRerum && updating){ //It is an update on an foreign manifest.  It can't get over Trump's wall.
                 var conf=confirm("The manifest you are trying to update does not appear to be in RERUM.  The update cannot be performed. \n Would you like to save this manifest into RERUM?");
@@ -42,7 +41,16 @@ rerum.service("API_Service", function($http, $q, rerumService, validationService
                     return 406;
                 }
             }
-            return $http.post(url, params);
+            var param={content: obj_str};
+            var params = $.param(param);
+            //This is an angular consequence.  The post action does not work the same, so we have to serialize up front to pass it through.
+            return $http({
+                method: 'POST',
+                url: url,
+                data: params,
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }});
         };
         
         this.getObjectByID = function(obj_id){
@@ -50,10 +58,18 @@ rerum.service("API_Service", function($http, $q, rerumService, validationService
             if(!validationService.validateJSON(paramObj)){
                return 500;
             }
-            var params = {content:JSON.stringify(paramObj)};
+            var param = {content:JSON.stringify(paramObj)};
+            var params = $.param(param);
+            //This is an angular consequence.  The post action does not work the same, so we have to serialize up front to pass it through.
             var url = "updateObject";
             if(obj_id){
-                return $http.post(url, params);
+                return $http({
+                method: 'POST',
+                url: url,
+                data: params,
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }});
             }
             else{
                return 400;
@@ -65,10 +81,18 @@ rerum.service("API_Service", function($http, $q, rerumService, validationService
             if(!validationService.validateJSON(paramObj)){
                 return 500;
             }
-            var params = {content: JSON.stringify(paramObj)};
+            var param = {content:JSON.stringify(paramObj)};
+            var params = $.param(param);
+            //This is an angular consequence.  The post action does not work the same, so we have to serialize up front to pass it through.
             var url = "deleteObject";
             if(obj_id){
-                return $http.post(url, params);
+                return $http({
+                method: 'POST',
+                url: url,
+                data: params,
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }});
             }
             else{
                 return 400;
@@ -81,10 +105,18 @@ rerum.service("API_Service", function($http, $q, rerumService, validationService
             if(!validationService.validateJSON(paramObj)){
                 return 500;
             }
-            var params = {content:JSON.stringify(paramObj)};
+            var param = {content:JSON.stringify(paramObj)};
+            var params = $.param(param);
+            //This is an angular consequence.  The post action does not work the same, so we have to serialize up front to pass it through.
             var url = "bulkSaveObjects";
             if(obj_array){
-                return $http.post(url, params);
+                return $http({
+                method: 'POST',
+                url: url,
+                data: params,
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }});
             }
             else{
                return 400;
