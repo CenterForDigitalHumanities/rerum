@@ -1,15 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package java_api;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -34,7 +29,7 @@ public class SaveObject extends HttpServlet {
             connection.setRequestMethod("POST");
             connection.setUseCaches(false);
             connection.setInstanceFollowRedirects(true);
-            connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+            connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded"); //ideally this would be json, but the Servlet.action is not expecting it. 
             connection.connect();
             DataOutputStream out = new DataOutputStream(connection.getOutputStream());
             //value to save
