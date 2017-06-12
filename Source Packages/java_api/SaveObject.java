@@ -46,14 +46,17 @@ public class SaveObject extends HttpServlet {
             }
             reader.close();
             connection.disconnect();
+            response.setStatus(HttpServletResponse.SC_OK);
             response.setHeader("Content-Location", "absoluteURI");
             response.getWriter().print(sb.toString());
         } catch (UnsupportedEncodingException ex) {
             System.out.println("Unsupported encoding exception.");
             response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, ex.getMessage());
+            response.getWriter().print(ex);
         } catch (IOException ex) {
             System.out.println("IO exception.");
             response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, ex.getMessage());
+            response.getWriter().print(ex);
         }
     }
 
