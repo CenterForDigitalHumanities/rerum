@@ -305,7 +305,6 @@ rerum.controller('buildManifestController', function ($scope, $uibModal, Context
     /* varius validators */
 
     //Here, the input could be an object or a string.
-    
 
     $scope.validIIIF = function(input){
         //hit the IIIF validator endpoint and return that result.  That could
