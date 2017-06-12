@@ -47,10 +47,10 @@ rerum.service("API_Service", function($http, $q, rerumService, validationService
         
         this.getObjectByID = function(obj_id){
             var paramObj = {"@id":obj_id};
-            var params = {content:JSON.stringify(paramObj)};
             if(!validationService.validateJSON(paramObj)){
-               $q.reject(new Error("failed json validation"));
+               return 500;
             }
+            var params = {content:JSON.stringify(paramObj)};
             var url = "updateObject";
             if(obj_id){
                 return $http.post(url, params);
@@ -62,10 +62,10 @@ rerum.service("API_Service", function($http, $q, rerumService, validationService
         
         this.deleteObjectByID = function(obj_id){
             var paramObj = {"@id":obj_id};
-            
             if(!validationService.validateJSON(paramObj)){
                 return 500;
             }
+            var params = {content: JSON.stringify(paramObj)};
             var url = "deleteObject";
             if(obj_id){
                 return $http.post(url, params);
@@ -78,10 +78,10 @@ rerum.service("API_Service", function($http, $q, rerumService, validationService
         //This works as batch create, update, set, unset
         this.batchSave = function(obj_array){
             var paramObj = {"@id":obj_array};
-            var params = {content:JSON.stringify(paramObj)};
             if(!validationService.validateJSON(paramObj)){
                 return 500;
             }
+            var params = {content:JSON.stringify(paramObj)};
             var url = "bulkSaveObjects";
             if(obj_array){
                 return $http.post(url, params);
