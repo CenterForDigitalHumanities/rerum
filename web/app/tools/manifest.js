@@ -334,6 +334,7 @@ rerum.controller('buildManifestController', function ($scope, $uibModal, Context
             $scope.fileManifest = JSON.parse(file);
             $scope.obj = $scope.fileManifest;
             $scope.manifestValidated = true;
+            Knowns.manifest = $scope.obj;
             //Check if it is a RERUM manifest?
         }
         else{
@@ -349,6 +350,7 @@ rerum.controller('buildManifestController', function ($scope, $uibModal, Context
             if($scope.validJSON(potentialManifest)){
                 $scope.obj = JSON.parse(potentialManifest);
                 $scope.manifestValidated = true;
+                Knowns.manifest = $scope.obj;
                 //Check if it is a RERUM manifest?
             }
             else{
@@ -367,6 +369,7 @@ rerum.controller('buildManifestController', function ($scope, $uibModal, Context
         if($scope.validJSON(potentialJSON)){
             $scope.obj = JSON.parse(potentialJSON);
             $scope.manifestValidated = true;
+            Knowns.manifest = $scope.obj;
             //check if it is a rerum manifest?
         }
         else{
@@ -429,6 +432,7 @@ rerum.controller('buildManifestController', function ($scope, $uibModal, Context
                 var newID = data["@id"].split("/").pop();
                 $scope.obj["@id"] = "http://object.rerum.io/" + newID;
                 $scope.imagesVisible = false;
+                Knowns.manifest = $scope.obj;
                 //inform user of a successful save, have the UI react accordingly
             });
             savePromise.error(function(data, status, headers, config){ //maniest did not save
