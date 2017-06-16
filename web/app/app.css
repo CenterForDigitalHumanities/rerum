@@ -48,6 +48,9 @@ header h1 {
     letter-spacing: .75rem;
     position: relative;
 }
+header h1 span{
+    color:#a3d1ff;
+}
 header small {
     position: absolute;
     bottom: 1rem;
@@ -261,3 +264,81 @@ dd {
 .validationResponse{
     white-space: pre-line;
 }
+   
+    .rerum_shimmer {
+      /* the shimmer magic */
+      background: -webkit-gradient(linear,left top,right top,from(#fff),to(#fff),color-stop(.5,#000));
+      background: -moz-gradient(linear,left top,right top,from(#fff),to(#fff),color-stop(.5,#000));
+      background: gradient(linear,left top,right top,from(#fff),to(#fff),color-stop(.5,#000));
+      -webkit-background-size: 75px 100%;
+      -moz-background-size: 75px 100%;
+      background-size:75px 100%;
+      -webkit-background-clip: text;
+      -moz-background-clip: text;
+      background-clip: text;
+      -webkit-animation-name: shimmer;
+      -moz-animation-name: shimmer;
+      -webkit-animation-name: shimmer;
+      animation-name: shimmer;
+      -webkit-animation-duration: 2s;
+      -moz-animation-duration: 2s;
+      -webkit-animation-duration: 2s;
+      animation-duration: 2s;
+      -webkit-animation-iteration-count: infinite;
+      -moz-animation-iteration-count: infinite;
+      -webkit-animation-iteration-count: infinite;
+      animation-iteration-count: infinite;
+      background-repeat: no-repeat;
+      background-position: 0 0;
+      background-color: #222;
+    }
+
+    @-moz-keyframes shimmer {
+      0% {
+        background-position: top left;
+      }
+
+      100% {
+        background-position: top right;
+      }
+    }
+
+    @-webkit-keyframes shimmer {
+      0% {
+        background-position: top left;
+      }
+
+      100% {
+        background-position: top right;
+      }
+    }
+
+    @-o-keyframes shimmer {
+      0% {
+        background-position: top left;
+      }
+
+      100% {
+        background-position: top right;
+      }
+    }
+
+    @-ms-keyframes shimmer {
+      0% {
+        background-position: top left;
+      }
+
+      100% {
+        background-position: top right;
+      }
+    }
+
+    @keyframes shimmer {
+      0% {
+        background-position: top left;
+      }
+
+      100% {
+        background-position: top right;
+      }
+    }
