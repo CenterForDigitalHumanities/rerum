@@ -264,33 +264,33 @@ rerum.controller('buildManifestController', function ($scope, $uibModal, Context
     var localStorageStr = localStorage.getItem("manifestObj"); //Any save/update action puts that manifest into local memory.
     var manifestID = rerumService.getURLVariable("manifestID"); //Allow users to supploy a manifestID in the URL
     $scope.manifestValidated = false; 
-    if(validationService.validateJSON(localStorageStr)){ //Use the local storage object if it exists and is valid
-        //localStorage takes priority over manifestID
-        obj=JSON.parse(localStorageStr);
-        $scope.manifestValidated = true; //There will be so submission process, so call it validated now so the manifest area shows. 
+    if(validationService.validateURI(manifestID)){ //resolve provided ID
+        var potentialManifest = rerumService.resolveURI(manifestID);
+        potentialManifest
+            .success(function(data, status, headers, config) {
+                if(validationService.validateJSON(data)){
+                    if(typeof data === "string"){
+                        obj = JSON.parse(data);
+                    }
+                    else{
+                        obj = data;
+                    }
+                    localStorage.setItem("manifestObj", JSON.stringify(data));
+                    $scope.manifestValidated = true; //There will be so submission process, so call it validated now so the manifest area shows. 
+                }  
+            })
+            .error(function(data, status, headers, config) {
+
+            });
     }
-    else{ //otherwise, try to grab the manifestID from the URL or use dummy data
-        localStorage.removeItem("manifestObj");
-        if(validationService.validateURI(manifestID)){
-            var potentialManifest = rerumService.resolveURI(manifestID);
-            potentialManifest
-                .success(function(data, status, headers, config) {
-                    if(validationService.validateJSON(data)){
-                        if(typeof data === "string"){
-                            obj = JSON.parse(data);
-                        }
-                        else{
-                            obj = data;
-                        }
-                        localStorage.setItem("manifestObj", JSON.stringify(data));
-                        $scope.manifestValidated = true; //There will be so submission process, so call it validated now so the manifest area shows. 
-                    }  
-                })
-                .error(function(data, status, headers, config) {
-                        
-                });
+    else{ //Check localStorage (this will be here if coming from manifest creation
+        if(validationService.validateJSON(localStorageStr)){ //Use the local storage object if it exists and is valid
+            //localStorage takes priority over manifestID
+            obj=JSON.parse(localStorageStr);
+            $scope.manifestValidated = true; //There will be so submission process, so call it validated now so the manifest area shows. 
         }
     }
+    
     $scope.obj = obj || Knowns.manifest;
     $scope.types = Knowns.type;
     $scope.adding = Knowns.adding;
@@ -304,7 +304,6 @@ rerum.controller('buildManifestController', function ($scope, $uibModal, Context
     $scope.filManifest = "";
     $scope.jsonManifest = {"json":{}};
     $scope.uriManifest = {"@id" : ""};
-    
     $scope.contextvisible = false;
 
 /*
