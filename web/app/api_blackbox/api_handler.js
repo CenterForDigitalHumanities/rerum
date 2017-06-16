@@ -21,6 +21,7 @@ rerum.service("API_Service", function($http, $q, rerumService, validationService
             if(obj['@id']){ //Is it an object for updating
                 updating = true;
             }
+            //The saveObject servlet actually does this for us.  If it didn't, we would need this code block.
 //            if(isRerum && updating){ //It is a RERUM object for updating
 //                //url = API_Path+"updateAnnotation.action?content=";
 //                url = "updateObject";
