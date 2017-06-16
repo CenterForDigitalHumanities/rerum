@@ -283,7 +283,7 @@ rerum.controller('buildManifestController', function ($scope, $uibModal, Context
                             obj = data;
                         }
                         localStorage.setItem("manifestObj", JSON.stringify(data));
-                        $scope.manifestValidated = true;
+                        $scope.manifestValidated = true; //There will be so submission process, so call it validated now so the manifest area shows. 
                     }  
                 })
                 .error(function(data, status, headers, config) {
@@ -338,8 +338,7 @@ rerum.controller('buildManifestController', function ($scope, $uibModal, Context
     //Here, the input could be an object or a string.
 
     $scope.validIIIF = function(input){
-        //hit the IIIF validator endpoint and return that result.  That could
-        //this could maybe be a RERUM service in this app.
+        //hit the IIIF validator endpoint and return that result. 
         return validationService.validateIIIF(input);
     };
 
@@ -356,12 +355,12 @@ rerum.controller('buildManifestController', function ($scope, $uibModal, Context
         return validationService.validateURI(input);
     };
 
-    /* End validators.  Check you don't repeat a rerumService */
+    /* End validators.  Check you don't repeat a rerumService.  Maybe collapse scope validators into pure validationService validators. */
 
     /* manifest gatherers */
     $scope.uploadManifestFile = function($fileContent){
         var file = $fileContent;
-        if($scope.validJSONM(file)){
+        if(validationService.validateJSON(file)){
             $scope.fileManifest = JSON.parse(file);
             $scope.obj = $scope.fileManifest;
             $scope.manifestValidated = true;
@@ -376,11 +375,11 @@ rerum.controller('buildManifestController', function ($scope, $uibModal, Context
 
     $scope.submitManifestURI = function(){
         var potentialURI = $scope.uriManifest["@id"];
-        if($scope.validURI(potentialURI)){
+        if(validationService.validateURI(potentialURI)){
             var potentialManifest = $scope.resolveURI(potentialURI);
             potentialManifest
             .success(function(data, status, headers, config){
-                if($scope.validJSON(data)){
+                if(validationService.validateJSON(data)){
                     if(typeof data === "string"){
                         $scope.obj = JSON.parse(data);
                     }
@@ -408,7 +407,7 @@ rerum.controller('buildManifestController', function ($scope, $uibModal, Context
 
     $scope.submitJSONManifest = function(){
         var potentialJSON = $scope.jsonManifest.json;
-        if($scope.validJSON(potentialJSON)){
+        if(validationService.validateJSON(potentialJSON)){
             $scope.obj = JSON.parse(potentialJSON);
             $scope.manifestValidated = true;
             Knowns.manifest = $scope.obj;

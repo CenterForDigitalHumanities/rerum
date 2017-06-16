@@ -179,7 +179,7 @@ rerum.controller('validationController', function ($scope, rerumService, validat
     
     $scope.validateImage = function(){
         var input=$scope.IMAGEURI;
-        if($scope.validateURI(input)){
+        if(validationService.validateURI(input)){
             var getPromise = validationService.validateImage(input);
             getPromise
             .success(function(data, status, headers, config) {
