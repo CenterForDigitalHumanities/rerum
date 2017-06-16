@@ -260,6 +260,37 @@ rerum.controller('buildManifestController', function ($scope, $uibModal, Context
     Context.getJSON.success(function (c) {
         $scope.context = c['@context'][0];
     });
+    //See if we know about a manifest from editManifest.html in localStorage.  Otherwise, see if a manifestID was supplied in URL.
+    var localStorageStr = localStorage.getItem("manifestObj"); //Any save/update action puts that manifest into local memory.
+    var manifestID = rerumService.getURLVariable("manifestID"); //Allow users to supploy a manifestID in the URL
+    $scope.manifestValidated = false; 
+    if(validationService.validateJSON(localStorageStr)){ //Use the local storage object if it exists and is valid
+        //localStorage takes priority over manifestID
+        obj=JSON.parse(localStorageStr);
+        $scope.manifestValidated = true; //There will be so submission process, so call it validated now so the manifest area shows. 
+    }
+    else{ //otherwise, try to grab the manifestID from the URL or use dummy data
+        localStorage.removeItem("manifestObj");
+        if(validationService.validateURI(manifestID)){
+            var potentialManifest = rerumService.resolveURI(manifestID);
+            potentialManifest
+                .success(function(data, status, headers, config) {
+                    if(validationService.validateJSON(data)){
+                        if(typeof data === "string"){
+                            obj = JSON.parse(data);
+                        }
+                        else{
+                            obj = data;
+                        }
+                        localStorage.setItem("manifestObj", JSON.stringify(data));
+                        $scope.manifestValidated = true;
+                    }  
+                })
+                .error(function(data, status, headers, config) {
+                        
+                });
+        }
+    }
     $scope.obj = obj || Knowns.manifest;
     $scope.types = Knowns.type;
     $scope.adding = Knowns.adding;
@@ -273,7 +304,7 @@ rerum.controller('buildManifestController', function ($scope, $uibModal, Context
     $scope.filManifest = "";
     $scope.jsonManifest = {"json":{}};
     $scope.uriManifest = {"@id" : ""};
-    $scope.manifestValidated = false;
+    
     $scope.contextvisible = false;
 
 /*
@@ -398,6 +429,11 @@ rerum.controller('buildManifestController', function ($scope, $uibModal, Context
  * create manifest from comma separated list of img urls
  **/
     $scope.loadImages = function (imgStr, height) {
+        imgStr=imgStr.trim();
+        //Need to trim the trailing comma (if it exists)
+        if(imgStr.substring(imgStr.length-1) === ","){
+            imgStr = imgStr.slice(0,-1);
+        }
         if (!$scope.cHeight) {
             $scope.cHeight = height;
         }
@@ -440,10 +476,14 @@ rerum.controller('buildManifestController', function ($scope, $uibModal, Context
         var savePromise = API_Service.save(manifestToSave); //Rerum service to $post into anno store
         //Cannot access success or fail from the save here.
             savePromise.success(function(data, status, headers, config){ //manifest saved
-                var newID = data["@id"].split("/").pop();
-                $scope.obj["@id"] = "http://object.rerum.io/" + newID;
+                var newID = data["@id"];
+                var justID = newID.split("/").pop();
+                $scope.obj["@id"] = "http://object.rerum.io/" + justID;
                 $scope.imagesVisible = false;
                 Knowns.manifest = $scope.obj;
+                //Store to a session storage variable to pass on to the edit page.
+                localStorage.removeItem("manifestObj");
+                localStorage.setItem("manifestObj", JSON.stringify($scope.obj));
                 //inform user of a successful save, have the UI react accordingly
             });
             savePromise.error(function(data, status, headers, config){ //maniest did not save

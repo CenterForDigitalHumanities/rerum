@@ -16,7 +16,7 @@ rerum.service("API_Service", function($http, $q, rerumService, validationService
             obj._rerum_alpha = true;
             var isRerum = validationService.validateRerumManifest(obj); //Does the @id tell us it is in rerum?
             var updating = false;
-            var url = "";
+            var url = "saveObject";
             var params = {};
             if(obj['@id']){ //Is it an object for updating
                 updating = true;

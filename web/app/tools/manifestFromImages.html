@@ -35,19 +35,19 @@
 <!--            <label>Something Custom</label>
             TODO: We could allow them to add custom manifest.metadata[] objects <br>-->
         </div>
-        <button type="submit">Create Manifest</button>
-
-        <button type="button" ng-show="canvases.length"
-                ng-click="preview()">
-            Preview manifest
-        </button>
-        <button type="button" ng-show="canvases.length"
-                ng-click="saveManifest(obj)">
-            Save this manifest
-        </button>
-
+        <input type="submit" value="Create Manifest"/>
     </form>
-    <a class="button" href="#/edit" ng-show="obj['@id']">
+    <button type="button" ng-show="canvases.length"
+            ng-click="preview()">
+        Preview manifest
+    </button>
+    <button type="button" ng-show="canvases.length"
+            ng-click="saveManifest(obj)">
+        Save this manifest
+    </button>
+
+
+    <a class="button" href="#/edit?manifestID={{obj['@id']}}" ng-show="obj['@id']">
         Edit this manifest ({{canvases.length}} canvas{{(canvases.length===1)&&""||"es"}})
     </a>
 

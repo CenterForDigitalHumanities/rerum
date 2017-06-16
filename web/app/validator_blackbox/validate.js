@@ -372,7 +372,10 @@ rerum.service("validationService", function($http, $q){
         
         this.validateJSON = function(input){
             var testAgainst = {"hello":"world"};
-            if(typeof input ===  "string"){
+            if(input === "" || input === null){
+                return false;
+            }
+            else if(typeof input ===  "string"){
                 input = input.trim();
                 try{
                     input = JSON.parse(input);
