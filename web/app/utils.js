@@ -195,7 +195,7 @@ angular.module('utils', [])
             return toret;
         };
     })
-    .service('rerumService', function($cacheFactory, Lists, Backend_ip, API_Path, $http, $q) {
+    .service('rerumService', function($cacheFactory, Lists, Backend_ip, API_Path, validationService, $http, $q) {
         var service = this;
         var rcache = {}; // cache without $cacheFactory, so I can see all the values
         var rerumCache = {
@@ -215,6 +215,16 @@ angular.module('utils', [])
             VIDEO: ["dctypes:MovingImage", "dcterms:MovingImage"],
             ANY: [],
         };
+        
+        this.getURLVariable = function (variable){
+            var query = window.location.search.substring(1);
+            var vars = query.split("&");
+            for (var i=0;i<vars.length;i++) {
+                    var pair = vars[i].split("=");
+                    if(pair[0] == variable){return pair[1];}
+            }
+            return(false);
+        };
 
         this.extractResources = function(obj) {
             if (angular.isObject(obj)) {
@@ -229,7 +239,7 @@ angular.module('utils', [])
         };
         this.resolveURI = function(uri) {
             console.log("resolving uri...");
-            if (typeof uri !== "string" || !this.validateURI(uri)) {
+            if (typeof uri !== "string" || !validationService.validateURI(uri)) {
                 throw Error(uri + " does not appear to be a valid URI");
             }
             return $http.get(uri);

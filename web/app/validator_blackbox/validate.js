@@ -179,7 +179,7 @@ rerum.controller('validationController', function ($scope, rerumService, validat
     
     $scope.validateImage = function(){
         var input=$scope.IMAGEURI;
-        if($scope.validateURI(input)){
+        if(validationService.validateURI(input)){
             var getPromise = validationService.validateImage(input);
             getPromise
             .success(function(data, status, headers, config) {
@@ -371,7 +371,11 @@ rerum.service("validationService", function($http, $q){
         //Offer IIIF Image API validation here http://iiif.io/api/image/validator/  ?
         
         this.validateJSON = function(input){
-            if(typeof input ===  "string"){
+            var testAgainst = {"hello":"world"};
+            if(input === "" || input === null){
+                return false;
+            }
+            else if(typeof input ===  "string"){
                 input = input.trim();
                 try{
                     input = JSON.parse(input);
@@ -382,12 +386,13 @@ rerum.service("validationService", function($http, $q){
                 }
             }
             else if (typeof input === "object"){
-                if(input.constructor === {}.contructor){
-                    return true;
-                }
-                else{
-                    return false;
-                }
+                return true;
+//                if(input.constructor === testAgainst.contructor){
+//                    return true;
+//                }
+//                else{
+//                    return false;
+//                }
             }
         };
 

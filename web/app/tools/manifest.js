@@ -256,10 +256,41 @@ rerum.value('Knowns',{
     }
 });
 
-rerum.controller('buildManifestController', function ($scope, $uibModal, Context, Knowns, rerumService, API_Service, obj) {
+rerum.controller('buildManifestController', function ($scope, $uibModal, Context, Knowns, rerumService, validationService, API_Service, obj) {
     Context.getJSON.success(function (c) {
         $scope.context = c['@context'][0];
     });
+    //See if we know about a manifest from editManifest.html in localStorage.  Otherwise, see if a manifestID was supplied in URL.
+    var localStorageStr = localStorage.getItem("manifestObj"); //Any save/update action puts that manifest into local memory.
+    var manifestID = rerumService.getURLVariable("manifestID"); //Allow users to supploy a manifestID in the URL
+    $scope.manifestValidated = false; 
+    if(validationService.validateJSON(localStorageStr)){ //Use the local storage object if it exists and is valid
+        //localStorage takes priority over manifestID
+        obj=JSON.parse(localStorageStr);
+        $scope.manifestValidated = true; //There will be so submission process, so call it validated now so the manifest area shows. 
+    }
+    else{ //otherwise, try to grab the manifestID from the URL or use dummy data
+        localStorage.removeItem("manifestObj");
+        if(validationService.validateURI(manifestID)){
+            var potentialManifest = rerumService.resolveURI(manifestID);
+            potentialManifest
+                .success(function(data, status, headers, config) {
+                    if(validationService.validateJSON(data)){
+                        if(typeof data === "string"){
+                            obj = JSON.parse(data);
+                        }
+                        else{
+                            obj = data;
+                        }
+                        localStorage.setItem("manifestObj", JSON.stringify(data));
+                        $scope.manifestValidated = true; //There will be so submission process, so call it validated now so the manifest area shows. 
+                    }  
+                })
+                .error(function(data, status, headers, config) {
+                        
+                });
+        }
+    }
     $scope.obj = obj || Knowns.manifest;
     $scope.types = Knowns.type;
     $scope.adding = Knowns.adding;
@@ -273,7 +304,7 @@ rerum.controller('buildManifestController', function ($scope, $uibModal, Context
     $scope.filManifest = "";
     $scope.jsonManifest = {"json":{}};
     $scope.uriManifest = {"@id" : ""};
-    $scope.manifestValidated = false;
+    
     $scope.contextvisible = false;
 
 /*
@@ -305,36 +336,35 @@ rerum.controller('buildManifestController', function ($scope, $uibModal, Context
     /* varius validators */
 
     //Here, the input could be an object or a string.
-    
 
     $scope.validIIIF = function(input){
-        //hit the IIIF validator endpoint and return that result.  That could
-        //this could maybe be a RERUM service in this app.
-        return rerumService.validateIIIF(input);
+        //hit the IIIF validator endpoint and return that result. 
+        return validationService.validateIIIF(input);
     };
 
     $scope.validRerumManifest = function(input){
         //Hit an advanced internal RERUM viewer/validator ?
-        return rerumService.validateRerumManifest(input);
+        return validationService.validateRerumManifest(input);
     };
     
     $scope.validJSON = function(input){
-        return rerumService.validateJSON(input);
+        return validationService.validateJSON(input);
     };
 
     $scope.validURI = function(input){
-        return rerumService.validateURI(input);
+        return validationService.validateURI(input);
     };
 
-    /* End validators.  Check you don't repeat a rerumService */
+    /* End validators.  Check you don't repeat a rerumService.  Maybe collapse scope validators into pure validationService validators. */
 
     /* manifest gatherers */
     $scope.uploadManifestFile = function($fileContent){
         var file = $fileContent;
-        if($scope.validJSONM(file)){
+        if(validationService.validateJSON(file)){
             $scope.fileManifest = JSON.parse(file);
             $scope.obj = $scope.fileManifest;
             $scope.manifestValidated = true;
+            Knowns.manifest = $scope.obj;
             //Check if it is a RERUM manifest?
         }
         else{
@@ -345,16 +375,28 @@ rerum.controller('buildManifestController', function ($scope, $uibModal, Context
 
     $scope.submitManifestURI = function(){
         var potentialURI = $scope.uriManifest["@id"];
-        if($scope.validURI(potentialURI)){
+        if(validationService.validateURI(potentialURI)){
             var potentialManifest = $scope.resolveURI(potentialURI);
-            if($scope.validJSON(potentialManifest)){
-                $scope.obj = JSON.parse(potentialManifest);
-                $scope.manifestValidated = true;
-                //Check if it is a RERUM manifest?
-            }
-            else{
-                alert("URI resolved manifest is not valid JSON.  Please check for errors. ");
-            }
+            potentialManifest
+            .success(function(data, status, headers, config){
+                if(validationService.validateJSON(data)){
+                    if(typeof data === "string"){
+                        $scope.obj = JSON.parse(data);
+                    }
+                    else{
+                        $scope.obj = data;
+                    }
+                    $scope.manifestValidated = true;
+                    Knowns.manifest = $scope.obj;
+                    //Check if it is a RERUM manifest?
+                }
+                else{
+                    alert("URI resolved manifest is not valid JSON.  Please check for errors. ");
+                }
+            })
+            .error(function(data, status, headers, config){
+                alert("Error GETting manifest");
+            });
         }
         else{
             alert("URI "+potentialURI+" was not valid");
@@ -365,9 +407,10 @@ rerum.controller('buildManifestController', function ($scope, $uibModal, Context
 
     $scope.submitJSONManifest = function(){
         var potentialJSON = $scope.jsonManifest.json;
-        if($scope.validJSON(potentialJSON)){
+        if(validationService.validateJSON(potentialJSON)){
             $scope.obj = JSON.parse(potentialJSON);
             $scope.manifestValidated = true;
+            Knowns.manifest = $scope.obj;
             //check if it is a rerum manifest?
         }
         else{
@@ -385,6 +428,11 @@ rerum.controller('buildManifestController', function ($scope, $uibModal, Context
  * create manifest from comma separated list of img urls
  **/
     $scope.loadImages = function (imgStr, height) {
+        imgStr=imgStr.trim();
+        //Need to trim the trailing comma (if it exists)
+        if(imgStr.substring(imgStr.length-1) === ","){
+            imgStr = imgStr.slice(0,-1);
+        }
         if (!$scope.cHeight) {
             $scope.cHeight = height;
         }
@@ -427,9 +475,14 @@ rerum.controller('buildManifestController', function ($scope, $uibModal, Context
         var savePromise = API_Service.save(manifestToSave); //Rerum service to $post into anno store
         //Cannot access success or fail from the save here.
             savePromise.success(function(data, status, headers, config){ //manifest saved
-                var newID = data["@id"].split("/").pop();
-                $scope.obj["@id"] = "http://object.rerum.io/" + newID;
+                var newID = data["@id"];
+                var justID = newID.split("/").pop();
+                $scope.obj["@id"] = "http://object.rerum.io/" + justID;
                 $scope.imagesVisible = false;
+                Knowns.manifest = $scope.obj;
+                //Store to a session storage variable to pass on to the edit page.
+                localStorage.removeItem("manifestObj");
+                localStorage.setItem("manifestObj", JSON.stringify($scope.obj));
                 //inform user of a successful save, have the UI react accordingly
             });
             savePromise.error(function(data, status, headers, config){ //maniest did not save
