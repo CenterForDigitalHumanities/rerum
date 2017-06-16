@@ -100,7 +100,7 @@ rerum.service("API_Service", function($http, $q, rerumService, validationService
             }
         };
         
-        //This works as batch create, update, set, unset
+        //This works as batch create, update
         this.batchSave = function(obj_array){
             var paramObj = {"@id":obj_array};
             if(!validationService.validateJSON(paramObj)){

@@ -49,6 +49,12 @@ rerum.controller('validationController', function ($scope, rerumService, validat
     $scope.MEIMessage = "";
     $scope.imageFileMessage = "";
     
+    /* 
+     * TODO: Connect with API_Service and route validation as an API schema 
+     * var type = rerumService.getURLVariable("type"); //Allow users to supploy a type in the URL
+     * var input= rerumService.getURLVariable("input"); //Allow users to supploy something to validate against in the URL
+     * */
+    
     /* Validation functions, scope to rerum services*/
     $scope.validateIIIF = function(){
         //hit the IIIF validator endpoint and return that result. Validator only supports URIs
