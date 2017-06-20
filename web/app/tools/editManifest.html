@@ -29,8 +29,8 @@
 		</div>
 		<label>JSON:</label>
 		<div class="positioned">
-                    <textarea id="jsonManifestInput" ng-model="jsonManifest.json|json" class="btn-block" rows="4"
-                              placeholder="Type or paste the JSON for this new Manifest"></textarea><i></i>
+                    <textarea id="jsonManifestInput" class="btn-block" rows="4"
+                              placeholder="Type or paste the JSON for this new Manifest">{{jsonManifest.json|json}}</textarea>
                     <button ng-click = "submitJSONManifest();">Use This JSON</button>
 		</div>
 	</div>
