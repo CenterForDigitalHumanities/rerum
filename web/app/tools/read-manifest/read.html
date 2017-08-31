@@ -54,11 +54,13 @@
 
         .text-annotation {
             font-size: 1.2rem;
+            perspective: 900px;
         }
 
         .text-annotation canvas {
-            transition: 500ms opacity;
+            transition: 500ms all;
             opacity: .3;
+            transform-origin: top;
         }
 
         .text-annotation:hover {
@@ -67,6 +69,10 @@
 
         .text-annotation:hover canvas {
             opacity: 1;
+            transform: rotateX(100deg);
+        }
+        .text-annotation div:first-of-type{
+            position:absolute;
         }
         .u-see-thru {
             background-color: rgba(255,255,255,.7);
@@ -200,8 +206,10 @@ monogram[shape='oval']{
             <div ng-show="screen.viewing==='annotations'" class="note">
                 <div class="note-block">
                     <div class="text-annotation" ng-mouseenter="moveBacksplash(a.on,screen.canvas)" data-content="{{ a.resource['cnt:chars'] }}" ng-repeat="a in screen.canvas.otherContent[0].resources" ng-if="a['@type']==='oa:Annotation'" data-uri="{{a['@id']}}">
-                        <strong>{{ a.label }}</strong> <span class="text" data-ng-bind-html="trust(a.resource['cnt:chars'] || a.resource['chars'] || a.resource['@value'])"></span>
-                        <code ng-hide="a.resource['cnt:chars'] || a.resource['chars'] || a.resource['@value']">[ no transcription ]</code>
+                        <div>
+                            <strong>{{ a.label }}</strong> <span class="text" data-ng-bind-html="trust(a.resource['cnt:chars'] || a.resource['chars'] || a.resource['@value'])"></span>
+                            <code ng-hide="a.resource['cnt:chars'] || a.resource['chars'] || a.resource['@value']">[ no transcription ]</code>
+                        </div>
                         <img selector="a.on" ng-if="a.on.indexOf('xywh')>0">
                     </div>
                 </div>
