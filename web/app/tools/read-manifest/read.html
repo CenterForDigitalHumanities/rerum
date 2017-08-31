@@ -55,9 +55,10 @@
         .text-annotation {
             font-size: 1.2rem;
             perspective: 900px;
+
         }
 
-        .text-annotation canvas {
+        .text-annotation canvas,.text-annotation img {
             transition: 500ms all;
             opacity: .3;
             transform-origin: top;
@@ -73,6 +74,7 @@
         }
         .text-annotation div:first-of-type{
             position:absolute;
+            z-index: -1;
         }
         .u-see-thru {
             background-color: rgba(255,255,255,.7);
