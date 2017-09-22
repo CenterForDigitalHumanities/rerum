@@ -1,11 +1,10 @@
-/* 
+/*
  * Modular Validation Black Box
  * @author: Bryan Haberberger (bhaberbe)
- * 
+ *
  * The dream is to make this an open API that people can hit through RERUM like
  * rerum.io/validate?type=json&input={hello:"world"}
  * rerum.io/validate?type=json&input=http://165.134.105.29/annotationstore/annotation/48594b3ffeaaee332
- * 
  * Right now, it is just registering the functionality in a service and a controller for the UI
  * in validate.html
  */
@@ -19,7 +18,7 @@ rerum.controller('validationController', function ($scope, rerumService, validat
     $scope.showMEI = false;
     $scope.showChoices = true;
     $scope.imageFileType = "";
-    
+
     $scope.validImage = false;
     $scope.validJSON = false;
     $scope.validIIIF = false;
@@ -28,7 +27,7 @@ rerum.controller('validationController', function ($scope, rerumService, validat
     $scope.validTEI = false;
     $scope.validMEI = false;
     $scope.validRerum = false;
-    
+
     $scope.IMAGEURI = "";
     $scope.IIIFURI = "";
     $scope.IIIFIMAGEURI = "";
@@ -40,7 +39,7 @@ rerum.controller('validationController', function ($scope, rerumService, validat
     $scope.XMLTEXT = "";
     $scope.MEITEXT = "";
     $scope.TEITEXT = "";
-    
+
     $scope.RERUMMessage = "";
     $scope.JSONMessage = "";
     $scope.IIIFMessage = "";
@@ -48,13 +47,13 @@ rerum.controller('validationController', function ($scope, rerumService, validat
     $scope.TEIMessage = "";
     $scope.MEIMessage = "";
     $scope.imageFileMessage = "";
-    
-    /* 
-     * TODO: Connect with API_Service and route validation as an API schema 
+
+    /*
+     * TODO: Connect with API_Service and route validation as an API schema
      * var type = rerumService.getURLVariable("type"); //Allow users to supploy a type in the URL
      * var input= rerumService.getURLVariable("input"); //Allow users to supploy something to validate against in the URL
      * */
-    
+
     /* Validation functions, scope to rerum services*/
     $scope.validateIIIF = function(){
         //hit the IIIF validator endpoint and return that result. Validator only supports URIs
@@ -182,7 +181,7 @@ rerum.controller('validationController', function ($scope, rerumService, validat
             }
         }
     };
-    
+
     $scope.validateImage = function(){
         var input=$scope.IMAGEURI;
         if(validationService.validateURI(input)){
@@ -207,14 +206,14 @@ rerum.controller('validationController', function ($scope, rerumService, validat
             $scope.imageFileMessage = "Could not resolve image.  \nStatus: The URI was invalid.";
             $scope.validImage = false;
             return $scope.validImage;
-        }      
+        }
     };
-    
+
     $scope.validateURI = function(input){
         $scope.validURI = validationService.validateURI(input);
         return $scope.validURI;
     };
-    
+
     //TODO, these are not built out quite yet.
     $scope.validateXML = function(input){
         if(input){
@@ -288,14 +287,14 @@ rerum.controller('validationController', function ($scope, rerumService, validat
         }
         return $scope.validMEI;
     };
-    
+
     $scope.resolveURI = function(input){
         return rerumService.resolveURI(input);
     };
-    
-    
+
+
     /* Hide/show sections */
-    
+
     $scope.sectionToggle = function(){
         $scope.showImage = false;
         $scope.showJSON = false;
@@ -304,7 +303,7 @@ rerum.controller('validationController', function ($scope, rerumService, validat
         $scope.showXML = false;
         $scope.showTEI = false;
         $scope.showMEI = false;
-        
+
 //        $scope.RERUMMessage = "";
 //        $scope.JSONMessage = "";
 //        $scope.IIIFMessage = "";
@@ -369,13 +368,13 @@ rerum.controller('validationController', function ($scope, rerumService, validat
 //        $scope.sectionToggle();
 //        $scope.showMEI = false;
 //    };
-    
+
 });
 
 rerum.service("validationService", function($http, $q){
      /* Various Validators */
         //Offer IIIF Image API validation here http://iiif.io/api/image/validator/  ?
-        
+
         this.validateJSON = function(input){
             var testAgainst = {"hello":"world"};
             if(input === "" || input === null){
@@ -403,6 +402,7 @@ rerum.service("validationService", function($http, $q){
         };
 
         this.validateURI = function(input){
+            if(input){
             input = input.trim();
             if(input.substring(0,4) === "http"){
                 return true;
@@ -410,25 +410,26 @@ rerum.service("validationService", function($http, $q){
             else{
                 return false;
             }
+            }
         };
-        
+
         //Attempt to resolve the image for validation
          this.validateImage = function(input){
             if (typeof input === "string" && !this.validateURI(input)) {
                 return input + " does not appear to be a valid URI";
                 //throw Error(input + " does not appear to be a valid URI");
             }
-            
+
             if(typeof input === "string"){
                 return $http.get(input);
-                
+
             }
             //What about file upload
             else{
                 return "Unknown data type.  Could not resolve image.";
             }
         };
-        
+
         this.validateIIIF = function(input){
             //Hit the IIIF validation API
             var url = "";
@@ -447,7 +448,7 @@ rerum.service("validationService", function($http, $q){
                 return false;
             }
         };
-        
+
         this.validateRerumManifest = function(input){
             //Will always come through as object, but could be a string version of that object.
             var idToCheck = "";
@@ -472,7 +473,7 @@ rerum.service("validationService", function($http, $q){
                 return false;
             }
         };
-        
+
         this.validateXML = function(input){
             var oParser = new DOMParser();
             var oDOM = oParser.parseFromString(input, "text/xml");

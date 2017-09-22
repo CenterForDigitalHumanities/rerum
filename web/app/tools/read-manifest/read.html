@@ -54,19 +54,27 @@
 
         .text-annotation {
             font-size: 1.2rem;
+            perspective: 900px;
+
         }
 
-        .text-annotation canvas {
-            transition: 500ms opacity;
-            opacity: .3;
+        .text-annotation canvas,.text-annotation img {
+            transition: 500ms all;
+            transform-origin: top;
+            box-shadow: rgba(0,0,0,1) 0px 0px 0px 0px;
         }
 
         .text-annotation:hover {
             background-color: #cfcfcf;
         }
 
-        .text-annotation:hover canvas {
-            opacity: 1;
+        .text-annotation:hover canvas, .text-annotation:hover img {
+            transform: rotateX(100deg);
+            box-shadow: rgba(0,0,0,.4) 0px 30px 5px -10px;
+        }
+        .text-annotation div:first-of-type{
+            position:absolute;
+            z-index: -1;
         }
         .u-see-thru {
             background-color: rgba(255,255,255,.7);
@@ -200,8 +208,10 @@ monogram[shape='oval']{
             <div ng-show="screen.viewing==='annotations'" class="note">
                 <div class="note-block">
                     <div class="text-annotation" ng-mouseenter="moveBacksplash(a.on,screen.canvas)" data-content="{{ a.resource['cnt:chars'] }}" ng-repeat="a in screen.canvas.otherContent[0].resources" ng-if="a['@type']==='oa:Annotation'" data-uri="{{a['@id']}}">
-                        <strong>{{ a.label }}</strong> <span class="text" data-ng-bind-html="trust(a.resource['cnt:chars'] || a.resource['chars'] || a.resource['@value'])"></span>
-                        <code ng-hide="a.resource['cnt:chars'] || a.resource['chars'] || a.resource['@value']">[ no transcription ]</code>
+                        <div>
+                            <strong>{{ a.label }}</strong> <span class="text" data-ng-bind-html="trust(a.resource['cnt:chars'] || a.resource['chars'] || a.resource['@value'])"></span>
+                            <code ng-hide="a.resource['cnt:chars'] || a.resource['chars'] || a.resource['@value']">[ no transcription ]</code>
+                        </div>
                         <img selector="a.on" ng-if="a.on.indexOf('xywh')>0">
                     </div>
                 </div>
