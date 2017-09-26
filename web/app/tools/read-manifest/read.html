@@ -203,17 +203,17 @@ monogram[shape='oval']{
                 <select ng-show="obj.sequences[0].canvases.length" ng-model="screen.canvas" ng-options="canvas.label for canvas in obj.sequences[0].canvases"></select>
                 <button role="button" ng-click="screen.canvas=obj.sequences[0].canvases[obj.sequences[0].canvases.indexOf(screen.canvas)+1]" ng-hide="obj.sequences[0].canvases.indexOf(screen.canvas)>(obj.sequences[0].canvases.length-2)">next</button>
                 <button role="button" ng-if="screen.canvas.otherContent[0].resources" ng-click="cycleView()">{{screen.views[screen.viewing]}}</button>
-                <button role="button" ng-show="screen.views[screen.viewing]=='annotations'" ng-click="screen.block=!screen.block">{{screen.block && "Shades"||"Simple"}}</button>
+                <button role="button" ng-show="screen.viewing==='annotations'" ng-click="screen.block=!screen.block">{{screen.block && "Shades"||"Simple"}}</button>
             </div>
         </div>
         <div style="position:relative;" ng-mouseleave="hideBacksplash()">
             <img id="backsplash" ng-style="screen.backsplashStyle" ng-src="{{screen.canvas.images[0].resource['@id']}}">
-            <div ng-hide="screen.viewing==='image'">
+            <div ng-show="screen.viewing==='image'">
                 <img fallback-src="http://placekitten.com/{{screen.canvas.width}}/{{screen.canvas.height}}" ng-src="{{screen.canvas.images[0].resource['@id']}}">
                 <div class="annotation" ng-mouseenter="moveBacksplash(a.on,screen.canvas)" data-content="{{ trust(a.resource['cnt:chars']) }}" ng-repeat="a in screen.canvas.otherContent[0].resources" ng-if="a['@type']==='oa:Annotation'" ng-style={{getStyle(a.on,screen.canvas)}} data-uri="{{a['@id']}}">
                 </div>
             </div>
-            <div ng-hide="screen.viewing==='annotations'" class="note" ng-class="{block:screen.block}">
+            <div ng-show="screen.viewing==='annotations'" class="note" ng-class="{block:screen.block}">
                 <div class="note-block">
                     <div class="text-annotation" ng-mouseenter="moveBacksplash(a.on,screen.canvas)" data-content="{{ a.resource['cnt:chars'] }}" ng-repeat="a in screen.canvas.otherContent[0].resources" ng-if="a['@type']==='oa:Annotation'" data-uri="{{a['@id']}}">
                         <div>
