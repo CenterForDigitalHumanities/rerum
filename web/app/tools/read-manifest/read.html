@@ -79,6 +79,10 @@
         .text-annotation div:last-child,.block .text-annotation div {
             position: relative !important;
         }
+        .block .text-annotation:hover canvas,.block .text-annotation:hover img {
+            transform: none;
+            box-shadow: inherit;
+        }
         .u-see-thru {
             background-color: rgba(255,255,255,.7);
         }
@@ -204,12 +208,12 @@ monogram[shape='oval']{
         </div>
         <div style="position:relative;" ng-mouseleave="hideBacksplash()">
             <img id="backsplash" ng-style="screen.backsplashStyle" ng-src="{{screen.canvas.images[0].resource['@id']}}">
-            <div ng-show="screen.viewing==='image'">
+            <div ng-hide="screen.viewing==='image'">
                 <img fallback-src="http://placekitten.com/{{screen.canvas.width}}/{{screen.canvas.height}}" ng-src="{{screen.canvas.images[0].resource['@id']}}">
                 <div class="annotation" ng-mouseenter="moveBacksplash(a.on,screen.canvas)" data-content="{{ trust(a.resource['cnt:chars']) }}" ng-repeat="a in screen.canvas.otherContent[0].resources" ng-if="a['@type']==='oa:Annotation'" ng-style={{getStyle(a.on,screen.canvas)}} data-uri="{{a['@id']}}">
                 </div>
             </div>
-            <div ng-hide="screen.viewing==='annotations'" class="note" ng-class="{'block':screen.block}">
+            <div ng-hide="screen.viewing==='annotations'" class="note" ng-class="{block:screen.block}">
                 <div class="note-block">
                     <div class="text-annotation" ng-mouseenter="moveBacksplash(a.on,screen.canvas)" data-content="{{ a.resource['cnt:chars'] }}" ng-repeat="a in screen.canvas.otherContent[0].resources" ng-if="a['@type']==='oa:Annotation'" data-uri="{{a['@id']}}">
                         <div>
