@@ -3,13 +3,13 @@
 rerum.config(['$routeProvider', '$locationProvider',
     function ($routeProvider, $locationProvider) {
     $routeProvider
-            .when('/crop/:canvasID', {
+            .when('/crop', {
                 templateUrl: 'app/tools/crop-page/cropping.html',
                 controller: 'cropController',
             resolve: {
-            currentCanvas: function (config, rerumService, $route, $q, Manifest, Lists) {
-            var cId = $route.current.params.canvasID;
-                if (cId.indexOf("%2F") > - 1) {
+            currentCanvas: function (config, rerumService, $route, $q, Manifest, Lists,$routeParams) {
+            var cId = $route.current.params.uri ||  $route.current.params.url || $route.current.params.canvas;
+                if (cId && cId.indexOf("%2F") > - 1) {
             cId = decodeURIComponent(cId);
             }
             if (config.currentCanvas && config.currentCanvas['@id'] === cId) {

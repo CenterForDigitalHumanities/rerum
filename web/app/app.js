@@ -29,8 +29,8 @@ rerum.config(['$routeProvider', '$locationProvider',
                 })
                 .otherwise(({redirectTo: '/welcome'}));
     }]);
-rerum.value('Backend_ip', '165.134.105.29'); //Store this like a global variables for use throughout, that way we only have to change it here. 
-rerum.value('API_Path', 'http://165.134.105.29/annotationstore/anno/'); //Store this like a global variables for use throughout, that way we only have to change it here. 
+rerum.value('Backend_ip', '165.134.105.29'); //Store this like a global variables for use throughout, that way we only have to change it here.
+rerum.value('API_Path', 'http://165.134.105.29/annotationstore/anno/'); //Store this like a global variables for use throughout, that way we only have to change it here.
 rerum.value('API_Key', 'som3_frigg1n_k3y');
 rerum.value('Terminal', false); // set Apple IIe style
 rerum.value('config', {
@@ -183,7 +183,7 @@ rerum.directive('scrollto',
             }
         };
     });
-    
+
 
 /*
  * Mock Data
