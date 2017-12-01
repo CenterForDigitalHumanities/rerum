@@ -2,29 +2,31 @@
 
 rerum.controller('registrationController', function ($scope, RegistrationService) {
     $scope.registrationReturn = {registrationMessage:"Click Submit to Register", agentMessage:"", code:100, agentRegistrationID:"-1"};
+//     $scope.submitRegistration = function (form) {
+//         var registrationPromise = RegistrationService.registerAgent(form);
+//         registrationPromise.then(function (promiseData) {
+//             $scope.registrationReturn.registrationMessage = promiseData.data.info;
+//             $scope.registrationReturn.code = promiseData.data.code;
+//             $scope.registrationReturn.agentRegistrationID = promiseData.agentID;
+//             $scope.registrationReturn.agentMessage = promiseData.agentMessage;
+//         }, function (err) {
+//             $scope.registrationReturn.registrationMessage = err.message;
+//             $scope.registrationReturn = {text: err.message, type: "msg-fail"};
+//             $scope.registrationReturn.agentRegistrationID = -1;
+//             $scope.registrationReturn.agentMessage = "Registration Failure!";
+//         });
+    
+     //Basic registration that does not create a user. 
     $scope.submitRegistration = function (form) {
-        var registrationPromise = RegistrationService.registerAgent(form);
-        registrationPromise.then(function (promiseData) {
-            $scope.registrationReturn.registrationMessage = promiseData.data.info;
-            $scope.registrationReturn.code = promiseData.data.code;
-            $scope.registrationReturn.agentRegistrationID = promiseData.agentID;
-            $scope.registrationReturn.agentMessage = promiseData.agentMessage;
-        }, function (err) {
-            $scope.registrationReturn.registrationMessage = err.message;
-            $scope.registrationReturn = {text: err.message, type: "msg-fail"};
-            $scope.registrationReturn.agentRegistrationID = -1;
-            $scope.registrationReturn.agentMessage = "Registration Failure!";
-        });
-
-      //Basic registration that does not create a user.
-//    RegistrationService.register(form)
-//        .then(function (promiseData) {
-//            $scope.registrationReturn.registrationMessage = promiseData.data.info;
-//            $scope.registrationReturn.code = promiseData.data.code;
-//        }, function (err) {
-//            $scope.registrationMessage = err.message;
-//            $scope.registrationReturn = {text: err.message, type: "msg-fail"};
-//        });
+       RegistrationService.register(form)
+       .then(function (promiseData) {
+           $scope.registrationReturn.registrationMessage = promiseData.data.info;
+           $scope.registrationReturn.code = promiseData.data.code;
+       }, function (err) {
+           $scope.registrationMessage = err.message;
+           $scope.registrationReturn = {text: err.message, type: "msg-fail"};
+       });
+     }
         
     };
 });
