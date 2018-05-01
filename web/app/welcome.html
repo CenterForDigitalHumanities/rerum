@@ -1,38 +1,34 @@
 <div class="container">
     <p>
-        This is an open and free repository for all sorts of digital things.
-        Digital anchors for real world objects and encoded assertions from real
-        world people are stored here without prejudice.
+        This is an open and free repository for all sorts of digital things. Digital anchors for real world objects and encoded assertions
+        from real world people are stored here without prejudice.
     </p>
     <div ng-controller="welcomeController" class="text-center">
         <!--    <div class="one column"></div>-->
         <div class="row">
-            <div class=" six columns card">
+            <div class=" four columns card">
                 <a href="#annotation" class="button u-full-width">
                     The Annotation Story
                     <i class="fa fa-comment-o"></i>
                 </a>
                 <p>
                     <i class="fa fa-comment-o watermark"></i>
-                    Learn more about the technology of digitizing the
-                    scholarly conversations around the world's
-                    <span class="no-break">most valuable resources.</span>
+                    Learn more about digitizing the scholarly conversations around
+                    <span class="no-break">valuable resources.</span>
                 </p>
             </div>
-            <div class=" six columns card">
+            <div class=" four columns card">
                 <a href="#about" class="button u-full-width">
-                    The O<small>ng</small>CDH Connection
+                    The O
+                    <small>ng</small>CDH Connection
                     <i class="fa fa-map-marker"></i>
                 </a>
                 <p>
                     <i class="fa fa-map-marker watermark"></i>
-                    Meet the organization aligning open standards and
-                    idiosyncratic needs of the global history
+                    Meet the organization aligning open standards and idiosyncratic needs
                     <span class="no-break">of scholarship.</span>
                 </p>
             </div>
-        </div>
-        <div class="row">
             <div class=" four columns card">
                 <a href="#tools" class="button u-full-width">
                     Rerum Tools
@@ -40,7 +36,21 @@
                 </a>
                 <p>
                     <i class="fa fa-cogs watermark"></i>
-                    Create, update, and interact with  <span class="no-break">the objects.</span>
+                    Create, update, and interact with
+                    <span class="no-break">the objects.</span>
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class=" four columns card">
+                <a href="#cases" class="button u-full-width">
+                    Implementations
+                    <i class="fa fa-television"></i>
+                </a>
+                <p>
+                    <i class="fa fa-television watermark"></i>
+                    Check out sitings of RERUM in
+                    <span class="no-break">the wild.</span>
                 </p>
             </div>
             <div class=" four columns card">
@@ -50,7 +60,8 @@
                 </a>
                 <p>
                     <i class="fa fa-wrench watermark"></i>
-                    Connect your application to  <span class="no-break">the repository</span>.
+                    Connect your application to
+                    <span class="no-break">the repository</span>.
                 </p>
             </div>
             <div class=" four columns card">
@@ -60,9 +71,48 @@
                 </a>
                 <p>
                     <i class="fa fa-cubes watermark"></i>
-                    Preview and suggest <span class="no-break">what comes next.</span>
+                    Preview and suggest
+                    <span class="no-break">what comes next.</span>
                 </p>
             </div>
         </div>
     </div>
+    <p>
+        <em>Rerum</em> (Latin: "of things") is a conveniently ambiguous umbrella term we use to identify the
+        <em>things</em> (tools, components, schemata) that are functional or philosophical kin to each other. The
+        <abbr title="last universal common ancestor">LUCA</abbr>
+        concept for them all is a set of principles:
+        <dl>
+            <dt><i class="fa fa-globe"></i> Annotation is everywhere</dt>
+            <dd>
+                Scholarly assertions, descriptive annotations, and even the measurements and notes often
+                <a href="blogpost">mistaken for metadata</a>
+                are all possible vertices for standards like Web Annotation. These sorts of declarations should 
+                always be atomized as much as possible in their storage, especially when they are simple to 
+                recombine for user applications.
+            </dd>
+            <dt><i class="fa fa-user"></i> Attribution is essential</dt>
+            <dd>
+                Productive communication between researchers requires reliable attribution. When individual 
+                annotations (as above) are each attributed, collaboration becomes natural, and even complex 
+                concerns such as authorization are just acts of filtering.
+            </dd>
+            <dt><i class="fa fa-floppy-o"></i> Format is ephemeral</dt>
+            <dd>
+                No one can predict the Next Great Format, but history can teach us about what obstacles to 
+                migration can be avoided. The simpler it is to abandon, the more likely a format will 
+                remain accessible.
+            </dd>
+            <dt><i class="fa fa-code-fork"></i> Knowledge is controversy</dt>
+            <dt><i class="fa fa-users"></i> Research is decentralized</dt>
+        </dl>
+
+        <abbr title="reconditorium eximium rerum universalium mutabiliumque">RERUM</abbr>, the recursive acronym for the open and free
+    </p>
 </div>
+
+RERUM = the application (any application) that runs a repository with the Rerum API. Rerum API = the set path formats and
+list of equivalencies that are accepted for types. RERUM Server = the github project with a Java backend and MongoDB that
+(will) respond to the Rerum API Rerum Cloud = the github project that connects the Rerum API to the Google Cloud Services.
+Rerum Tools = standalone tools for editing objects and writing into and out of a RERUM Rerum User Management = the theoretical
+SSO solution for WJOSJCDHSLU projects
