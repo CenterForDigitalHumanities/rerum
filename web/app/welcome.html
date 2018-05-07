@@ -1,156 +1,177 @@
-<div class="container">
+<div>
     <style type="text/css">
         i.fa.fa-3x.u-pull-left {
             margin: 0 0.125em;
         }
+        .pane {
+            padding:1rem 0;
+        }
+        .pane:nth-of-type(2n) {
+            background: #a3d1ff;
+        }
     </style>
-    <p>
-        This is an open and free repository for all sorts of digital things. Digital anchors for real world objects and encoded assertions
-        from real world people are stored here without prejudice.
-    </p>
-    <div ng-controller="welcomeController" class="text-center">
-        <!--    <div class="one column"></div>-->
-        <div class="row">
-            <div class=" four columns card">
-                <a href="#annotation" class="button u-full-width">
-                    The Annotation Story
-                    <i class="fa fa-comment-o"></i>
-                </a>
-                <p>
-                    <i class="fa fa-comment-o watermark"></i>
-                    Learn more about digitizing the scholarly conversations around
-                    <span class="no-break">valuable resources.</span>
-                </p>
-            </div>
-            <div class=" four columns card">
-                <a href="#about" class="button u-full-width">
-                    The O
-                    <small>ng</small>CDH Connection
-                    <i class="fa fa-map-marker"></i>
-                </a>
-                <p>
-                    <i class="fa fa-map-marker watermark"></i>
-                    Meet the organization aligning open standards and idiosyncratic needs
-                    <span class="no-break">of scholarship.</span>
-                </p>
-            </div>
-            <div class=" four columns card">
-                <a href="#tools" class="button u-full-width">
-                    Rerum Components
-                    <i class="fa fa-cogs"></i>
-                </a>
-                <p>
-                    <i class="fa fa-cogs watermark"></i>
-                    Create, update, and interact with
-                    <span class="no-break">the objects.</span>
-                </p>
-            </div>
-        </div>
-        <div class="row">
-            <div class=" four columns card">
-                <a href="#cases" class="button u-full-width">
-                    Implementations
-                    <i class="fa fa-television"></i>
-                </a>
-                <p>
-                    <i class="fa fa-television watermark"></i>
-                    Check out sightings of RERUM in
-                    <span class="no-break">the wild.</span>
-                </p>
-            </div>
-            <div class=" four columns card">
-                <a href="#connect" class="button u-full-width">
-                    Connect To RERUM
-                    <i class="fa fa-wrench"></i>
-                </a>
-                <p>
-                    <i class="fa fa-wrench watermark"></i>
-                    Connect your application to
-                    <span class="no-break">the repository</span>.
-                </p>
-            </div>
-            <div class=" four columns card">
-                <a href="#future" class="button u-full-width">
-                    The Future
-                    <i class="fa fa-cubes"></i>
-                </a>
-                <p>
-                    <i class="fa fa-cubes watermark"></i>
-                    Preview and suggest
-                    <span class="no-break">what comes next.</span>
-                </p>
+<div class="pane">
+        <div class="container">
+            <h3>Free for All</h3>
+            <p>
+                This is an open and free repository for all sorts of digital things. Digital anchors for real world objects and encoded assertions
+                from real world people are stored here without prejudice.
+            </p>
+            <div ng-controller="welcomeController" class="text-center">
+                <!--    <div class="one column"></div>-->
+                <div class="row">
+                    <div class=" four columns card">
+                        <a href="#annotation" class="button u-full-width">
+                            The Annotation Story
+                            <i class="fa fa-comment-o"></i>
+                        </a>
+                        <p>
+                            <i class="fa fa-comment-o watermark"></i>
+                            Learn more about digitizing the scholarly conversations around
+                            <span class="no-break">valuable resources.</span>
+                        </p>
+                    </div>
+                    <div class=" four columns card">
+                        <a href="#about" class="button u-full-width">
+                            The O
+                            <small>ng</small>CDH Connection
+                            <i class="fa fa-map-marker"></i>
+                        </a>
+                        <p>
+                            <i class="fa fa-map-marker watermark"></i>
+                            Meet the organization aligning open standards and idiosyncratic needs
+                            <span class="no-break">of scholarship.</span>
+                        </p>
+                    </div>
+                    <div class=" four columns card">
+                        <a href="#tools" class="button u-full-width">
+                            Rerum Components
+                            <i class="fa fa-cogs"></i>
+                        </a>
+                        <p>
+                            <i class="fa fa-cogs watermark"></i>
+                            Create, update, and interact with
+                            <span class="no-break">the objects.</span>
+                        </p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class=" four columns card">
+                        <a href="#cases" class="button u-full-width">
+                            Implementations
+                            <i class="fa fa-television"></i>
+                        </a>
+                        <p>
+                            <i class="fa fa-television watermark"></i>
+                            Check out sightings of RERUM in
+                            <span class="no-break">the wild.</span>
+                        </p>
+                    </div>
+                    <div class=" four columns card">
+                        <a href="#connect" class="button u-full-width">
+                            Connect To RERUM
+                            <i class="fa fa-wrench"></i>
+                        </a>
+                        <p>
+                            <i class="fa fa-wrench watermark"></i>
+                            Connect your application to
+                            <span class="no-break">the repository</span>.
+                        </p>
+                    </div>
+                    <div class=" four columns card">
+                        <a href="#future" class="button u-full-width">
+                            The Future
+                            <i class="fa fa-cubes"></i>
+                        </a>
+                        <p>
+                            <i class="fa fa-cubes watermark"></i>
+                            Preview and suggest
+                            <span class="no-break">what comes next.</span>
+                        </p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-    <p>
-        <em>Rerum</em> (Latin: "of things") is a conveniently ambiguous umbrella term we use to identify the
-        <em>things</em> (tools, schemata, databases) that are functional or philosophical kin. The
-        <abbr title="last universal common ancestor">LUCA</abbr>
-        concept for them all is a set of principles:
-        <dl>
-            <dt>
-                 Annotation is everywhere</dt>
-            <dd>
-                <i class="fa fa-3x u-pull-left fa-globe"></i> Scholarly assertions, descriptive annotations, and even the measurements and notes often
-                <a href="blogpost">mistaken for metadata</a>
-                are all possible vertices for standards like Web Annotation. These sorts of declarations should always be atomized as much
-                as possible in their storage, especially when they are simple to recombine for user applications.
-            </dd>
-            <dt>
-                 Attribution is essential</dt>
-            <dd>
-                <i class="fa fa-3x u-pull-left fa-user"></i> Productive communication between researchers requires reliable attribution. When individual annotations (as above) are each
-                attributed, collaboration becomes natural, and even complex concerns such as authorization are just acts
-                of filtering.
-            </dd>
-            <dt>
-                 Format is ephemeral</dt>
-            <dd>
-                <i class="fa fa-3x u-pull-left fa-floppy-o"></i> No one can predict the Next Great Format, but history can teach us about what obstacles to migration can be avoided. The
-                simpler it is to abandon, the more likely a format will remain accessible.
-            </dd>
-            <dt>
-                 Knowledge is controversy</dt>
-            <dd>
-                <i class="fa fa-3x u-pull-left fa-code-fork"></i> Statements of fact are reference material until challenged. The interaction of experts and the collisions of theories, evidence,
-                and educated conjecture or theses enlivens research. Recording both the state and the history of the conversation
-                serves knowledge.
-            </dd>
-            <dt>
-                 Research is decentralized</dt>
-            <dd>
-                <i class="fa fa-3x u-pull-left fa-users"></i> Experts in any mature field are not only distributed across institutions, but the most influential investigators may move
-                around, as people do. The complex and enforced conventions around citation and
-                <abbr title="Intellectual Property Rights">IPR</abbr> make clear the critical nature of maintaining attribution and encouraging distribution.
-            </dd>
-        </dl>
-    </p>
-    <h3>The Leaves of Rerum</h3>
-    <p>
-        Manifestations of Rerum fall into certain categories and should be referred to according to these specific conventions:
-    </p>
-    <dl>
-        <dt>
-            <abbr title="reconditorium eximium rerum universalium mutabiliumque">RERUM</abbr>
-        </dt>
-        <dd>
-            indicates the application (any application) that runs a repository with the Rerum API.
-        </dd>
-        <dt>Rerum API</dt>
-        <dd>
-            collects the set of HTTP endpoints used by client servers to run operations within the RERUM database.
-        </dd>
-        <dt>RERUM Server</dt>
-        <dd>
-            is a complete web service. Our existing instance is on github and combines MongoDB and Java.
-        </dd>
-        <dt>Rerum Cloud</dt>
-        <dd>
-            is an ongoing attempt to implement a cloud-based RERUM Server. The current github attempt uses Google Cloud Services.
-        </dd>
-        <dt>Rerum Components</dt>
-        <dd>
-            describes the applications, tools, and Web Components that are designed for the Rerum API.
-        </dd>
-    </dl>
+    <div class="pane">
+        <div class="container">
+                <h3>The Roots of Rerum</h3>
+            <p>
+                <em>Rerum</em> (Latin: "of things") is a conveniently ambiguous umbrella term we use to identify the
+                <em>things</em> (tools, schemata, databases) that are functional or philosophical kin. The
+                <abbr title="last universal common ancestor">LUCA</abbr>
+                concept for them all is a set of principles:
+                <dl>
+                    <dt>
+                        Annotation is everywhere</dt>
+                    <dd>
+                        <i class="fa fa-3x u-pull-left fa-globe"></i> Scholarly assertions, descriptive annotations, and even the measurements and notes often
+                        <a href="blogpost">mistaken for metadata</a>
+                        are all possible vertices for standards like Web Annotation. These sorts of declarations should always be atomized as much
+                        as possible in their storage, especially when they are simple to recombine for user applications.
+                    </dd>
+                    <dt>
+                        Attribution is essential</dt>
+                    <dd>
+                        <i class="fa fa-3x u-pull-left fa-user"></i> Productive communication between researchers requires reliable attribution. When individual
+                        annotations (as above) are each attributed, collaboration becomes natural, and even complex concerns
+                        such as authorization are just acts of filtering.
+                    </dd>
+                    <dt>
+                        Format is ephemeral</dt>
+                    <dd>
+                        <i class="fa fa-3x u-pull-left fa-floppy-o"></i> No one can predict the Next Great Format, but history can teach us about what obstacles to migration
+                        can be avoided. The simpler it is to abandon, the more likely a format will remain accessible.
+                    </dd>
+                    <dt>
+                        Knowledge is controversy</dt>
+                    <dd>
+                        <i class="fa fa-3x u-pull-left fa-code-fork"></i> Statements of fact are reference material until challenged. The interaction of experts and the
+                        collisions of theories, evidence, and educated conjecture or theses enlivens research. Recording
+                        both the state and the history of the conversation serves knowledge.
+                    </dd>
+                    <dt>
+                        Research is decentralized</dt>
+                    <dd>
+                        <i class="fa fa-3x u-pull-left fa-users"></i> Experts in any mature field are not only distributed across institutions, but the most influential
+                        investigators may move around, as people do. The complex and enforced conventions around citation
+                        and
+                        <abbr title="Intellectual Property Rights">IPR</abbr> make clear the critical nature of maintaining attribution and encouraging distribution.
+                    </dd>
+                </dl>
+            </p>
+        </div>
+    </div>
+    <div class="pane">
+        <div class="container">
+            <h3>The Leaves of Rerum</h3>
+            <p>
+                Manifestations of Rerum fall into certain categories and should be referred to according to these specific conventions:
+            </p>
+            <dl>
+                <dt>
+                    <abbr title="reconditorium eximium rerum universalium mutabiliumque">RERUM</abbr>
+                </dt>
+                <dd>
+                    indicates the application (any application) that runs a repository with the Rerum API.
+                </dd>
+                <dt>Rerum API</dt>
+                <dd>
+                    collects the set of HTTP endpoints used by client servers to run operations within the RERUM database.
+                </dd>
+                <dt>RERUM Server</dt>
+                <dd>
+                    is a complete web service. Our existing instance is on github and combines MongoDB and Java.
+                </dd>
+                <dt>Rerum Cloud</dt>
+                <dd>
+                    is an ongoing attempt to implement a cloud-based RERUM Server. The current github attempt uses Google Cloud Services.
+                </dd>
+                <dt>Rerum Components</dt>
+                <dd>
+                    describes the applications, tools, and Web Components that are designed for the Rerum API.
+                </dd>
+            </dl>
+        </div>
+    </div>
 </div>
