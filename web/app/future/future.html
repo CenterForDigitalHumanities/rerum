@@ -11,7 +11,7 @@
             Standards
         </a>
         <a class="four columns button" scrollto="tools">
-            Tools
+            Components
         </a>
     </div>
     <p>
@@ -35,17 +35,12 @@
         or even flat file structures that may be best suited to certain resources.
     </p>
     <p>
-        The current authentication is based on a simple IP whitelist. This requires
-        servers to maintain a static IP and makes management clumsy. The use of an
-        API key will improve the experience for developers and some work has begun
-        on the GCS RERUM instance, implementing the Auth0 service. Furthermore,
-        RERUM currently trusts the registered servers (and always will), but
-        attribution will improve if the <a target="_blank" href="https://auth0.com">Auth0</a>
-        authentication is extended to clients, not for API calls directly, but
-        for the creation of public <code>Agent</code> objects, which can be tracked
-        and managed in the OngCDH RERUM instance. Once this is in place, it will
-        even be possible to extend authentication to individual users and allow
-        applications to use the API to use a RERUM SSO, instead of tracking users
+        The current authentication implements <a target="_blank" href="https://auth0.com">Auth0</a>
+        service to generate API Keys and public <code>foaf:Agent</code>s within
+        RERUM. Further, RERUM currently trusts the registered servers (and always will),
+        but attribution may improve if the <a target="_blank" href="https://auth0.com">Auth0</a>
+        authentication is extended to individual users and allow
+        applications to use the API as a RERUM SSO, instead of tracking users
         internally.
     </p>
     <p>
@@ -57,7 +52,7 @@
     </p>
     <p>
         Finally, modularization and export of the RERUM software will require
-        attention. Dockers, Node modules, and others (bower, yeoman, gulp, grunt)
+        attention. Dockers, Node modules, and other bundlers and builders (bower, yeoman, gulp, grunt)
         may allow for custom configurations or just a simplified build for developers
         who wish to host their own instance. When these installs proliferate as hoped,
         it will also become important to spec out how they may identify each other to
@@ -73,10 +68,10 @@
         All instances of RERUM repositories must allow for at least the core API documented on
         <a href="https://github.com/CenterForDigitalHumanities/rerum_server" target="_blank"><i class="fa fa-github"></i> Github</a>.
         Version 0 is currently in use and suffers from several unconventional structures
-        and a somewhat complex object structure. Version 1, being developed with the GCS RERUM
-        instance, will attempt to standardize the object structure and remove the model
-        requirement from the objects saved. Also, v1 will prefer JSON(-LD) for all
-        transactions. Version 2, being designed, but not yet encoded anywhere, will
+        and a somewhat complex object structure. Version 1, currently in alpha release,
+        standardizes the object structure and removes the model requirement from the objects
+        saved. Also, v1 will prefer JSON(-LD) for all transactions. Version 2, being designed,
+        but not yet encoded anywhere, will
         focus on extending the search capabilities and accommodate interconnected
         RERUM servers.
     </p>
@@ -86,7 +81,7 @@
 
     <h3 id="standards">Standards</h3>
     <p>
-        RERUM would not be productive without the hard work of the Web Annotation 
+        RERUM would not be productive without the hard work of the Web Annotation
         W3C Group and the International Image Interoperability Framework. We
         believe this is the beginning of the story and the Web Annotation model for annotation
         as description, connection, attribution, selection, aggregation, and more
@@ -95,9 +90,6 @@
         surrogate. Through the democratization and productive use of annotation,
         this service intends to encourage the use of existing standards and the careful
         extension and development for better coverage of new areas of scholarship.
-        <a href="https://centerfordigitalhumanities.github.io/rerum-consortium" target="_blank">The Rerum Consortium</a>
-        exists, then, to provide a collaborative place for these new ideas to develop
-        and take hold.
     </p>
     <p>
         While it would be nice for RERUM to automatically know what is new and hot,
@@ -112,7 +104,7 @@
         Top
     </a>
 
-    <h3 id="tools">Tools</h3>
+    <h3 id="tools">Components</h3>
     <p>
         In service to the mission, tools must be supported and referenced which make
         object creation easier, more accurate, and with which more encoding is possible
