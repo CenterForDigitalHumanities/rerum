@@ -15,8 +15,8 @@ rerum.controller('registrationController', function ($scope, RegistrationService
 //             $scope.registrationReturn.agentRegistrationID = -1;
 //             $scope.registrationReturn.agentMessage = "Registration Failure!";
 //         });
-    
-     //Basic registration that does not create a user. 
+
+     //Basic registration that does not create a user.
     $scope.submitRegistration = function (form) {
        RegistrationService.register(form)
        .then(function (promiseData) {
@@ -26,13 +26,11 @@ rerum.controller('registrationController', function ($scope, RegistrationService
            $scope.registrationMessage = err.message;
            $scope.registrationReturn = {text: err.message, type: "msg-fail"};
        });
-     }
-        
     };
 });
 
 rerum.service('RegistrationService', function ($http, $q, Backend_ip, API_Service) {
-    
+
 //Just hits the annotationstore registration in to the accepted server list
     this.register = function (form) {
         var reg = /^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
@@ -44,10 +42,10 @@ rerum.service('RegistrationService', function ($http, $q, Backend_ip, API_Servic
             return $q.reject(new Error("Invalid server IP: " + form.ip));
         }
     };
-    
+
 //Actually create an Agent and return the registration promise data with the, or an error.
 //Need to respect the check against existing server IP entries.  DO NOT create an agent if the IP is already registered.
-//Think if DDOS situations and unlimited agents connected to IPs.  
+//Think if DDOS situations and unlimited agents connected to IPs.
     this.registerAgent = function(form){
         var variables = "";
         var registerNewServer = "";
