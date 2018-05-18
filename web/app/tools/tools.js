@@ -33,7 +33,7 @@ rerum.controller('toolsController', function ($scope) {
             notes: "Premier crowdsourced transcription in a simple interface."
         },
         {
-            label: "T-PEN",
+            label: "TPEN",
             link: "http://t-pen.org",
             version: "2.8",
             tags: ["transcriber","annotator","manuscripts","iiif","browser"],
