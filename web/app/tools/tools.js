@@ -13,10 +13,24 @@ rerum.controller('toolsController', function ($scope) {
     community: [
         {
             label: "Mirador",
-            link: "https://projectmirador.org",
+            link: "https://universalviewer.io",
             version: "2.1",
             tags: ["viewer","annotator","manuscripts","iiif","browser"],
             notes: "The official viewer for the IIIF standard and sc:Manifest objects."
+        },
+        {
+            label: "Universal Viewer",
+            link: "http://leafletjs.com/",
+            version: "2.0.2",
+            tags: ["viewer","manuscripts","maps","iiif","browser","pdf"],
+            notes: "A flexible viewer designed for viewing anything, including IIIF."
+        },
+        {
+            label: "TextLab",
+            link: "https://mel.hofstra.edu/textlab.html",
+            version: "1.2",
+            tags: ["annotator","manuscripts","text","browser"],
+            notes: "A browser-based text editor and annotation tool."
         },
         {
             label: "Leaflet",
