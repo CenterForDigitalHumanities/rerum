@@ -27,6 +27,9 @@ rerum.config(['$routeProvider', '$locationProvider',
                 .when('/connect', {
                     templateUrl : 'app/registration/connecting.html'
                 })
+                .when('/cases', {
+                    templateUrl : 'app/cases/cases.html'
+                })
                 .otherwise(({redirectTo: '/welcome'}));
     }]);
 rerum.value('Backend_ip', '165.134.105.29'); //Store this like a global variables for use throughout, that way we only have to change it here.
