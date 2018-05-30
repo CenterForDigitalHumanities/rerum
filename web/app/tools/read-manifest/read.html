@@ -206,7 +206,7 @@ monogram[shape='oval']{
                 <button role="button" ng-click="screen.canvas=obj.sequences[0].canvases[obj.sequences[0].canvases.indexOf(screen.canvas)+1]" ng-hide="obj.sequences[0].canvases.indexOf(screen.canvas)>(obj.sequences[0].canvases.length-2)">next</button>
                 <button role="button" ng-if="screen.canvas.otherContent[0].resources" ng-click="cycleView()">{{screen.views[screen.viewing]}}</button>
                 <button role="button" ng-show="screen.viewing==='annotations'" ng-click="screen.block=!screen.block">{{screen.block && "Shades"||"Simple"}}</button>
-                <button role="button" ng-show="screen.viewing==='annotations'" ng-click="screen.alpha=!screen.alpha">{{screen.alpha && "Alphabetized"||"Natural Order"}}</button>
+                <button role="button" ng-show="screen.viewing==='annotations'" ng-click="screen.alpha=!screen.alpha">{{screen.alpha && "Natural Order"||"Alphabetized"}}</button>
             </div>
         </div>
         <div style="position:relative;" ng-mouseleave="hideBacksplash()">
