@@ -206,6 +206,7 @@ monogram[shape='oval']{
                 <button role="button" ng-click="screen.canvas=obj.sequences[0].canvases[obj.sequences[0].canvases.indexOf(screen.canvas)+1]" ng-hide="obj.sequences[0].canvases.indexOf(screen.canvas)>(obj.sequences[0].canvases.length-2)">next</button>
                 <button role="button" ng-if="screen.canvas.otherContent[0].resources" ng-click="cycleView()">{{screen.views[screen.viewing]}}</button>
                 <button role="button" ng-show="screen.viewing==='annotations'" ng-click="screen.block=!screen.block">{{screen.block && "Shades"||"Simple"}}</button>
+                <button role="button" ng-show="screen.viewing==='alpha'" ng-click="screen.alpha=!screen.alpha">{{screen.alpha && "Alphabetized"||"Natural Order"}}</button>
             </div>
         </div>
         <div style="position:relative;" ng-mouseleave="hideBacksplash()">
@@ -217,7 +218,7 @@ monogram[shape='oval']{
             </div>
             <div ng-show="screen.viewing==='annotations'" class="note" ng-class="{block:screen.block}">
                 <div class="note-block">
-                    <div class="text-annotation" ng-mouseenter="moveBacksplash(a.on,screen.canvas)" data-content="{{ a.resource['cnt:chars'] }}" ng-repeat="a in screen.canvas.otherContent[0].resources" ng-if="a['@type']==='oa:Annotation'" data-uri="{{a['@id']}}">
+                    <div class="text-annotation" ng-mouseenter="moveBacksplash(a.on,screen.canvas)" data-content="{{ a.resource['cnt:chars'] }}" ng-repeat="a in alphaSet(screen.canvas.otherContent[0].resources)" ng-if="a['@type']==='oa:Annotation'" data-uri="{{a['@id']}}">
                         <div>
                             <strong>{{ a.label }}</strong> <span class="text" data-ng-bind-html="trust(a.resource['cnt:chars'] || a.resource['chars'] || a.resource['@value'])"></span>
                             <code ng-hide="a.resource['cnt:chars'] || a.resource['chars'] || a.resource['@value']">[ no transcription ]</code>

@@ -172,4 +172,23 @@ rerum.controller('readManifestController', function ($scope, $http,$sce, obj,can
             });
         }
     }
+    $scope.alphaSet = function(list){
+        if($scope.screen.alpha){
+            list.sort(function(a,b){
+                let aVal = a.resource['cnt:chars'] || a.resource['chars'] || a.resource['@value'];
+                let bVal = b.resource['cnt:chars'] || b.resource['chars'] || b.resource['@value'];
+                if (aVal < bVal) {
+                    return -1
+                }
+                if (aVal > bVal) {
+                    return 1
+                }
+                return 0
+            });
+            return list;
+        } else {
+            return list
+        }
+    };
+
 });
