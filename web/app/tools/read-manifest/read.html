@@ -10,7 +10,7 @@
             left: -12vw;
             top: -25vh;
             z-index: -1;
-            filter: grayscale(1) contrast(2) brightness(2);
+            filter: grayscale(1) contrast(1.5) brightness(2);
             opacity: 0;
             max-width: none;
             transition: 500ms all;
@@ -216,7 +216,7 @@ monogram[shape='oval']{
                 <div class="annotation" ng-mouseenter="moveBacksplash(a.on,screen.canvas)" data-content="{{ trust(a.resource['cnt:chars']) }}" ng-repeat="a in screen.canvas.otherContent[0].resources" ng-if="a['@type']==='oa:Annotation'" ng-style={{getStyle(a.on,screen.canvas)}} data-uri="{{a['@id']}}">
                 </div>
             </div>
-            <div ng-show="screen.viewing==='annotations'" class="note" ng-class="{block:screen.block}">
+            <div ng-show="screen.viewing==='annotations'" class="note u-see-thru" ng-class="{block:screen.block}">
                 <div class="note-block">
                     <div class="text-annotation" ng-mouseenter="moveBacksplash(a.on,screen.canvas)" data-content="{{ a.resource['cnt:chars'] }}" ng-repeat="a in alphaSet(screen.canvas.otherContent[0].resources)" ng-if="a['@type']==='oa:Annotation'" data-uri="{{a['@id']}}">
                         <div>
