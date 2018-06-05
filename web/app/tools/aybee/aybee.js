@@ -35,7 +35,8 @@ rerum.controller('aybeeController', function ($scope, $http, $sce, obj, rerumSer
     $scope.obj = obj;
     $scope.screen = {
         language: "en",
-        murl: ""
+        murl: "",
+        letters:["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
     };
     $scope.annotations = [];
     if (obj['@id']) {

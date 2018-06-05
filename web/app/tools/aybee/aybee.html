@@ -54,13 +54,13 @@
 
         .text-annotation {
             font-size: 1.2rem;
-            perspective: 900px;
-
+            height: 8rem;
+            float: left;
+            padding: 0 3rem;
         }
 
         .text-annotation canvas,.text-annotation img {
             transition: 500ms all;
-            transform-origin: top;
             box-shadow: rgba(0,0,0,1) 0px 0px 0px 0px;
             width: auto;
             max-width: 100%;
@@ -71,12 +71,10 @@
         }
 
         .text-annotation:hover canvas, .text-annotation:hover img {
-            transform: rotateX(100deg);
             box-shadow: rgba(0,0,0,.4) 0px 30px 5px -10px;
         }
         .text-annotation div:first-of-type{
             position:absolute;
-            z-index: -1;
         }
         .text-annotation div:last-child,.block .text-annotation div {
             position: relative !important;
@@ -153,6 +151,21 @@
         canvas {
             width: auto !important;
         }
+        .note-footer a {
+            padding: .25rem;
+            border: thin solid #ddd;
+            height: 2.5em;
+            line-height: 2;
+            width: 1.5em;
+            text-align: center;
+            margin-right:-1px;
+        }
+        .note-footer a:hover{
+            background-color: #ddd;
+        }
+        .note>.note-block {
+            overflow: auto;
+        }
     </style>
     <div ng-if="obj['@id']">
         <div class="note u-see-thru">
@@ -182,15 +195,16 @@
             </div>
             <div class="btn-group note-footer">
                 <input ng-model="screen.searchy" placeholder="Type to Filter" type="text">
+                <a ng-repeat="i in screen.letters" ng-click="screen.searchy=i;">{{i}}</a>
             </div>
         </div>
         <div style="position:relative;">
             <div class="note u-see-thru block">
                 <div class="note-block">
-                    <div class="text-annotation" data-content="{{ a.resource['cnt:chars'] }}" ng-repeat="a in alphaSet(annotations) | filter:screen.searchy:startsWith" ng-if="a['@type']==='oa:Annotation'" data-uri="{{a['@id']}}">
+                    <div class="text-annotation" data-content="{{ aVal }}" ng-init="aVal = a.resource['cnt:chars'] || a.resource['chars'] || a.resource['@value']" ng-repeat="a in alphaSet(annotations)" ng-if="a['@type']==='oa:Annotation'" data-uri="{{a['@id']}}" ng-show="startsWith(aVal,screen.searchy)">
                         <div>
-                            <strong>{{ a.label}}</strong> <span class="text" data-ng-bind-html="trust(a.resource['cnt:chars'] || a.resource['chars'] || a.resource['@value'])"></span>
-                            <code ng-hide="a.resource['cnt:chars'] || a.resource['chars'] || a.resource['@value']">[ no transcription ]</code>
+                            <strong>{{ a.label}}</strong> <span class="text" data-ng-bind-html="trust(aVal)"></span>
+                            <code ng-hide="aVal">[ no transcription ]</code>
                         </div>
                         <img selector="a.on" ng-if="a.on.indexOf('xywh') > 0">
                     </div>
