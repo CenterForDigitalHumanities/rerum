@@ -123,8 +123,8 @@ rerum.controller('aybeeController', function ($scope, $http, $sce, obj, rerumSer
         });
         return list;
     };
-    $scope.startsWith = function (actual, expected) {
+    $scope.searchIndex = function (actual, expected) {
         var lowerStr = (actual + "").toLowerCase();
-        return lowerStr.indexOf(expected.toLowerCase()) === 0;
+        return lowerStr.indexOf(expected.toLowerCase());
     }
 });
