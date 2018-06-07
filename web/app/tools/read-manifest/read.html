@@ -213,12 +213,12 @@ monogram[shape='oval']{
             <img id="backsplash" ng-style="screen.backsplashStyle" ng-src="{{screen.canvas.images[0].resource['@id']}}">
             <div ng-show="screen.viewing==='image'">
                 <img fallback-src="http://placekitten.com/{{screen.canvas.width}}/{{screen.canvas.height}}" ng-src="{{screen.canvas.images[0].resource['@id']}}">
-                <div class="annotation" ng-mouseenter="moveBacksplash(a.on,screen.canvas)" data-content="{{ trust(a.resource['cnt:chars']) }}" ng-repeat="a in screen.canvas.otherContent[0].resources" ng-if="a['@type']==='oa:Annotation'" ng-style={{getStyle(a.on,screen.canvas)}} data-uri="{{a['@id']}}">
+                <div class="annotation" ng-mouseenter="moveBacksplash(a.on,screen.canvas)" data-content="{{ trust(a.resource['cnt:chars']) }}" ng-repeat="a in screen.canvas.otherContent[0].resources" ng-if="(a['@type']==='oa:Annotation')||a.type==='Annotation'" ng-style={{getStyle(a.on,screen.canvas)}} data-uri="{{a['@id']||a.id}}">
                 </div>
             </div>
             <div ng-show="screen.viewing==='annotations'" class="note u-see-thru" ng-class="{block:screen.block}">
                 <div class="note-block">
-                    <div class="text-annotation" ng-mouseenter="moveBacksplash(a.on,screen.canvas)" data-content="{{ a.resource['cnt:chars'] }}" ng-repeat="a in alphaSet(screen.canvas.otherContent[0].resources)" ng-if="a['@type']==='oa:Annotation'" data-uri="{{a['@id']}}">
+                    <div class="text-annotation" ng-mouseenter="moveBacksplash(a.on,screen.canvas)" data-content="{{ a.resource['cnt:chars'] }}" ng-repeat="a in alphaSet(screen.canvas.otherContent[0].resources)" ng-if="(a['@type']==='oa:Annotation')||a.type==='Annotation'" data-uri="{{a['@id']||a.id}}">
                         <div>
                             <strong>{{ a.label }}</strong> <span class="text" data-ng-bind-html="trust(a.resource['cnt:chars'] || a.resource['chars'] || a.resource['@value'])"></span>
                             <code ng-hide="a.resource['cnt:chars'] || a.resource['chars'] || a.resource['@value']">[ no transcription ]</code>
