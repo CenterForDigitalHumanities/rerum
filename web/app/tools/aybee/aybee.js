@@ -109,10 +109,26 @@ rerum.controller('aybeeController', function ($scope, $http, $sce, obj, rerumSer
             });
         }
     }
+function getValue(a){
+    let val = ""
+    let res = a.resource || a.body
+    if(!res) throw new Error("No annotation body detected")
+    if(!angular.isArray(res)) res=[res]
+    angular.forEach(function(body){
+        if(val)return // breakout after the first found for now
+        val = a.resource['cnt:chars'] 
+        || a.resource['chars'] 
+        || a.resource['@value'] 
+        || a.resource.value 
+        || a.body.value ;
+    })
+    return val
+}
+
     $scope.alphaSet = function (list) {
         list.sort(function (a, b) {
-            let aVal = a.resource['cnt:chars'] || a.resource['chars'] || a.resource['@value'] || a.resource.value || a.body.value;
-            let bVal = b.resource['cnt:chars'] || b.resource['chars'] || b.resource['@value'] || b.resource.value || b.body.value;
+            let aVal = getValue(a)
+            let bVal = getValue(b)
             if (aVal < bVal) {
                 return -1
             }
