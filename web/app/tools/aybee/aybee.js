@@ -56,7 +56,7 @@ rerum.controller('aybeeController', function ($scope, $http, $sce, obj, rerumSer
             }
             rerumService.resolveURI(uri)
                 .then(function (res) {
-                    $scope.screen.canvas.otherContent[0] = canvas.otherContent[0] = res.data;
+                    canvas.otherContent[0] = res.data;
                     $scope.annotations = $scope.annotations.concat(canvas.otherContent[0].resources);
                 }, function (err) { });
         });
@@ -89,18 +89,6 @@ rerum.controller('aybeeController', function ($scope, $http, $sce, obj, rerumSer
         return $scope.description;
     };
     $scope.setDescription(obj.description, "en");
-    $scope.getStyle = function (on, canvas) {
-        var xywh = on.substring(on.indexOf("xywh=") + 5)
-            .split(",");
-        var height = canvas.height;
-        var width = canvas.width;
-        return {
-            left: xywh[0] / width * 100 + "%",
-            top: xywh[1] / height * 100 + "%",
-            height: xywh[3] / height * 100 + "%",
-            width: xywh[2] / width * 100 + "%"
-        };
-    };
     function checkResponse (data) {
         if (!data || Object.keys(data).length === 0) {
             showError({
