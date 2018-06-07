@@ -56,7 +56,7 @@ rerum.controller('aybeeController', function ($scope, $http, $sce, obj, rerumSer
             }
             rerumService.resolveURI(uri)
                 .then(function (res) {
-                    canvas.otherContent[0] = res.data;
+                    $scope.screen.canvas.otherContent[0] = canvas.otherContent[0] = res.data;
                     $scope.annotations = $scope.annotations.concat(canvas.otherContent[0].resources);
                 }, function (err) { });
         });
@@ -111,8 +111,8 @@ rerum.controller('aybeeController', function ($scope, $http, $sce, obj, rerumSer
     }
     $scope.alphaSet = function (list) {
         list.sort(function (a, b) {
-            let aVal = a.resource['cnt:chars'] || a.resource['chars'] || a.resource['@value'];
-            let bVal = b.resource['cnt:chars'] || b.resource['chars'] || b.resource['@value'];
+            let aVal = a.resource['cnt:chars'] || a.resource['chars'] || a.resource['@value'] || a.resource.value || a.body.value;
+            let bVal = b.resource['cnt:chars'] || b.resource['chars'] || b.resource['@value'] || b.resource.value || b.body.value;
             if (aVal < bVal) {
                 return -1
             }
