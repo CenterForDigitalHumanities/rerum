@@ -103,12 +103,11 @@ function getValue(a){
     if(!res) throw new Error("No annotation body detected")
     if(!angular.isArray(res)) res=[res]
     angular.forEach(function(body){
-        if(val) return // breakout after the first found for now
-        val = a.resource['cnt:chars'] 
-        || a.resource['chars'] 
-        || a.resource['@value'] 
-        || a.resource.value 
-        || a.body.value ;
+        // if(val) return // breakout after the first found for now
+        val = body['cnt:chars'] 
+        || body['chars'] 
+        || body['@value'] 
+        || body.value 
     })
     return val
 }
