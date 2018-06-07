@@ -65,7 +65,7 @@ rerum.controller('readManifestController', function ($scope, $http,$sce, obj,can
                 uri = canvas.otherContent[0]['@id'];
             }
             rerumService.resolveURI(uri).then(function (res) {
-                canvas.otherContent[0] = res.data;
+                $scope.screen.canvas.otherContent[0] = canvas.otherContent[0] = res.data;
             }, function (err) { });
         });
     }
