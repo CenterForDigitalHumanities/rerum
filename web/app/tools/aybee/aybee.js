@@ -97,7 +97,7 @@ rerum.controller('aybeeController', function ($scope, $http, $sce, obj, rerumSer
             });
         }
     }
-$scope.getValue(a){
+$scope.getValue = function(a){
     let val
     let res = a.resource || a.body
     if(!res) throw new Error("No annotation body detected")

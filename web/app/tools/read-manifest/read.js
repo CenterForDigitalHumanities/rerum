@@ -173,4 +173,18 @@ rerum.controller('readManifestController', function ($scope, $http,$sce, obj,can
             });
         }
     }
+    $scope.getValue = function(a){
+        let val
+        let res = a.resource || a.body
+        if(!res) throw new Error("No annotation body detected")
+        if(!angular.isArray(res)) res=[res]
+        res.forEach(function(body){
+            if(val) return // breakout after the first found for now
+            val = body['cnt:chars'] 
+            || body['chars'] 
+            || body['@value'] 
+            || body.value 
+        })
+        return val
+    }
 });
