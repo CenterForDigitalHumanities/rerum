@@ -205,7 +205,7 @@
         <div style="position:relative;">
             <div class="note u-see-thru block">
                 <div class="note-block">
-                    <div class="text-annotation" data-content="{{ aVal }}" ng-init="aVal = a.resource['cnt:chars'] || a.resource['chars'] || a.resource['@value']" ng-repeat="a in alphaSet(annotations)" ng-if="a['@type']==='oa:Annotation'" data-uri="{{a['@id']}}" ng-show="(screen.searchin && searchIndex(aVal,screen.searchy) > -1) || (searchIndex(aVal,screen.searchy) === 0)">
+                    <div class="text-annotation" data-content="{{ aVal }}" ng-init="aVal = getValue(a)" ng-repeat="a in alphaSet(annotations)" ng-if="(a['@type']==='oa:Annotation')||(a.type==='Annotation')" data-uri="{{a['@id']}}" ng-show="(screen.searchin && searchIndex(aVal,screen.searchy) > -1) || (searchIndex(aVal,screen.searchy) === 0)">
                         <div>
                             <strong>{{ a.label}}</strong> <span class="text" data-ng-bind-html="trust(aVal)"></span>
                             <code ng-hide="aVal">[ no transcription ]</code>

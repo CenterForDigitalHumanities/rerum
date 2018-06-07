@@ -97,7 +97,7 @@ rerum.controller('aybeeController', function ($scope, $http, $sce, obj, rerumSer
             });
         }
     }
-function getValue(a){
+$scope.getValue(a){
     let val
     let res = a.resource || a.body
     if(!res) throw new Error("No annotation body detected")
@@ -114,8 +114,8 @@ function getValue(a){
 
     $scope.alphaSet = function (list) {
         list.sort(function (a, b) {
-            let aVal = getValue(a)
-            let bVal = getValue(b)
+            let aVal = $scope.getValue(a)
+            let bVal = $scope.getValue(b)
             if (aVal < bVal) {
                 return -1
             }
