@@ -1,10 +1,101 @@
+
+
 <!DOCTYPE html>
-<html>
-<head>
-<title>...redirecty</title>
-<meta http-equiv="refresh" content="0; url=web" />
-</head>
-<body>
-to <code>/web</code> subdirectory
+<html class="body" ng-app="rerum">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>RERUM</title>
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+        <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="https://cdn.rawgit.com/dhg/Skeleton/master/css/skeleton.css">
+        <link rel="stylesheet" href="app/lib/loading-bar.css" media="screen">
+        <link rel="stylesheet" href="app/lib/hotkeys.min.css" media="screen">
+        <link rel="stylesheet" href="assets/fonts.css" media="screen">
+        <link rel="stylesheet" href="app/app.css" media="screen">
+        <link rel="stylesheet" href="app/tools/parse-rect/parse-rect.css" media="screen">
+        <link rel="stylesheet" href="app/tools/crop-page/crop-page.css" media="screen">
+        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+        <link rel="apple-touch-icon" sizes="57x57" href="apple-icon-57x57.png">
+        <link rel="apple-touch-icon" sizes="60x60" href="apple-icon-60x60.png">
+        <link rel="apple-touch-icon" sizes="72x72" href="apple-icon-72x72.png">
+        <link rel="apple-touch-icon" sizes="76x76" href="apple-icon-76x76.png">
+        <link rel="apple-touch-icon" sizes="114x114" href="apple-icon-114x114.png">
+        <link rel="apple-touch-icon" sizes="120x120" href="apple-icon-120x120.png">
+        <link rel="apple-touch-icon" sizes="144x144" href="apple-icon-144x144.png">
+        <link rel="apple-touch-icon" sizes="152x152" href="apple-icon-152x152.png">
+        <link rel="apple-touch-icon" sizes="180x180" href="apple-icon-180x180.png">
+        <link rel="icon" type="image/png" sizes="192x192"  href="android-icon-192x192.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+        <link rel="manifest" href="/manifest.json">
+        <!--        <base href="rerum/">-->
+    </head>
+    <body ng-controller="mainController">
+        <header>
+            <div class="row">
+                <a class="two columns" href="#welcome">
+                    <img src="logo.png" alt="logo" class="u-full-width" />
+                </a>
+                <small class="rerum_shimmer">reconditorium eximium rerum universalium mutabiliumque</small>
+                <h1 class="ten columns ">
+                    <span>rerum</span>
+                </h1>
+            </div>
+        </header>
+    <ng-view></ng-view>
+    <div style="height:20rem;width:100%;"></div>
+    <footer>
+        <div class="row">
+            <a href="#welcome" class="button four columns">
+                Home
+                <i class="fa fa-home"></i>
+            </a>
+            <a href="#annotation" class="button four columns">
+                The Annotation Story
+                <i class="fa fa-comment-o"></i>
+            </a>
+            <a href="#about" class="button four columns">
+                The O<small>ng</small>CDH Connection
+            <i class="fa fa-map-marker"></i>
+        </a>
+        </div>
+        <div class="row">
+            <a href="#tools" class="button four columns">
+            Rerum Tools
+            <i class="fa fa-cogs"></i>
+        </a>
+        <a href="#api" class="button four columns">
+            Use Rerum API
+            <i class="fa fa-wrench"></i>
+        </a>
+        <a href="#future" class="button four columns">
+            The Future
+            <i class="fa fa-cubes"></i>
+        </a>
+        </div>
+    </footer>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular-route.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular-animate.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular-sanitize.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.14.3/ui-bootstrap.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.14.3/ui-bootstrap-tpls.js"></script>
+    <script type="text/javascript" src="app/lib/loading-bar.js"></script>
+    <script type="text/javascript" src="app/lib/hotkeys.min.js"></script>
+    <script type="text/javascript" src="app/app.js"></script>
+    <script type="text/javascript" src="app/utils.js"></script>
+    <script type="text/javascript" src="app/registration/registration.js"></script>
+    <script type="text/javascript" src="app/tools/drawBox.js"></script>
+    <script type="text/javascript" src="app/tools/manifest.js"></script>
+    <script type="text/javascript" src="app/tools/tools.js"></script>
+    <script type="text/javascript" src="app/tools/essay/essay.js"></script>
+    <script type="text/javascript" src="app/api_blackbox/api_handler.js"></script>
+    <script type="text/javascript" src="app/validator_blackbox/validate.js"></script>
+    <script type="text/javascript" src="app/tools/parse-rect/parsing.js"></script>
+    <script type="text/javascript" src="app/tools/crop-page/cropping.js"></script>
+    <script type="text/javascript" src="app/tools/read-manifest/read.js"></script>
+    <script type="text/javascript" src="app/tools/aybee/aybee.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </body>
 </html>
