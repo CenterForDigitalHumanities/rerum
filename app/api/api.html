@@ -1,0 +1,97 @@
+<div class="container">
+    <style>
+        #objects p {
+            display: inline-grid;
+        }
+    </style>
+    <p>
+        To limit the possibility of abuse without putting too many obstacles up,
+        writing to the annotation store is restricted to servers (no CORS) who have
+        <a href="http://store.rerum.io">registered themselves</a>. The full plans for RERUM can be found
+        <a href="#/future">elsewhere on the site</a>.
+    </p>
+    <p>
+        The current public RERUM service is hosted on
+        a virtual server of OngCDH at Saint Louis University.
+        The backend is written in Java and MongoDB, with all requests currently over
+        HTTP.
+    </p>
+    <p>
+        All read requests (GET) are open by default. To write to RERUM, Follow
+        these simple steps:
+    </p>
+    <div id="objects">
+        <h1>RERUM Objects</h1>
+        <p>
+            The following object types are
+            currently encouraged in RERUM, though anything can be accepted:
+        </p>
+        <h5>Annotations:</h5>
+        <p>
+            Annotation<code>http://www.w3.org/ns/oa#Annotation</code>
+        </p>
+        <h5>Manifests:</h5>
+        <p>
+            Manifest<code>http://iiif.io/api/presentation/3#Manifest</code>
+        </p>
+        <p>
+            Manifest<code>http://iiif.io/api/presentation/2#Manifest</code>
+        </p>
+        <h5>Canvases:</h5>
+        <p>
+            Canvas<code>http://iiif.io/api/presentation/3#Canvas</code>
+        </p>
+        <p>
+            Canvas<code>http://iiif.io/api/presentation/2#Canvas</code>
+        </p>
+        <h5>List Objects:</h5>
+        <p>
+            Annotation&nbsp;Collection<code>http://www.w3.org/ns/activitystreams#AnnotationCollection</code>
+        </p>
+        <p>
+            Annotation&nbsp;Page<code>http://www.w3.org/ns/activitystreams#AnnotationPage</code>
+        </p>
+        <p>
+            Range<code>https://iiif.io/api/presentation/3#Range</code>
+        </p>
+        <p>
+            Sequence<code>http://iiif.io/api/presentation/2#Sequence</code>
+        </p>
+        <p>
+            Annotation&nbsp;List<code>http://iiif.io/api/presentation/2#AnnotationList</code>
+        </p>
+        <p>
+            Range<code>https://iiif.io/api/presentation/2#Range</code>
+        </p>
+        <p>
+            Aggregation<code>http://www.openarchives.org/ore/1.0/datamodel#Aggregation</code>
+        </p>
+        <h5>Plaintext Resources:</h5>
+        <p>
+            Content&nbsp;Literals<code>http://www.w3.org/2011/content#chars</code>
+        </p>
+        <h5>Agents:</h5>
+        <p>
+            Agent<code>http://xmlns.com/foaf/spec/#term_Agent</code>
+        </p>
+        <p>
+            Person<code>http://xmlns.com/foaf/spec/#term_Person</code>
+        </p>
+        <p>
+            Group<code>http://xmlns.com/foaf/spec/#term_Group</code>
+        </p>
+        <p>
+            Organization<code>http://xmlns.com/foaf/spec/#term_Organization</code>
+        </p>
+        <p>
+            Project<code>http://xmlns.com/foaf/spec/#term_Project</code>
+        </p>
+    </div>
+    <h1 id="api">API</h1>
+    <section>
+        <h2>Version 1</h2> store.rerum.io/v1
+        <a href="https://github.com/CenterForDigitalHumanities/rerum_server/blob/master/API.md">API has its own space
+            here</a>
+        <iframe src="http://centerfordigitalhumanities.github.io/rerum_server/API.html" class='container'></iframe>
+    </section>
+</div>

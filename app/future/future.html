@@ -20,15 +20,15 @@
     </p>
     <h3 id="server">Server</h3>
     <p>
-        The alpha server for the RERUM annotation store is a MongoDB/Java service
+        The server for our public RERUM service is a MongoDB/Java API
         (<a href="https://github.com/CenterForDigitalHumanities/rerum_server" target="_blank"><i class="fa fa-github"></i></a>),
-        but there is no reason the same server APIs cannot be implemented
+        but nothing prevents the same server APIs from being implemented
         in other configurations so that users may easily initialize their own
         RERUM to which others may connect.
     </p>
     <p>
-        Cloud services are the most obvious next step and there is already a project
-        started (<a href="https://github.com/CenterForDigitalHumanities/rerum-cloud" target="_blank"><i class="fa fa-github"></i></a>)
+        Containers are an obvious build and we have toyed with projects
+        (<a href="https://github.com/CenterForDigitalHumanities/rerum-cloud" target="_blank"><i class="fa fa-github"></i></a>, archived)
         using NodeJS and Google Datastore. Azure, AWS and others may be developed as well.
         Database flavors may be changed for different instances to optimize
         the transactions in RERUM or increase its adoption. There are SQL and noSQL
@@ -48,13 +48,14 @@
         applications and open it up for others. In addition to an instance of
         the Auth0 user management, RERUM will create a public user
         <code>foaf:Agent</code> that can provide a connection between various
-        user profiles and be used as an aggregating value for attribution.
+        user profiles and be used as an aggregating value for attribution. It 
+        is not a goal of the Rerum ecosystem to ever become a general authenticator.
     </p>
     <p>
-        Finally, modularization and export of the RERUM software will require
-        attention. Dockers, Node modules, and other bundlers and builders (bower, yeoman, gulp, grunt)
+        Finally, packaging of the RERUM software will require
+        attention. Bundlers and builders 
         may allow for custom configurations or just a simplified build for developers
-        who wish to host their own instance. When these installs proliferate as hoped,
+        who wish to host their own instance. When these ins talls proliferate as hoped,
         it will also become important to spec out how they may identify each other to
         complete the graph and allow for broader queries and interconnections across
         the Internet.
@@ -67,13 +68,14 @@
     <p>
         All instances of RERUM repositories must allow for at least the core API documented on
         <a href="https://github.com/CenterForDigitalHumanities/rerum_server" target="_blank"><i class="fa fa-github"></i> Github</a>.
-        Version 0 is currently in use and suffers from several unconventional structures
-        and a somewhat complex object structure. Version 1, currently in alpha release,
-        standardizes the object structure and removes the model requirement from the objects
-        saved. Also, v1 will prefer JSON(-LD) for all transactions. Version 2, being designed,
-        but not yet encoded anywhere, will
+        Version 0 is currently deprecated suffering from several unconventional structures
+        and a somewhat complex object structure. Version 1, currently in open release,
+        standardizes the object structure, establishes versioning, and removes the model 
+        requirement from the objects saved. Also, v1 prefers JSON(-LD) for all transactions. 
+        Designed, but not yet encoded anywhere, are extensions that provide smart services 
+        for IIIF, Web Annotation, and collections. Version 3, still unimagined, should 
         focus on extending the search capabilities and accommodate interconnected
-        RERUM servers.
+        RERUM services.
     </p>
     <a class="u-pull-right top" scrollto="top">
         Top
@@ -119,9 +121,15 @@
         Individual repositories will be generated for each OngCDH tool.
     </p>
     <p>
+        Collection tools are designed for users who would curate a set of digital objects
+        from a variety of online resources. The goal is to produce a public user interface 
+        that appears cohesive and polished while providing deep investigation and recombination. 
+        Importantly, this must respect intellectual property and be non-destructive.
+    </p>
+    <p>
         Manifest tools are very important for smaller institutions and individuals.
         The focus in this area will be to create or reference tools that allow for
-        viewing, creation, editing, and validation of <code>sc:Manifest</code> objects.
+        viewing, creation, editing, and validation of <code>Manifest</code> objects.
         Our tools will be web applications, but there is space for contributions of
         specific scripts shims and plug-ins for other applications. All tools hosted
         here will include the option to save your objects to RERUM by default.
@@ -131,8 +139,8 @@
         as RERUM matures. The specific challenge of a good annotation tool is not its
         ability to encode the standard Web Annotation format, but its ability to identify its
         audience and encourage the user to make scholarly decisions without technical
-        effort or improper encoding. Cropping a <code>sc:Canvas</code> image annotation
-        is a very discrete act from marking illustrations, though much of the interactions
+        effort or improper encoding. Cropping a <code>Canvas</code> image annotation
+        is a very discrete act from marking illustrations, though most of the interactions
         are similar. Transcription is high on the list (OngCDH's bias), but any image
         annotation is supportable. Managing annotations is also a challenge and complete
         interfaces will be required to sensibly aggregate the records within RERUM for
@@ -145,7 +153,9 @@
         Integration is not really a tool, but will become a list of tools within which
         resources from RERUM can be imported or referenced. These short links may provide
         the opportunity to begin a project in FromThePage using the connected Manifest
-        or open an annotation management tool within a Collection at the Wellcome Library.
+        or open an annotation management tool within a Collection at the Wellcome Library. 
+        Eventually, there will be a playground for users to interact with data objects 
+        in a sandbox environment and try out different tools in a shareable way.
     </p>
     <a class="u-pull-right top" scrollto="top">
         Top

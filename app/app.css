@@ -343,3 +343,18 @@ dd {
         background-position: top right;
     }
 }
+
+/* Larger than phablet */
+@media (max-width: 550px) {
+    .card {
+        min-width:100%;
+    }
+    .row {
+        min-width: 100%;
+        padding: 0;
+        display:block;
+    }
+    footer {
+        position: relative;
+    }
+}
