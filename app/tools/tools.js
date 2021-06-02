@@ -4,7 +4,7 @@ rerum.config(['$routeProvider',
     function ($routeProvider, $locationProvider, Edition) {
         $routeProvider
             .when('/tools', {
-                templateUrl: 'app/tools/tools.html'
+                templateUrl: 'tools/tools.html'
             });
     }]);
 
@@ -89,7 +89,7 @@ rerum.controller('toolsController', function ($scope) {
             notes: "Minor editing of existing Manifests and save changes."
         },{
             label: "Canvas Annotator",
-            link: "app/tools/annotation-tool/proto.html",
+            link: "tools/annotation-tool/proto.html",
             version: "0.1",
             tags: ["annotator","canvas","images","iiif"],
             notes: "An undergraduate project in OngCDH to create a simple Canvas annotation tool."

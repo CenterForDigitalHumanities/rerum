@@ -4,31 +4,31 @@ rerum.config(['$routeProvider', '$locationProvider',
 //            $locationProvider.html5Mode(true);
             $routeProvider
                 .when('/welcome', {
-                    templateUrl: 'app/welcome.html'
+                    templateUrl: 'welcome.html'
                 })
                 .when('/register', {
-                    templateUrl: 'app/registration/registration.html'
+                    templateUrl: 'registration/registration.html'
                 })
                 .when('/api', {
-                    templateUrl: 'app/api/api.html'
+                    templateUrl: 'api/api.html'
                 })
                 .when('/future', {
-                    templateUrl: 'app/future/future.html'
+                    templateUrl: 'future/future.html'
                 })
                 .when('/annotation', {
-                    templateUrl: 'app/annotations/annotations.html'
+                    templateUrl: 'annotations/annotations.html'
                 })
                 .when('/objects', {
-                    templateUrl: 'app/objects/objects.html'
+                    templateUrl: 'objects/objects.html'
                 })
                 .when('/about', {
-                    templateUrl: 'app/about/about.html'
+                    templateUrl: 'about/about.html'
                 })
                 .when('/connect', {
-                    templateUrl : 'app/registration/connecting.html'
+                    templateUrl : 'registration/connecting.html'
                 })
                 .when('/cases', {
-                    templateUrl : 'app/cases/cases.html'
+                    templateUrl : 'cases/cases.html'
                 })
                 .otherwise(({redirectTo: '/welcome'}));
     }]);

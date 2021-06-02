@@ -5,7 +5,7 @@ rerum.config(['$routeProvider',
     function ($routeProvider, $locationProvider, Edition) {
         $routeProvider
             .when('/edit', {
-                templateUrl: 'app/tools/editManifest.html',
+                templateUrl: 'tools/editManifest.html',
                 controller: 'buildManifestController',
                 resolve: {
                     context: function (Context) {
@@ -20,7 +20,7 @@ rerum.config(['$routeProvider',
                 }
             })
             .when('/build', {
-                templateUrl: 'app/tools/manifestFromImages.html',
+                templateUrl: 'tools/manifestFromImages.html',
                 controller: 'buildManifestController',
                 resolve: {
                     context: function (Context) {
@@ -32,7 +32,7 @@ rerum.config(['$routeProvider',
                 }
             })
             .when('/validate', {
-                templateUrl: 'app/tools/validate.html',
+                templateUrl: 'tools/validate.html',
                 controller: 'validationController',
                 resolve: {
                     context: function (Context) {
@@ -312,7 +312,7 @@ rerum.controller('buildManifestController', function ($scope, $uibModal, Context
     $scope.editList = function (parent,prop) {
         var self = this;
         var modal = $uibModal.open({
-            templateUrl: 'app/tools/editList.html',
+            templateUrl: 'tools/editList.html',
             size: 'lg',
             controller: function ($scope,Knowns,Context) {
                 $scope.context = Context.json;
@@ -595,7 +595,7 @@ rerum.directive('ngLoad', function($parse){
 rerum.directive('addProperty',function(){
     return {
         restrict: 'E',
-        templateUrl:'app/tools/addProperty.html',
+        templateUrl:'tools/addProperty.html',
         scope: {
             obj:'='
         },
@@ -751,7 +751,7 @@ rerum.directive('thumbsCanvas', function () {
        },
        replace: true,
        controller: "thumbsController",
-       templateUrl: "app/thumbsCanvas.html"
+       templateUrl: "thumbsCanvas.html"
    };
 });
 

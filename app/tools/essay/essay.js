@@ -4,7 +4,7 @@ rerum.config(['$routeProvider',
     function ($routeProvider, $locationProvider) {
         $routeProvider
             .when('/essay', {
-                templateUrl: 'app/tools/essay/essay.html',
+                templateUrl: 'tools/essay/essay.html',
                 controller: 'essayController',
                 resolve: {
                     context: function (Context) {
@@ -19,7 +19,7 @@ rerum.config(['$routeProvider',
                 }
             })
             .when('/essay/edit', {
-                templateUrl: 'app/tools/essay/editEssay.html',
+                templateUrl: 'tools/essay/editEssay.html',
                 controller: 'essayController',
                 resolve: {
                     context: function (Context) {
@@ -98,7 +98,7 @@ rerum.controller('essayController', function ($scope, $uibModal, Context, Knowns
     $scope.editList = function (parent, prop) {
         var self = this;
         var modal = $uibModal.open({
-            templateUrl: 'app/tools/editList.html',
+            templateUrl: 'tools/editList.html',
             size: 'lg',
             controller: function ($scope, Knowns, Context) {
                 $scope.context = Context.json;

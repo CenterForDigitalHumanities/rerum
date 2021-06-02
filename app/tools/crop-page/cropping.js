@@ -4,7 +4,7 @@ rerum.config(['$routeProvider', '$locationProvider',
     function ($routeProvider, $locationProvider) {
     $routeProvider
             .when('/crop', {
-                templateUrl: 'app/tools/crop-page/cropping.html',
+                templateUrl: 'tools/crop-page/cropping.html',
                 controller: 'cropController',
             resolve: {
             currentCanvas: function (config, rerumService, $route, $q, Manifest, Lists,$routeParams) {
