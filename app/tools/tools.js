@@ -24,6 +24,12 @@ rerum.controller('toolsController', function ($scope) {
             version: "2.0.2",
             tags: ["viewer","manuscripts","maps","iiif","browser","pdf"],
             notes: "A flexible viewer designed for viewing anything, including IIIF."
+        },{
+            label: "IIIF Concordance",
+            link: "http://concordance.rerum.io",
+            version: "0.2",
+            tags: ["viewer","reader","manuscripts","transcription","iiif"],
+            notes: "Filter and sort words from a transcription of a IIIF Manifest."
         },
         {
             label: "TextLab",
@@ -70,41 +76,47 @@ rerum.controller('toolsController', function ($scope) {
     ],
     rerum:[
         {
+            label: "Manifest Transcription Reader",
+            link: "#/read",
+            version: "0.4",
+            tags: ["viewer","reader","manuscripts","transcription","iiif"],
+            notes: "Simple reading of Manifest annotations, metadata, and images."
+        },{
+            label: "Transcription Search Tool",
+            link: "#/aybee",
+            version: "0.3",
+            tags: ["viewer","reader","manuscripts","transcription","iiif"],
+            notes: "View and filter Manifest annotations and images by letter or phrase."
+        },{
             label: "Manifest from Images",
             link: "#/build",
             version: "0.6",
-            tags: ["creator","iiif","images","manifest"],
+            tags: ["creator","iiif","images","manifest","prezi-2"],
             notes: "Create a new Manifest from a list of image URLs."
-        },{
-            label: "Manifest Transcription Reader",
-            link: "#/read",
-            version: "0.2",
-            tags: ["viewer","reader","manuscripts","transcription","iiif"],
-            notes: "Simple reading of Manifest annotations, metadata, and images."
         },{
             label: "Edit a Manifest",
             link: "#/edit",
             version: "0.2",
-            tags: ["editor","annotator","manuscripts","iiif"],
+            tags: ["archived","editor","annotator","manuscripts","iiif"],
             notes: "Minor editing of existing Manifests and save changes."
         },{
             label: "Canvas Annotator",
             link: "tools/annotation-tool/proto.html",
             version: "0.1",
-            tags: ["annotator","canvas","images","iiif"],
+            tags: ["student project","annotator","canvas","images","iiif"],
             notes: "An undergraduate project in OngCDH to create a simple Canvas annotation tool."
         },{
             label: "TPWN",
             link: "https://github.com/cubap/TPWN",
             version: "0.0.1",
-            tags: ["transcriber","manuscripts","manifest","iiif"],
+            tags: ["archived","transcriber","manuscripts","manifest","iiif","proof-of-concept"],
             notes: "A very early proof-of-concept of a completely stand-alone front-end based on T-PEN for 3.0 planning."
         },
         {
             label: "Validators",
             link: "#/validate",
             version: "0.5",
-            tags: ["IIIF","JSON","RERUM","validation"],
+            tags: ["IIIF","JSON","RERUM","validation","prezi-2"],
             notes: "Various validation tools for data types involved with RERUM."
         }
     ]};
