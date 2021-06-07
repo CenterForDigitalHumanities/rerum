@@ -34,15 +34,9 @@
         <p>
             Manifest<code>http://iiif.io/api/presentation/3#Manifest</code>
         </p>
-        <p>
-            Manifest<code>http://iiif.io/api/presentation/2#Manifest</code>
-        </p>
         <h5>Canvases:</h5>
         <p>
             Canvas<code>http://iiif.io/api/presentation/3#Canvas</code>
-        </p>
-        <p>
-            Canvas<code>http://iiif.io/api/presentation/2#Canvas</code>
         </p>
         <h5>List Objects:</h5>
         <p>
@@ -53,15 +47,6 @@
         </p>
         <p>
             Range<code>https://iiif.io/api/presentation/3#Range</code>
-        </p>
-        <p>
-            Sequence<code>http://iiif.io/api/presentation/2#Sequence</code>
-        </p>
-        <p>
-            Annotation&nbsp;List<code>http://iiif.io/api/presentation/2#AnnotationList</code>
-        </p>
-        <p>
-            Range<code>https://iiif.io/api/presentation/2#Range</code>
         </p>
         <p>
             Aggregation<code>http://www.openarchives.org/ore/1.0/datamodel#Aggregation</code>
@@ -90,8 +75,1063 @@
     <h1 id="api">API</h1>
     <section>
         <h2>Version 1</h2> store.rerum.io/v1
-        <a href="https://github.com/CenterForDigitalHumanities/rerum_server/blob/master/API.md">API has its own space
-            here</a>
-        <iframe src="http://centerfordigitalhumanities.github.io/rerum_server/API.html" class='container'></iframe>
+        <a href="https://github.com/CenterForDigitalHumanities/rerum_server/blob/master/API.md">link</a>
+        <p>All the following interactions will take place between
+            the server running RERUM and the application server. Direct connection from client script
+            to the RERUM server is not allowed. Please note that all
+            examples are pointing at the development version of the RERUM API, not the
+            production version. Only point to the production version once you have
+            tested with the development version.</p>
+
+        <p>If you would like to see an example of a web application leveraging the RERUM API visit the
+            testbed at http://tinydev.rerum.io or the <a
+                href="https://github.com/CenterForDigitalHumanities/TinyThings">GitHub codebase for TinyThings</a>.</p>
+
+        <p>To have simple CRUD ability from client script without using a back end proxy, you can
+            use our public test endpoints. Note: Your data will be public and could be removed at any time. This is for
+            testing only
+            and will not be attributed to you in any way.</p>
+        <ul>
+            <li>http://tinydev.rerum.io/app/create Uses the rules established by RERUM <a href="#create">create</a></li>
+            <li>http://tinydev.rerum.io/app/update Uses the rules established by RERUM PUT <a href="#update">update</a>
+            </li>
+            <li>http://tinydev.rerum.io/app/delete Uses the rules established by RERUM <a href="#delete">delete</a></li>
+            <li>http://tinydev.rerum.io/app/query Uses the rules established by RERUM <a href="#custom-query">Custom
+                    Query</a></li>
+        </ul>
+
+        <h2 id="get">GET<a class="anchorjs-link " href="#get" aria-label="Anchor" data-anchorjs-icon=""
+                style="font: 1em / 1 anchorjs-icons; padding-left: 0.375em;"></a></h2>
+
+        <h3 id="single-object-by-id">Single object by id<a class="anchorjs-link " href="#single-object-by-id"
+                aria-label="Anchor" data-anchorjs-icon=""
+                style="font: 1em / 1 anchorjs-icons; padding-left: 0.375em;"></a></h3>
+
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Patterns</th>
+                    <th scope="col">Payloads</th>
+                    <th scope="col">Responses</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code class="language-plaintext highlighter-rouge">/id/_id</code></td>
+                    <td><code class="language-plaintext highlighter-rouge">empty</code></td>
+                    <td>200 <code class="language-plaintext highlighter-rouge">{JSON}</code></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <ul>
+            <li><strong><code class="language-plaintext highlighter-rouge">_id</code></strong>—the id of the object in
+                RERUM.</li>
+            <li><strong>Response: <code class="language-plaintext highlighter-rouge">{JSON}</code></strong>—The object
+                at <code class="language-plaintext highlighter-rouge">_id</code></li>
+        </ul>
+
+        <p>Example: http://devstore.rerum.io/v1/id/11111</p>
+
+        <h3 id="history-tree-before-this-version">History tree before this version<a class="anchorjs-link "
+                href="#history-tree-before-this-version" aria-label="Anchor" data-anchorjs-icon=""
+                style="font: 1em / 1 anchorjs-icons; padding-left: 0.375em;"></a></h3>
+
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Patterns</th>
+                    <th scope="col">Payloads</th>
+                    <th scope="col">Responses</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code class="language-plaintext highlighter-rouge">/history/_id</code></td>
+                    <td><code class="language-plaintext highlighter-rouge">empty</code></td>
+                    <td>200 <code class="language-plaintext highlighter-rouge">[{JSON}]</code></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <ul>
+            <li><strong><code class="language-plaintext highlighter-rouge">_id</code></strong>—the id of the object in
+                RERUM.</li>
+            <li><strong>Response: <code class="language-plaintext highlighter-rouge">[{JSON}]</code></strong>—an array
+                of the resolved objects of all parent history objects</li>
+        </ul>
+
+        <p>As objects in RERUM are altered, the previous state is retained in
+            a history tree. Requests return ancestors of this object on it’s
+            branch. The objects in the array are listed in inorder traversal but
+            ignoring other branches.</p>
+
+        <p>Example: http://devstore.rerum.io/v1/history/11111</p>
+
+        <h3 id="history-tree-since-this-version">History tree since this version<a class="anchorjs-link "
+                href="#history-tree-since-this-version" aria-label="Anchor" data-anchorjs-icon=""
+                style="font: 1em / 1 anchorjs-icons; padding-left: 0.375em;"></a></h3>
+
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Patterns</th>
+                    <th scope="col">Payloads</th>
+                    <th scope="col">Responses</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code class="language-plaintext highlighter-rouge">/since/_id</code></td>
+                    <td><code class="language-plaintext highlighter-rouge">empty</code></td>
+                    <td>200 <code class="language-plaintext highlighter-rouge">[{JSON}]</code></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <ul>
+            <li><strong><code class="language-plaintext highlighter-rouge">_id</code></strong>—the id of the object in
+                RERUM.</li>
+            <li><strong>Response: <code class="language-plaintext highlighter-rouge">[{JSON}]</code></strong>—an array
+                of the resolved objects of all child history objects</li>
+        </ul>
+
+        <p>As objects in RERUM are altered, the next state is retained in
+            a history tree. Requests return all descendants of this object from all branches.<br>
+            The objects in the array are listed in preorder traversal.</p>
+
+        <p>Example: http://devstore.rerum.io/v1/since/11111</p>
+
+        <h2 id="post">POST<a class="anchorjs-link " href="#post" aria-label="Anchor" data-anchorjs-icon=""
+                style="font: 1em / 1 anchorjs-icons; padding-left: 0.375em;"></a></h2>
+
+        <h3 id="access-token-proxy">Access Token Proxy<a class="anchorjs-link " href="#access-token-proxy"
+                aria-label="Anchor" data-anchorjs-icon=""
+                style="font: 1em / 1 anchorjs-icons; padding-left: 0.375em;"></a></h3>
+
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Patterns</th>
+                    <th scope="col">Payloads</th>
+                    <th scope="col">Responses</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code class="language-plaintext highlighter-rouge">/accessToken.action</code></td>
+                    <td><code class="language-plaintext highlighter-rouge">{JSON}</code></td>
+                    <td>200 <code class="language-plaintext highlighter-rouge">{JSON}</code></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <ul>
+            <li><strong><code class="language-plaintext highlighter-rouge">{JSON}</code></strong>— Auth0 requirements <a
+                    href="https://auth0.com/docs/tokens/refresh-token/current#use-a-refresh-token">here</a></li>
+            <li><strong>Response: <code class="language-plaintext highlighter-rouge">{JSON}</code></strong>— Containing
+                the Auth0 /oauth/token <code class="language-plaintext highlighter-rouge">JSON</code> response</li>
+        </ul>
+
+        <p>RERUM works as a proxy with Auth0 to help manage tokens from registered applications.
+            This will form the request necessary to get a response from Auth0 which contains
+            a new access token.</p>
+
+        <p>Example Response:</p>
+
+        <ul>
+            <li><strong>Header:</strong> <code class="language-plaintext highlighter-rouge">HTTP/1.1 200 OK</code></li>
+            <li><strong>Body:</strong></li>
+        </ul>
+
+        <pre><code class="language-(json)">{
+    "access_token":"eyJz93a...k4laUWw",
+    "token_type":"Bearer",
+    "expires_in":86400
+}
+                </code></pre>
+
+        <h3 id="refresh-token-proxy">Refresh Token Proxy<a class="anchorjs-link " href="#refresh-token-proxy"
+                aria-label="Anchor" data-anchorjs-icon=""
+                style="font: 1em / 1 anchorjs-icons; padding-left: 0.375em;"></a></h3>
+
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Patterns</th>
+                    <th scope="col">Payloads</th>
+                    <th scope="col">Responses</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code class="language-plaintext highlighter-rouge">/refreshToken.action</code></td>
+                    <td><code class="language-plaintext highlighter-rouge">{JSON}</code></td>
+                    <td>200 <code class="language-plaintext highlighter-rouge">{JSON}</code></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <ul>
+            <li><strong><code class="language-plaintext highlighter-rouge">{JSON}</code></strong>— Auth0 requirements <a
+                    href="https://auth0.com/docs/tokens/refresh-token/current#get-a-refresh-token">here</a></li>
+            <li><strong>Response: <code class="language-plaintext highlighter-rouge">{JSON}</code></strong>— Containing
+                the Auth0 /oauth/token <code class="language-plaintext highlighter-rouge">JSON</code> response</li>
+        </ul>
+
+        <p>RERUM works as a proxy with Auth0 to help manage tokens from registered applications.
+            This will form the request necessary to get a response from Auth0 which contains
+            a new refresh token.</p>
+
+        <p>Example Response:</p>
+
+        <ul>
+            <li><strong>Header:</strong> <code class="language-plaintext highlighter-rouge">HTTP/1.1 200 OK</code></li>
+            <li><strong>Body:</strong></li>
+        </ul>
+
+        <pre><code class="language-(json)">{
+    "access_token":"eyJz93a...k4laUWw",
+    "refresh_token":"GEbRxBN...edjnXbL",
+    "id_token":"eyJ0XAi...4faeEoQ",
+    "token_type":"Bearer",
+    "expires_in":86400
+}
+                </code></pre>
+
+        <h3 id="create">Create<a class="anchorjs-link " href="#create" aria-label="Anchor" data-anchorjs-icon=""
+                style="font: 1em / 1 anchorjs-icons; padding-left: 0.375em;"></a></h3>
+
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Patterns</th>
+                    <th scope="col">Payloads</th>
+                    <th scope="col">Responses</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code class="language-plaintext highlighter-rouge">/create.action</code></td>
+                    <td><code class="language-plaintext highlighter-rouge">{JSON}</code></td>
+                    <td>201 <code
+                            class="language-plaintext highlighter-rouge">Location: http://devstore.rerum.io/v1/id/11111</code>
+                        <code class="language-plaintext highlighter-rouge">{JSON}</code></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <ul>
+            <li><strong><code class="language-plaintext highlighter-rouge">{JSON}</code></strong>—The object to create
+            </li>
+            <li><strong>Response: <code class="language-plaintext highlighter-rouge">{JSON}</code></strong>—Containing
+                various bits of information about the create.</li>
+        </ul>
+
+        <p>Add a completely new object to RERUM and receive the location URI
+            in response. Accepts only single JSON objects for RERUM storage.
+            Mints a new URI and returns the object’s <code class="language-plaintext highlighter-rouge">Location</code>
+            as a header.
+            If the object already contains an <code class="language-plaintext highlighter-rouge">@id</code> that matches
+            an object in RERUM,
+            the API will direct the user to use <a href="#update">update</a> instead.</p>
+
+        <p>Example Response:</p>
+
+        <ul>
+            <li><strong>Header:</strong> <code
+                    class="language-plaintext highlighter-rouge">Location: http://devstore.rerum.io/v1/id/11111</code>
+            </li>
+            <li><strong>Body:</strong></li>
+        </ul>
+
+        <pre><code class="language-(json)">{
+    "code" : 201,
+    "new_obj_state" : {
+    "@id": "http://devstore.rerum.io/v1/id/11111",
+    ...
+    },
+    "iiif_validation" : {
+    "warnings" : ["Array of warnings from IIIF validator"],
+    "error" : "Error for why this object failed validation",
+    "okay" : 1 // 0 or 1 as to whether or not it passed IIIF validation
+    }
+}
+                </code></pre>
+
+        <h3 id="batch-create">Batch Create<a class="anchorjs-link " href="#batch-create" aria-label="Anchor"
+                data-anchorjs-icon="" style="font: 1em / 1 anchorjs-icons; padding-left: 0.375em;"></a></h3>
+
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Patterns</th>
+                    <th scope="col">Payloads</th>
+                    <th scope="col">Responses</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code class="language-plaintext highlighter-rouge">/batchCreate.action</code></td>
+                    <td><code class="language-plaintext highlighter-rouge">[{JSON}]</code></td>
+                    <td>201 <code
+                            class="language-plaintext highlighter-rouge">Location: https://devstore.rerum.io/v1/id/11111, ...</code>
+                        <code class="language-plaintext highlighter-rouge">[{JSON}]</code></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <ul>
+            <li><strong><code class="language-plaintext highlighter-rouge">[{JSON}]</code></strong>—an array of objects
+                to create in RERUM</li>
+            <li><strong>Response: <code class="language-plaintext highlighter-rouge">[{JSON}]</code></strong>—an array
+                of the resolved objects from the creation process</li>
+        </ul>
+
+        <p>The array of JSON objects passed in will be created in the
+            order submitted and the response will have the URI of the new
+            resource or an error message in the body as an array in the
+            same order. When errors are encountered, the batch process
+            will attempt to continue for all submitted items.</p>
+
+        <h3 id="custom-query">Custom Query<a class="anchorjs-link " href="#custom-query" aria-label="Anchor"
+                data-anchorjs-icon="" style="font: 1em / 1 anchorjs-icons; padding-left: 0.375em;"></a></h3>
+
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Patterns</th>
+                    <th scope="col">Payloads</th>
+                    <th scope="col">Responses</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code class="language-plaintext highlighter-rouge">/getByProperties.action</code></td>
+                    <td><code class="language-plaintext highlighter-rouge">{JSON}</code></td>
+                    <td>200 <code class="language-plaintext highlighter-rouge">[{JSON}]</code></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <ul>
+            <li><strong><code class="language-plaintext highlighter-rouge">{JSON}</code></strong>—the properties in JSON
+                format for the query</li>
+            <li><strong>Response: <code class="language-plaintext highlighter-rouge">[{JSON}]</code></strong>—an array
+                of the resolved objects of all objects that match the query</li>
+        </ul>
+
+        <p>This simple format will be made more complex
+            in the future, but should serve the basic needs as it is.
+            All responses are in a JSON Array, even if zero records or a single
+            record is returned. RERUM will test for property matches,
+            so <code class="language-plaintext highlighter-rouge">{ "@type" : "sc:Canvas", "label" : "page 46" }</code>
+            will match objects like</p>
+
+        <pre><code class="language-(json)">{
+    "@id": "https://devstore.rerum.io/v1/id/00000",
+    "otherContent": [],
+    "label": "page 46",
+    "width": 730,
+    "images": [],
+    "height": 1000,
+    "@type": "sc:Canvas"
+}
+                </code></pre>
+
+        <p>and return each matched object in a JSON array in no particular order.</p>
+
+        <h3 id="http-post-method-override">HTTP POST Method Override<a class="anchorjs-link "
+                href="#http-post-method-override" aria-label="Anchor" data-anchorjs-icon=""
+                style="font: 1em / 1 anchorjs-icons; padding-left: 0.375em;"></a></h3>
+
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Patterns</th>
+                    <th scope="col">Payloads</th>
+                    <th scope="col">Responses</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code class="language-plaintext highlighter-rouge">/patch.action</code></td>
+                    <td><code class="language-plaintext highlighter-rouge">{JSON}</code></td>
+                    <td>201 <code
+                            class="language-plaintext highlighter-rouge">Location: http://devstore.rerum.io/v1/id/22222</code>
+                        <code class="language-plaintext highlighter-rouge">{JSON}</code></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <ul>
+            <li><strong><code class="language-plaintext highlighter-rouge">{JSON}</code></strong>—The object to patch
+                update.</li>
+            <li><strong>Response: <code class="language-plaintext highlighter-rouge">{JSON}</code></strong>—Containing
+                various bits of information about the patch.</li>
+        </ul>
+
+        <p>Some programming languages and some servers do not consider <code
+                class="language-plaintext highlighter-rouge">PATCH</code> to be a standard method.
+            As a result, some software is unable to make a <code
+                class="language-plaintext highlighter-rouge">PATCH</code> update request directly.
+            RERUM still wants these applications to fit within these standards. We support
+            the <code class="language-plaintext highlighter-rouge">X-HTTP-Method-Override</code> header on <code
+                class="language-plaintext highlighter-rouge">POST</code> requests to make them act like <a
+                href="#patch-update"><code class="language-plaintext highlighter-rouge">PATCH</code> requests
+                in this API</a>.</p>
+
+        <p>Example Method Override Request:</p>
+
+        <ul>
+            <li><strong>Header:</strong>
+                <code class="language-plaintext highlighter-rouge">Method: POST</code>,
+                <code class="language-plaintext highlighter-rouge">X-HTTP-Method-Override: PATCH</code>
+            </li>
+            <li><strong>Body:</strong>
+                <strong><code class="language-plaintext highlighter-rouge">{JSON}</code></strong>—An object containing
+                the @id for update and the fields in that object to patch.
+            </li>
+        </ul>
+
+        <p>This grants software that is otherwise unable to make these requests the ability
+            to so.</p>
+
+        <p>Example Response:</p>
+
+        <ul>
+            <li><strong>Header:</strong> <code
+                    class="language-plaintext highlighter-rouge">Location: http://devstore.rerum.io/v1/id/22222</code>
+                <code class="language-plaintext highlighter-rouge">{JSON}</code></li>
+            <li><strong>Body:</strong></li>
+        </ul>
+
+        <pre><code class="language-(json)">{
+    "code" : 200,
+    "original_object_id" : "http://devstore.rerum.io/v1/id/11111",
+    "new_obj_state" : {
+    "@id": "http://devstore.rerum.io/v1/id/22222",
+    "__rerum":{
+        "history":{
+            "previous":"http://devstore.rerum.io/v1/id/11111",
+            ...
+        }
+        ...
+    }
+    ...
+    },
+    "iiif_validation" : {
+    "warnings" : ["Array of warnings from IIIF validator"],
+    "error" : "Error for why this object failed validation",
+    "okay" : 1 // 0 or 1 as to whether or not it passed IIIF validation
+    }
+}
+                </code></pre>
+
+        <h2 id="put">PUT<a class="anchorjs-link " href="#put" aria-label="Anchor" data-anchorjs-icon=""
+                style="font: 1em / 1 anchorjs-icons; padding-left: 0.375em;"></a></h2>
+        <blockquote>
+            <p><strong>NB:</strong> <code class="language-plaintext highlighter-rouge">__rerum</code>, <code
+                    class="language-plaintext highlighter-rouge">@id</code> and <code
+                    class="language-plaintext highlighter-rouge">_id</code> updates are ignored.</p>
+
+            <p>Updates to released or deleted objects fail with an error.</p>
+        </blockquote>
+
+        <h3 id="update">Update<a class="anchorjs-link " href="#update" aria-label="Anchor" data-anchorjs-icon=""
+                style="font: 1em / 1 anchorjs-icons; padding-left: 0.375em;"></a></h3>
+
+        <p>Replace an existing record through reference to its internal
+            RERUM id. This will have the effects of update, set, and unset actions.
+            New keys will be created and keys not present in the request will not be present in the resulting object.
+            When an object is updated, the <code class="language-plaintext highlighter-rouge">@id</code> will change.
+            This results in the need to track history and
+            the previous version will be represented in the <code
+                class="language-plaintext highlighter-rouge">__rerum.history.previous</code> of the resulting object.
+        </p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Patterns</th>
+                    <th scope="col">Payloads</th>
+                    <th scope="col">Responses</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code class="language-plaintext highlighter-rouge">/update.action</code></td>
+                    <td><code class="language-plaintext highlighter-rouge">{JSON}</code></td>
+                    <td>200 <code
+                            class="language-plaintext highlighter-rouge">Location: http://devstore.rerum.io/v1/id/22222</code>
+                        <code class="language-plaintext highlighter-rouge">{JSON}</code></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <ul>
+            <li><strong><code class="language-plaintext highlighter-rouge">{JSON}</code></strong>—The requested new
+                state for the object.</li>
+            <li><strong>Response Body: <code
+                        class="language-plaintext highlighter-rouge">{JSON}</code></strong>—Containing various bits of
+                information about the PUT update.</li>
+        </ul>
+
+        <p>Example Response:</p>
+
+        <ul>
+            <li><strong>Header:</strong> <code
+                    class="language-plaintext highlighter-rouge">Location: http://devstore.rerum.io/v1/id/22222</code>
+            </li>
+            <li><strong>Body:</strong></li>
+        </ul>
+
+        <pre><code class="language-(json)">{
+    "code" : 200,
+    "original_object_id" : "http://devstore.rerum.io/v1/id/11111",
+    "new_obj_state" : {
+    "@id": "http://devstore.rerum.io/v1/id/22222",
+    "__rerum":{
+        "history":{
+            "previous":"http://devstore.rerum.io/v1/id/11111",
+            ...
+        }
+        ...
+    }
+    ...
+    },
+    "iiif_validation" : {
+    "warnings" : ["Array of warnings from IIIF validator"],
+    "error" : "Error for why this object failed validation",
+    "okay" : 1 // 0 or 1 as to whether or not it passed IIIF validation
+    }
+}
+                </code></pre>
+
+        <h3 id="batch-update-beta">Batch Update (beta)<a class="anchorjs-link " href="#batch-update-beta"
+                aria-label="Anchor" data-anchorjs-icon=""
+                style="font: 1em / 1 anchorjs-icons; padding-left: 0.375em;"></a></h3>
+
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Patterns</th>
+                    <th scope="col">Payloads</th>
+                    <th scope="col">Responses</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code class="language-plaintext highlighter-rouge">/batch_update.action</code></td>
+                    <td><code class="language-plaintext highlighter-rouge">[{JSON}]</code></td>
+                    <td>200 <code
+                            class="language-plaintext highlighter-rouge">Location: http://devstore.rerum.io/v1/id/22222, ...</code>
+                        <code class="language-plaintext highlighter-rouge">[{JSON}]</code></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <ul>
+            <li><strong><code class="language-plaintext highlighter-rouge">[{JSON}]</code></strong>—an array of objects
+                to update in RERUM. Each object MUST contain an <code
+                    class="language-plaintext highlighter-rouge">@id</code>.</li>
+            <li><strong>Response: <code class="language-plaintext highlighter-rouge">[{JSON}]</code></strong>—an array
+                of the resolved objects in their new state from the update process</li>
+        </ul>
+
+        <p>The array of JSON objects passed in will be updated in the
+            order submitted and the response will have the URI of the
+            resource or an error message in the body as an array in the
+            same order.</p>
+
+        <h2 id="patch">PATCH<a class="anchorjs-link " href="#patch" aria-label="Anchor" data-anchorjs-icon=""
+                style="font: 1em / 1 anchorjs-icons; padding-left: 0.375em;"></a></h2>
+
+        <blockquote>
+            <p><strong>NB:</strong> <code class="language-plaintext highlighter-rouge">__rerum</code>, <code
+                    class="language-plaintext highlighter-rouge">@id</code> and <code
+                    class="language-plaintext highlighter-rouge">_id</code> updates are ignored.</p>
+
+            <p>Updates to released or deleted objects fail with an error.</p>
+        </blockquote>
+
+        <h3 id="patch-update">Patch Update<a class="anchorjs-link " href="#patch-update" aria-label="Anchor"
+                data-anchorjs-icon="" style="font: 1em / 1 anchorjs-icons; padding-left: 0.375em;"></a></h3>
+
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Patterns</th>
+                    <th scope="col">Payloads</th>
+                    <th scope="col">Responses</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code class="language-plaintext highlighter-rouge">/patch.action</code></td>
+                    <td><code class="language-plaintext highlighter-rouge">{JSON}</code></td>
+                    <td>200 <code
+                            class="language-plaintext highlighter-rouge">Location: http://devstore.rerum.io/v1/id/22222</code>
+                        <code class="language-plaintext highlighter-rouge">{JSON}</code></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <ul>
+            <li><strong><code class="language-plaintext highlighter-rouge">{JSON}</code></strong>—The requested new
+                state for the object. MUST contain an <code class="language-plaintext highlighter-rouge">@id</code></li>
+            <li><strong>Response Body: <code
+                        class="language-plaintext highlighter-rouge">{JSON}</code></strong>—Containing various bits of
+                information about the PATCH update.</li>
+        </ul>
+
+        <p>A single object is updated by altering the set or subset of properties in the JSON
+            payload. This method only updates existing keys. If a property submitted in the payload
+            which does not exist, an error will be returned to the user. If <code
+                class="language-plaintext highlighter-rouge">{"key":null}</code> is submitted,
+            the value will be set to <code class="language-plaintext highlighter-rouge">null</code>. Properties not
+            mentioned in the payload object remain
+            unaltered in the resulting object. This results in the need to track history and
+            the previous version will be represented in the <code
+                class="language-plaintext highlighter-rouge">__rerum.history.previous</code> of the resulting object.
+        </p>
+
+        <p>Example Response:</p>
+
+        <ul>
+            <li><strong>Header:</strong> <code
+                    class="language-plaintext highlighter-rouge">Location: http://devstore.rerum.io/v1/id/22222</code>
+            </li>
+            <li><strong>Body:</strong></li>
+        </ul>
+
+        <pre><code class="language-(json)">{
+    "code" : 200,
+    "original_object_id" : "http://devstore.rerum.io/v1/id/11111",
+    "new_obj_state" : {
+    "@id": "http://devstore.rerum.io/v1/id/22222",
+    "__rerum":{
+        "history":{
+            "previous":"http://devstore.rerum.io/v1/id/11111",
+            ...
+        }
+        ...
+    }
+    ...
+    },
+    "iiif_validation" : {
+    "warnings" : ["Array of warnings from IIIF validator"],
+    "error" : "Error for why this object failed validation",
+    "okay" : 1 // 0 or 1 as to whether or not it passed IIIF validation
+    }
+}
+                </code></pre>
+
+        <h3 id="add-properties">Add Properties<a class="anchorjs-link " href="#add-properties" aria-label="Anchor"
+                data-anchorjs-icon="" style="font: 1em / 1 anchorjs-icons; padding-left: 0.375em;"></a></h3>
+
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Patterns</th>
+                    <th scope="col">Payloads</th>
+                    <th scope="col">Responses</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code class="language-plaintext highlighter-rouge">/set.action</code></td>
+                    <td><code class="language-plaintext highlighter-rouge">{JSON}</code></td>
+                    <td>200 <code
+                            class="language-plaintext highlighter-rouge">Location: http://devstore.rerum.io/v1/id/22222</code>
+                        <code class="language-plaintext highlighter-rouge">{JSON}</code></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <ul>
+            <li><strong><code class="language-plaintext highlighter-rouge">{JSON}</code></strong>—The requested new
+                state for the object MUST contain an <code class="language-plaintext highlighter-rouge">@id</code></li>
+            <li><strong>Response: <code class="language-plaintext highlighter-rouge">{JSON}</code></strong>—Containing
+                various bits of information about the PATCH update. (see PUT Update for example)</li>
+        </ul>
+
+        <p>A single object is updated by adding all properties in the JSON
+            payload. If a property already exists, a warning is returned to the user. This
+            is a specialized PATCH update with the same request, response, and history behavior.</p>
+
+        <h3 id="remove-properties">Remove Properties<a class="anchorjs-link " href="#remove-properties"
+                aria-label="Anchor" data-anchorjs-icon=""
+                style="font: 1em / 1 anchorjs-icons; padding-left: 0.375em;"></a></h3>
+
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Patterns</th>
+                    <th scope="col">Payloads</th>
+                    <th scope="col">Responses</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code class="language-plaintext highlighter-rouge">/unset.action</code></td>
+                    <td><code class="language-plaintext highlighter-rouge">{JSON}</code></td>
+                    <td>202 <code
+                            class="language-plaintext highlighter-rouge">Location: http://devstore.rerum.io/v1/id/22222</code>
+                        <code class="language-plaintext highlighter-rouge">{JSON}</code></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <ul>
+            <li><strong><code class="language-plaintext highlighter-rouge">{JSON}</code></strong>—The requested new
+                state for the object. Must contain an <code class="language-plaintext highlighter-rouge">@id</code>.
+            </li>
+            <li><strong><code class="language-plaintext highlighter-rouge">{JSON}</code></strong>—Containing various
+                bits of information about the PATCH update. (see PUT Update for example)</li>
+        </ul>
+
+        <p>A single object is updated by dropping all properties
+            in the JSON payload list like <code class="language-plaintext highlighter-rouge">{key:null}</code>. Keys
+            must match
+            to be dropped otherwise a warning is returned to the user. This
+            is a specialized PATCH update with the same request, response, and history behavior.</p>
+
+        <h3 id="rerum-released">RERUM released<a class="anchorjs-link " href="#rerum-released" aria-label="Anchor"
+                data-anchorjs-icon="" style="font: 1em / 1 anchorjs-icons; padding-left: 0.375em;"></a></h3>
+
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Patterns</th>
+                    <th scope="col">Payloads</th>
+                    <th scope="col">Responses</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code class="language-plaintext highlighter-rouge">/release.action</code></td>
+                    <td><code class="language-plaintext highlighter-rouge">String @id</code> or <code
+                            class="language-plaintext highlighter-rouge">{JSON}</code></td>
+                    <td>200 <code
+                            class="language-plaintext highlighter-rouge">Location: http://devstore.rerum.io/v1/id/11111</code>
+                        <code class="language-plaintext highlighter-rouge">{JSON}</code></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <ul>
+            <li><strong><code class="language-plaintext highlighter-rouge">String @id</code></strong>—The <code
+                    class="language-plaintext highlighter-rouge">@id</code> of the version to be released.</li>
+            <li><strong><code class="language-plaintext highlighter-rouge">{JSON}</code></strong>—The object. Must
+                contain <code class="language-plaintext highlighter-rouge">@id</code>.</li>
+        </ul>
+
+        <p>RERUM allows for the Generator of a version of an object to assign a <code
+                class="language-plaintext highlighter-rouge">released</code> state.
+            Objects in released states are locked such that further changes are refused.
+            Calling any update or delete action on a released object will result in an error response.
+            The release action will alter the <code
+                class="language-plaintext highlighter-rouge">__rerum.isReleased</code> of the version identified
+            and alter <code class="language-plaintext highlighter-rouge">__rerum.releases</code> properties throughout
+            the object’s history without making a
+            new history state for the resulting object (the <code
+                class="language-plaintext highlighter-rouge">@id</code> does not change). Any version of an object
+            with an <code class="language-plaintext highlighter-rouge">oa:Motivation</code> containing <code
+                class="language-plaintext highlighter-rouge">rr:releasing</code> will be released as soon as it is
+            saved.</p>
+
+        <p>Example Response:</p>
+        <pre><code class="language-(json)">{
+    "code" : 200,
+    "previously_released_id" : "http://devstore.rerum.io/v1/id/00001",
+    "next_releases_ids" : ["http://devstore.rerum.io/v1/id/11112", ...],
+    "new_obj_state" : {
+    "@id": "http://devstore.rerum.io/v1/id/11111",
+    "__rerum":{
+        "isReleased":Date.now(),
+        "releases"{
+            ...
+        }
+        ...
+    }
+    ...
+    },
+    "iiif_validation" : {
+    "warnings" : ["Array of warnings from IIIF validator"],
+    "error" : "Error for why this object failed validation",
+    "okay" : 1 // 0 or 1 as to whether or not it passed IIIF validation
+    }
+}
+                </code></pre>
+
+        <h2 id="delete">DELETE<a class="anchorjs-link " href="#delete" aria-label="Anchor" data-anchorjs-icon=""
+                style="font: 1em / 1 anchorjs-icons; padding-left: 0.375em;"></a></h2>
+
+        <p>RERUM allows the Generator of an object to delete that object.<br>
+            Requests can be made by the string <code class="language-plaintext highlighter-rouge">@id</code> or a JSON
+            object containing the <code class="language-plaintext highlighter-rouge">@id</code>.
+            RERUM DELETE does not remove anything from the server. Deleted objects are only marked as deleted.
+            Objects marked as deleted do not return in query results and may only be directly retrieved by <code
+                class="language-plaintext highlighter-rouge">@id</code>.</p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Patterns</th>
+                    <th scope="col">Payloads</th>
+                    <th scope="col">Responses</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code class="language-plaintext highlighter-rouge">/delete.action</code></td>
+                    <td><code class="language-plaintext highlighter-rouge">String @id</code> or <code
+                            class="language-plaintext highlighter-rouge">{JSON}</code></td>
+                    <td>204</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <ul>
+            <li><strong><code class="language-plaintext highlighter-rouge">String @id</code></strong>—The @id of the
+                object.</li>
+            <li><strong><code class="language-plaintext highlighter-rouge">{JSON}</code></strong>—The object to delete.
+                Must contain <code class="language-plaintext highlighter-rouge">@id</code>.</li>
+        </ul>
+
+        <p>There is no batch <code class="language-plaintext highlighter-rouge">DELETE</code> planned.</p>
+
+        <h3 id="__deleted">__deleted<a class="anchorjs-link " href="#__deleted" aria-label="Anchor"
+                data-anchorjs-icon="" style="font: 1em / 1 anchorjs-icons; padding-left: 0.375em;"></a></h3>
+
+        <p>A deleted object is easily recognized by <code class="language-plaintext highlighter-rouge">__deleted</code>
+        </p>
+
+        <pre><code class="language-(json)">{
+    "@id" : "http://devstore.rerum.io/v1/id/11111",
+    "__deleted" : {
+    "object" : {
+        "@id" : "http://devstore.rerum.io/v1/id/11111",
+        "@type": "sc:Canvas",
+        "label": "page 46",
+        "width": 730,
+        "images": [],
+        "height": 1000,
+        "__rerum": {...}
+    },
+    "deletor" : GENERATOR,
+    "time" : 1516213216852
+    }
+}
+                </code></pre>
+
+        <blockquote>
+            <p><strong>Note:</strong> The <code class="language-plaintext highlighter-rouge">__deleted.object</code>
+                contains a snapshot of this version of the object when it was deleted, including its place in the
+                history.</p>
+        </blockquote>
+
+        <blockquote>
+            <p><strong>Note:</strong> The <code class="language-plaintext highlighter-rouge">__deleted.deletor</code> is
+                the URI of the agent that marked this object as deleted.</p>
+        </blockquote>
+
+        <hr>
+
+        <h2 id="smart-objects">Smart objects<a class="anchorjs-link " href="#smart-objects" aria-label="Anchor"
+                data-anchorjs-icon="" style="font: 1em / 1 anchorjs-icons; padding-left: 0.375em;"></a></h2>
+
+        <p><strong>*Proposed development</strong></p>
+
+        <h2 id="__rerum">__rerum<a class="anchorjs-link " href="#__rerum" aria-label="Anchor" data-anchorjs-icon=""
+                style="font: 1em / 1 anchorjs-icons; padding-left: 0.375em;"></a></h2>
+
+        <p>Each object carries a protected property called <code
+                class="language-plaintext highlighter-rouge">__rerum</code> containing a metadata
+            object about the version retrieved.</p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Property</th>
+                    <th scope="col">Type</th>
+                    <th scope="col">Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>@context</td>
+                    <td>String</td>
+                    <td>The RERUM context file http://store.rerum.io/v1/context.json.</td>
+                </tr>
+                <tr>
+                    <td>alpha</td>
+                    <td>Boolean</td>
+                    <td>An Internal flag for RERUM API version control.</td>
+                </tr>
+                <tr>
+                    <td>APIversion</td>
+                    <td>String</td>
+                    <td>Specific RERUM API release version for this data node, currently 1.0.0.</td>
+                </tr>
+                <tr>
+                    <td>history.prime</td>
+                    <td>String</td>
+                    <td>The URI of the object initializing this history.</td>
+                </tr>
+                <tr>
+                    <td>history.next</td>
+                    <td>[String]</td>
+                    <td>An array of URIs for the immediate derivatives of this version. A length &gt; 1 indicates a
+                        branch.</td>
+                </tr>
+                <tr>
+                    <td>history.previous</td>
+                    <td>String</td>
+                    <td>The URI of the immediately previous version.</td>
+                </tr>
+                <tr>
+                    <td>generatedBy</td>
+                    <td>String</td>
+                    <td>Reference to the authenticated application which committed this version.</td>
+                </tr>
+                <tr>
+                    <td>createdAt</td>
+                    <td>timestamp</td>
+                    <td>Though the object may also assert this about itself, RERUM controls this value.</td>
+                </tr>
+                <tr>
+                    <td>isOverwritten</td>
+                    <td>timestamp</td>
+                    <td>Written when the overwrite endpoint is used. Exposes the date and time of the change.</td>
+                </tr>
+                <tr>
+                    <td>isReleased</td>
+                    <td>timestamp</td>
+                    <td>Written when the release endpoint is used. Exposes the date and time this node was released.
+                    </td>
+                </tr>
+                <tr>
+                    <td>releases.previous</td>
+                    <td>String</td>
+                    <td>URI of the most recent released version from which this version is derived.</td>
+                </tr>
+                <tr>
+                    <td>releases.next</td>
+                    <td>[String]</td>
+                    <td>Array of URIs for the first <code class="language-plaintext highlighter-rouge">released</code>
+                        decendant in the downstream branches.</td>
+                </tr>
+                <tr>
+                    <td>releases.replaces</td>
+                    <td>String</td>
+                    <td>URI of the previous release this node is motivated to replace. This is only present on released
+                        versions and will always match the value of <code
+                            class="language-plaintext highlighter-rouge">releases.previous</code>.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <blockquote>
+            <p>In the future, this may be encoded as an annotation on the object, using
+                existing vocabularies, but for now the applications accessing RERUM will
+                need to interpret this data if it is relevant.</p>
+        </blockquote>
+
+        <h3 id="history">History<a class="anchorjs-link " href="#history" aria-label="Anchor" data-anchorjs-icon=""
+                style="font: 1em / 1 anchorjs-icons; padding-left: 0.375em;"></a></h3>
+
+        <p>History is stored through pointers that create a B-Tree. All nodes in the B-tree know the root node, the
+            previous node, and the next node(s).</p>
+
+        <p>You can ask for all descendants or all ancestors from any given node so long as you know the node’s <code
+                class="language-plaintext highlighter-rouge">@id</code> and the node has not been deleted. See <a
+                href="#history-tree-before-id">history parents</a> and <a href="#history-tree-since-id">history
+                children</a> for more details about this process.</p>
+
+        <p>Deleted objects are not present in any B-Tree, but do exist as separate nodes that can be requested by the
+            URI directly. A snapshot their position at the time of deletion persists in these deleted nodes.</p>
+
+        <h3 id="generator-attribution">Generator Attribution<a class="anchorjs-link " href="#generator-attribution"
+                aria-label="Anchor" data-anchorjs-icon=""
+                style="font: 1em / 1 anchorjs-icons; padding-left: 0.375em;"></a></h3>
+
+        <p>RERUM associates a <code class="language-plaintext highlighter-rouge">foaf:Agent</code> with each action
+            performed on an item in <code class="language-plaintext highlighter-rouge">__rerum.generatedBy</code>which
+            is referred to as the “Generator”. An API key authenticated application requesting an overwrite, release, or
+            delete action can only do so if they are the Generator of the object the action is performed on. If an
+            unauthorized application attempts one of these actions a <code
+                class="language-plaintext highlighter-rouge">401 Unauthorized</code> response is returned with an
+            explanation on how to branch versions instead.</p>
+
+        <p>Applications are <em>strongly</em> encouraged to record their own assertions within the objects, as consuming
+            applications may reliably use a combination of the authoritative <code
+                class="language-plaintext highlighter-rouge">generatedBy</code> property and an intrinsic <code
+                class="language-plaintext highlighter-rouge">creator</code> to establish a reliable attribution.</p>
+
+        <h2 id="authentication">Authentication<a class="anchorjs-link " href="#authentication" aria-label="Anchor"
+                data-anchorjs-icon="" style="font: 1em / 1 anchorjs-icons; padding-left: 0.375em;"></a></h2>
+
+        <p>RERUM creates an <code class="language-plaintext highlighter-rouge">agent</code> for each successful
+            registration. This <code class="language-plaintext highlighter-rouge">agent</code> is in JSON-LD format and
+            stored publicly. Authentication is managed by <a href="https://auth0.com/">Auth0</a>.
+            When RERUM creates an <code class="language-plaintext highlighter-rouge">agent</code>, Auth0 generates a
+            refresh token and an access token. Applications are responsible for providing their access tokens via a
+            <code class="language-plaintext highlighter-rouge">Authentication</code> Header in their CRUD requests. Get
+            requests do not require this header. As access tokens expire every hour, the applications are responsible
+            for requesting and keeping track of valid access tokens. For an example on how to do this, see this example
+            from <a
+                href="https://github.com/CenterForDigitalHumanities/TinyThings/blob/master/Source%20Packages/io/rerum/tokens/TinyTokenManager.java">TinyThings</a>.
+            The API key at Auth0 persists for each application, which may manage its own sessions. Expired
+            (unauthorized) sessions receive a <code class="language-plaintext highlighter-rouge">401 Unauthorized</code>
+            response with instructions to refresh the session or to register the application.</p>
+
+        <h2 id="context">@context<a class="anchorjs-link " href="#context" aria-label="Anchor" data-anchorjs-icon=""
+                style="font: 1em / 1 anchorjs-icons; padding-left: 0.375em;"></a></h2>
+
+        <p>Objects in RERUM should be JSON-LD, which means they should have an <code
+                class="language-plaintext highlighter-rouge">@context</code> provided when they are created. However,
+            ordinary JSON documents are allowed in the store. These JSON documents can be interpreted as JSON-LD by
+            referencing a JSON-LD context document in an <a
+                href="https://www.w3.org/TR/json-ld/#h3_interpreting-json-as-json-ld">HTTP Link Header</a>. RERUM
+            provides this <code class="language-plaintext highlighter-rouge">@context</code> in the <code
+                class="language-plaintext highlighter-rouge">Link</code> header and also provides an <code
+                class="language-plaintext highlighter-rouge">@context</code> for the <code
+                class="language-plaintext highlighter-rouge">__rerum</code> terms mentioned above.</p>
+
+        <p>http://store.rerum.io/v1/context.json</p>
+
+        <h2 id="iiif">IIIF<a class="anchorjs-link " href="#iiif" aria-label="Anchor" data-anchorjs-icon=""
+                style="font: 1em / 1 anchorjs-icons; padding-left: 0.375em;"></a></h2>
+
+        <p>RERUM fully supports <a href="https://iiif.io/technical-details/">IIIF standards</a> and makes third party
+            calls to the <a href="http://iiif.io/api/presentation/validator/service/">IIIF validation API</a>. A piece
+            of the RERUM response is the validation response of this API so the user knows whether or not their data
+            conforms to this standard. Objects that fail IIIF validation are still saved.</p>
+
+        <h2 id="web-annotation">Web Annotation<a class="anchorjs-link " href="#web-annotation" aria-label="Anchor"
+                data-anchorjs-icon="" style="font: 1em / 1 anchorjs-icons; padding-left: 0.375em;"></a></h2>
+
+        <p>RERUM follows the W3C Annotation protocol. To learn more about Web Annotation see
+            https://www.w3.org/TR/annotation-protocol/</p>
+
+        <h2 id="rerum-responses">RERUM Responses<a class="anchorjs-link " href="#rerum-responses" aria-label="Anchor"
+                data-anchorjs-icon="" style="font: 1em / 1 anchorjs-icons; padding-left: 0.375em;"></a></h2>
+
+        <p>The intention of the API is to follow RESTful practices. These practices drive what requests we accept and
+            what responses we have to the various scenarios around those requests. What it means to be RESTful varies
+            wildly, but our efforts follow the guidelines at http://www.restapitutorial.com/resources.html</p>
+
+        <p>RERUM follows REST, IIIF and Web Annotation standards to form its responses to users. For more information
+            about why RERUM chose a certain HTTP status code see the graph below.</p>
+
+        <p><img src="https://user-images.githubusercontent.com/3287006/32914301-b2fbf798-cada-11e7-9541-a2bee8454c2c.png"
+                alt="alt text"></p>
+
+        <p>If you are confused as to what type of requests give what reponse, review the <a href="#web-annotation">Web
+                Annotation</a> and <a href="#rest">RESTful</a> standards.</p>
+
+        <p><strong>*Listing of responses is undergoing development at this time.</strong></p>
     </section>
 </div>

@@ -4,7 +4,7 @@ rerum.config(['$routeProvider', '$locationProvider',
     function ($routeProvider, $locationProvider) {
     $routeProvider
         .when('/parse/:canvasID', {
-                templateUrl: 'app/tools/parse-rect/parsing.html',
+                templateUrl: 'tools/parse-rect/parsing.html',
             controller: 'parsingController',
             resolve: {
             currentCanvas: function (config, rerumService, $route, $q, Manifest, Lists) {
@@ -73,7 +73,7 @@ rerum.controller('parsingController', function ($scope, $rootScope, $uibModal, r
             resources: []
         };
         $scope.modal = $uibModal.open({
-            templateUrl: "app/tools/parse-rect/addAnnotationList.html",
+            templateUrl: "tools/parse-rect/addAnnotationList.html",
             scope: $scope
         });
     };

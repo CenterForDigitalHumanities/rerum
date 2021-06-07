@@ -1,10 +1,10 @@
-/* cheap reset */
 *, *:before, *:after  {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
     color:#001e3c;
-}
+} /* cheap reset */
+
 
 a[scrollto]{
     cursor: pointer;
@@ -23,6 +23,10 @@ a[scrollto].top:hover::before{
     100% {
         top: -.6rem;
     }
+}
+
+button,.button {
+    overflow: hidden;
 }
 
 .disabled {

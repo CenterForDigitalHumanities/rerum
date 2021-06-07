@@ -20,42 +20,37 @@
     </p>
     <h3 id="server">Server</h3>
     <p>
-        The server for our public RERUM service is a MongoDB/Java API
+        The server for our public RERUM API service is built on MongoDB/Java
         (<a href="https://github.com/CenterForDigitalHumanities/rerum_server" target="_blank"><i class="fa fa-github"></i></a>),
         but nothing prevents the same server APIs from being implemented
         in other configurations so that users may easily initialize their own
         RERUM to which others may connect.
     </p>
     <p>
-        Containers are an obvious build and we have toyed with projects
-        (<a href="https://github.com/CenterForDigitalHumanities/rerum-cloud" target="_blank"><i class="fa fa-github"></i></a>, archived)
+        We have toyed with projects (<a href="https://github.com/CenterForDigitalHumanities/rerum-cloud" target="_blank"><i class="fa fa-github"></i></a>, archived)
         using NodeJS and Google Datastore. Azure, AWS and others may be developed as well.
         Database flavors may be changed for different instances to optimize
         the transactions in RERUM or increase its adoption. There are SQL and noSQL
-        or even flat file structures that may be best suited to certain resources.
+        or even flat file structures that may be best suited to certain resource types.
     </p>
     <p>
         The current authentication implements <a target="_blank" href="https://auth0.com">Auth0</a>
-        service to generate API Keys and public <code>foaf:Agent</code>s within
-        RERUM. Further, RERUM currently trusts the registered servers (and always will),
-        but attribution may improve if the <a target="_blank" href="https://auth0.com">Auth0</a>
-        authentication is extended to individual users and allow
-        applications to use the API as a RERUM SSO, instead of tracking users
-        internally.
+        service to generate API Keys and public <code>Agent</code>s within
+        RERUM. Further, RERUM currently trusts registered servers and always will. 
+        These server applications will make the appropriate <code>creator</code>-type assertions 
+        about the individual responsibility for each object.
     </p>
     <p>
         RERUM will pursue functionality as an authenticator for OngCDH
         applications and open it up for others. In addition to an instance of
-        the Auth0 user management, RERUM will create a public user
-        <code>foaf:Agent</code> that can provide a connection between various
-        user profiles and be used as an aggregating value for attribution. It 
-        is not a goal of the Rerum ecosystem to ever become a general authenticator.
+        the Auth0 user management, the public user <code>Agent</code> provides a 
+        connection between various user profiles and be used as an aggregating value for 
+        attribution. It is not a goal of the Rerum ecosystem to ever become a general authenticator.
     </p>
     <p>
-        Finally, packaging of the RERUM software will require
-        attention. Bundlers and builders 
+        Finally, packaging of the RERUM software will require attention. Bundlers and builders 
         may allow for custom configurations or just a simplified build for developers
-        who wish to host their own instance. When these ins talls proliferate as hoped,
+        who wish to host their own instance. When these installs proliferate as hoped,
         it will also become important to spec out how they may identify each other to
         complete the graph and allow for broader queries and interconnections across
         the Internet.
@@ -67,13 +62,13 @@
     <h3 id="api">API</h3>
     <p>
         All instances of RERUM repositories must allow for at least the core API documented on
-        <a href="https://github.com/CenterForDigitalHumanities/rerum_server" target="_blank"><i class="fa fa-github"></i> Github</a>.
+        <a href="http://centerfordigitalhumanities.github.io/rerum_server/API.html" target="_blank"><i class="fa fa-github"></i> Github</a>.
         Version 0 is currently deprecated suffering from several unconventional structures
         and a somewhat complex object structure. Version 1, currently in open release,
         standardizes the object structure, establishes versioning, and removes the model 
-        requirement from the objects saved. Also, v1 prefers JSON(-LD) for all transactions. 
+        requirement from the objects saved. Also, v1 prefers JSON-LD 1.1 for all transactions. 
         Designed, but not yet encoded anywhere, are extensions that provide smart services 
-        for IIIF, Web Annotation, and collections. Version 3, still unimagined, should 
+        for IIIF, Web Annotation, and collections. Version 2, still unimagined, should 
         focus on extending the search capabilities and accommodate interconnected
         RERUM services.
     </p>
@@ -111,7 +106,7 @@
         In service to the mission, tools must be supported and referenced which make
         object creation easier, more accurate, and with which more encoding is possible
         than may be the minimum required for the motivating task. Here at rerum.io,
-        we will maintain annotated references to external tools as well as producing
+        we intend to maintain annotated references to external tools as well as producing
         tools ourselves.
     </p>
     <p>
@@ -130,7 +125,7 @@
         Manifest tools are very important for smaller institutions and individuals.
         The focus in this area will be to create or reference tools that allow for
         viewing, creation, editing, and validation of <code>Manifest</code> objects.
-        Our tools will be web applications, but there is space for contributions of
+        Our tools are web applications and services, but there is space for contributions of
         specific scripts shims and plug-ins for other applications. All tools hosted
         here will include the option to save your objects to RERUM by default.
     </p>

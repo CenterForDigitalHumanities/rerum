@@ -1,11 +1,4 @@
 <div class="container">
-    <p>
-        In service to the mission, tools must be supported and referenced which
-        make object creation easier, more accurate, and
-        with which more encoding is possible than may be the minimum required
-        for the motivating task. Here at rerum.io, we will maintain annotated
-        references to external tools as well as producing tools ourselves.
-    </p>
     <div ng-controller="welcomeController">
         <div ng-controller="toolsController">
             <label>
@@ -26,25 +19,30 @@
                 resources (Web Components, simple libraries, etc.) will also be included
                 here.
             </p>
-            <table>
-                <thead>
-                <th>Name</th>
-                <th>Version</th>
-                <th>Tags</th>
-                <th>Notes</th>
+            <table class="columns twelve">
+                <style>
+                    td code {
+                        display:inline-block;
+                    }
+                </style>
+                <thead class="row">
+                <th class="columns four">Name</th>
+                <th class="columns one">Version</th>
+                <th class="columns three">Tags</th>
+                <th class="columns four">Notes</th>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="t in tools.rerum|filter:tagFilter.toLowerCase()">
-                        <td>
+                    <tr class="row" ng-repeat="t in tools.rerum|filter:tagFilter.toLowerCase()">
+                        <td class="columns four">
                             <a ng-href="{{t.link}}" class="nowrap">{{t.label}}</a>
                         </td>
-                        <td>
+                        <td class="columns one">
                             {{t.version}}
                         </td>
-                        <td>
+                        <td class="columns three">
                             <code ng-repeat="tag in t.tags">{{tag}}</code>
                         </td>
-                        <td>
+                        <td class="columns four">
                             {{t.notes}}
                         </td>
                     </tr>
