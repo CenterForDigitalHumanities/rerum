@@ -245,10 +245,10 @@
         </ul>
 
         <pre><code class="language-(json)">{
-                  "access_token":"eyJz93a...k4laUWw",
-                  "token_type":"Bearer",
-                  "expires_in":86400
-                }
+    "access_token":"eyJz93a...k4laUWw",
+    "token_type":"Bearer",
+    "expires_in":86400
+}
                 </code></pre>
 
         <h3 id="refresh-token-proxy">Refresh Token Proxy<a class="anchorjs-link " href="#refresh-token-proxy"
@@ -291,12 +291,12 @@
         </ul>
 
         <pre><code class="language-(json)">{
-                  "access_token":"eyJz93a...k4laUWw",
-                  "refresh_token":"GEbRxBN...edjnXbL",
-                  "id_token":"eyJ0XAi...4faeEoQ",
-                  "token_type":"Bearer",
-                  "expires_in":86400
-                }
+    "access_token":"eyJz93a...k4laUWw",
+    "refresh_token":"GEbRxBN...edjnXbL",
+    "id_token":"eyJ0XAi...4faeEoQ",
+    "token_type":"Bearer",
+    "expires_in":86400
+}
                 </code></pre>
 
         <h3 id="create">Create<a class="anchorjs-link " href="#create" aria-label="Anchor" data-anchorjs-icon=""
@@ -346,17 +346,17 @@
         </ul>
 
         <pre><code class="language-(json)">{
-                  "code" : 201,
-                  "new_obj_state" : {
-                    "@id": "http://devstore.rerum.io/v1/id/11111",
-                    ...
-                  },
-                  "iiif_validation" : {
-                    "warnings" : ["Array of warnings from IIIF validator"],
-                    "error" : "Error for why this object failed validation",
-                    "okay" : 1 // 0 or 1 as to whether or not it passed IIIF validation
-                  }
-                }
+    "code" : 201,
+    "new_obj_state" : {
+    "@id": "http://devstore.rerum.io/v1/id/11111",
+    ...
+    },
+    "iiif_validation" : {
+    "warnings" : ["Array of warnings from IIIF validator"],
+    "error" : "Error for why this object failed validation",
+    "okay" : 1 // 0 or 1 as to whether or not it passed IIIF validation
+    }
+}
                 </code></pre>
 
         <h3 id="batch-create">Batch Create<a class="anchorjs-link " href="#batch-create" aria-label="Anchor"
@@ -429,14 +429,14 @@
             will match objects like</p>
 
         <pre><code class="language-(json)">{
-                  "@id": "https://devstore.rerum.io/v1/id/00000",
-                  "otherContent": [],
-                  "label": "page 46",
-                  "width": 730,
-                  "images": [],
-                  "height": 1000,
-                  "@type": "sc:Canvas"
-                }
+    "@id": "https://devstore.rerum.io/v1/id/00000",
+    "otherContent": [],
+    "label": "page 46",
+    "width": 730,
+    "images": [],
+    "height": 1000,
+    "@type": "sc:Canvas"
+}
                 </code></pre>
 
         <p>and return each matched object in a JSON array in no particular order.</p>
@@ -507,25 +507,25 @@
         </ul>
 
         <pre><code class="language-(json)">{
-                  "code" : 200,
-                  "original_object_id" : "http://devstore.rerum.io/v1/id/11111",
-                  "new_obj_state" : {
-                    "@id": "http://devstore.rerum.io/v1/id/22222",
-                    "__rerum":{
-                        "history":{
-                            "previous":"http://devstore.rerum.io/v1/id/11111",
-                            ...
-                        }
-                      ...
-                    }
-                    ...
-                  },
-                  "iiif_validation" : {
-                    "warnings" : ["Array of warnings from IIIF validator"],
-                    "error" : "Error for why this object failed validation",
-                    "okay" : 1 // 0 or 1 as to whether or not it passed IIIF validation
-                  }
-                }
+    "code" : 200,
+    "original_object_id" : "http://devstore.rerum.io/v1/id/11111",
+    "new_obj_state" : {
+    "@id": "http://devstore.rerum.io/v1/id/22222",
+    "__rerum":{
+        "history":{
+            "previous":"http://devstore.rerum.io/v1/id/11111",
+            ...
+        }
+        ...
+    }
+    ...
+    },
+    "iiif_validation" : {
+    "warnings" : ["Array of warnings from IIIF validator"],
+    "error" : "Error for why this object failed validation",
+    "okay" : 1 // 0 or 1 as to whether or not it passed IIIF validation
+    }
+}
                 </code></pre>
 
         <h2 id="put">PUT<a class="anchorjs-link " href="#put" aria-label="Anchor" data-anchorjs-icon=""
@@ -587,25 +587,25 @@
         </ul>
 
         <pre><code class="language-(json)">{
-                  "code" : 200,
-                  "original_object_id" : "http://devstore.rerum.io/v1/id/11111",
-                  "new_obj_state" : {
-                    "@id": "http://devstore.rerum.io/v1/id/22222",
-                    "__rerum":{
-                        "history":{
-                            "previous":"http://devstore.rerum.io/v1/id/11111",
-                            ...
-                        }
-                      ...
-                    }
-                    ...
-                  },
-                  "iiif_validation" : {
-                    "warnings" : ["Array of warnings from IIIF validator"],
-                    "error" : "Error for why this object failed validation",
-                    "okay" : 1 // 0 or 1 as to whether or not it passed IIIF validation
-                  }
-                }
+    "code" : 200,
+    "original_object_id" : "http://devstore.rerum.io/v1/id/11111",
+    "new_obj_state" : {
+    "@id": "http://devstore.rerum.io/v1/id/22222",
+    "__rerum":{
+        "history":{
+            "previous":"http://devstore.rerum.io/v1/id/11111",
+            ...
+        }
+        ...
+    }
+    ...
+    },
+    "iiif_validation" : {
+    "warnings" : ["Array of warnings from IIIF validator"],
+    "error" : "Error for why this object failed validation",
+    "okay" : 1 // 0 or 1 as to whether or not it passed IIIF validation
+    }
+}
                 </code></pre>
 
         <h3 id="batch-update-beta">Batch Update (beta)<a class="anchorjs-link " href="#batch-update-beta"
@@ -706,25 +706,25 @@
         </ul>
 
         <pre><code class="language-(json)">{
-                  "code" : 200,
-                  "original_object_id" : "http://devstore.rerum.io/v1/id/11111",
-                  "new_obj_state" : {
-                    "@id": "http://devstore.rerum.io/v1/id/22222",
-                    "__rerum":{
-                        "history":{
-                            "previous":"http://devstore.rerum.io/v1/id/11111",
-                            ...
-                        }
-                      ...
-                    }
-                    ...
-                  },
-                  "iiif_validation" : {
-                    "warnings" : ["Array of warnings from IIIF validator"],
-                    "error" : "Error for why this object failed validation",
-                    "okay" : 1 // 0 or 1 as to whether or not it passed IIIF validation
-                  }
-                }
+    "code" : 200,
+    "original_object_id" : "http://devstore.rerum.io/v1/id/11111",
+    "new_obj_state" : {
+    "@id": "http://devstore.rerum.io/v1/id/22222",
+    "__rerum":{
+        "history":{
+            "previous":"http://devstore.rerum.io/v1/id/11111",
+            ...
+        }
+        ...
+    }
+    ...
+    },
+    "iiif_validation" : {
+    "warnings" : ["Array of warnings from IIIF validator"],
+    "error" : "Error for why this object failed validation",
+    "okay" : 1 // 0 or 1 as to whether or not it passed IIIF validation
+    }
+}
                 </code></pre>
 
         <h3 id="add-properties">Add Properties<a class="anchorjs-link " href="#add-properties" aria-label="Anchor"
@@ -843,26 +843,26 @@
 
         <p>Example Response:</p>
         <pre><code class="language-(json)">{
-                  "code" : 200,
-                  "previously_released_id" : "http://devstore.rerum.io/v1/id/00001",
-                  "next_releases_ids" : ["http://devstore.rerum.io/v1/id/11112", ...],
-                  "new_obj_state" : {
-                    "@id": "http://devstore.rerum.io/v1/id/11111",
-                    "__rerum":{
-                        "isReleased":Date.now(),
-                        "releases"{
-                            ...
-                        }
-                      ...
-                    }
-                    ...
-                  },
-                  "iiif_validation" : {
-                    "warnings" : ["Array of warnings from IIIF validator"],
-                    "error" : "Error for why this object failed validation",
-                    "okay" : 1 // 0 or 1 as to whether or not it passed IIIF validation
-                  }
-                }
+    "code" : 200,
+    "previously_released_id" : "http://devstore.rerum.io/v1/id/00001",
+    "next_releases_ids" : ["http://devstore.rerum.io/v1/id/11112", ...],
+    "new_obj_state" : {
+    "@id": "http://devstore.rerum.io/v1/id/11111",
+    "__rerum":{
+        "isReleased":Date.now(),
+        "releases"{
+            ...
+        }
+        ...
+    }
+    ...
+    },
+    "iiif_validation" : {
+    "warnings" : ["Array of warnings from IIIF validator"],
+    "error" : "Error for why this object failed validation",
+    "okay" : 1 // 0 or 1 as to whether or not it passed IIIF validation
+    }
+}
                 </code></pre>
 
         <h2 id="delete">DELETE<a class="anchorjs-link " href="#delete" aria-label="Anchor" data-anchorjs-icon=""
@@ -909,21 +909,21 @@
         </p>
 
         <pre><code class="language-(json)">{
-                  "@id" : "http://devstore.rerum.io/v1/id/11111",
-                  "__deleted" : {
-                    "object" : {
-                      "@id" : "http://devstore.rerum.io/v1/id/11111",
-                      "@type": "sc:Canvas",
-                      "label": "page 46",
-                      "width": 730,
-                      "images": [],
-                      "height": 1000,
-                      "__rerum": {...}
-                    },
-                    "deletor" : GENERATOR,
-                    "time" : 1516213216852
-                  }
-                }
+    "@id" : "http://devstore.rerum.io/v1/id/11111",
+    "__deleted" : {
+    "object" : {
+        "@id" : "http://devstore.rerum.io/v1/id/11111",
+        "@type": "sc:Canvas",
+        "label": "page 46",
+        "width": 730,
+        "images": [],
+        "height": 1000,
+        "__rerum": {...}
+    },
+    "deletor" : GENERATOR,
+    "time" : 1516213216852
+    }
+}
                 </code></pre>
 
         <blockquote>

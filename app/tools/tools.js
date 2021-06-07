@@ -13,15 +13,15 @@ rerum.controller('toolsController', function ($scope) {
     community: [
         {
             label: "Mirador",
-            link: "https://universalviewer.io",
-            version: "2.1",
+            link: "https://projectmirador.org",
+            version: "3.1.1",
             tags: ["viewer","annotator","manuscripts","iiif","browser"],
             notes: "The official viewer for the IIIF standard and sc:Manifest objects."
         },
         {
             label: "Universal Viewer",
-            link: "http://leafletjs.com/",
-            version: "2.0.2",
+            link: "https://universalviewer.io",
+            version: "3.1.1",
             tags: ["viewer","manuscripts","maps","iiif","browser","pdf"],
             notes: "A flexible viewer designed for viewing anything, including IIIF."
         },{
@@ -67,11 +67,11 @@ rerum.controller('toolsController', function ($scope) {
             notes: "The fork for OngCDH which supports non-IIIF images."
         },
         {
-            label: "Broken Books",
-            link: "http://brokenbooks.org",
+            label: "ReForm",
+            link: "http://reform.rerum.io",
             version: "0.8",
             tags: ["sequences","annotator","manuscripts","canvas","iiif","oac","metadata"],
-            notes: "A beta project for reassembling manuscripts that are no longer intact."
+            notes: "A developing project for rearranging or combining manuscripts."
         }
     ],
     rerum:[
