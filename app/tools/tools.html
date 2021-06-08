@@ -19,17 +19,19 @@
                 resources (Web Components, simple libraries, etc.) will also be included
                 here.
             </p>
-            <table class="columns twelve">
+            <table class="columns twelve" aria-describedby="Rerum tools">
                 <style>
                     td code {
                         display:inline-block;
                     }
                 </style>
-                <thead class="row">
-                <th class="columns four">Name</th>
-                <th class="columns one">Version</th>
-                <th class="columns three">Tags</th>
-                <th class="columns four">Notes</th>
+                <thead>
+                    <tr  class="row">
+                        <th scope="col" class="columns four">Name</th>
+                        <th scope="col" class="columns one">Version</th>
+                        <th scope="col" class="columns three">Tags</th>
+                        <th scope="col" class="columns four">Notes</th>
+                    </tr>
                 </thead>
                 <tbody>
                     <tr class="row" ng-repeat="t in tools.rerum|filter:tagFilter.toLowerCase()">
@@ -53,12 +55,12 @@
                 These applications are not part of RERUM, but allow
                 for the use, distribution, or viewing of RERUM resources.
             </p>
-            <table>
+            <table aria-describedby="Community tools">
                 <thead>
-                <th>Name</th>
-                <th>Version</th>
-                <th>Tags</th>
-                <th>Notes</th>
+                <th scope="col">Name</th>
+                <th scope="col">Version</th>
+                <th scope="col">Tags</th>
+                <th scope="col">Notes</th>
                 </thead>
                 <tbody>
                     <tr ng-repeat="t in tools.community|filter:tagFilter.toLowerCase()">
