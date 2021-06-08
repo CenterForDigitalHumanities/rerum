@@ -4,7 +4,7 @@ rerum.config(['$routeProvider',
     function ($routeProvider, $locationProvider, Edition) {
         $routeProvider
             .when('/tools', {
-                templateUrl: 'tools/tools.html'
+                templateUrl: 'app/tools/tools.html'
             });
     }]);
 

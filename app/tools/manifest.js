@@ -5,7 +5,7 @@ rerum.config(['$routeProvider',
     function ($routeProvider, $locationProvider, Edition) {
         $routeProvider
             .when('/edit', {
-                templateUrl: 'tools/editManifest.html',
+                templateUrl: 'app/tools/editManifest.html',
                 controller: 'buildManifestController',
                 resolve: {
                     context: function (Context) {
@@ -20,7 +20,7 @@ rerum.config(['$routeProvider',
                 }
             })
             .when('/build', {
-                templateUrl: 'tools/manifestFromImages.html',
+                templateUrl: 'app/tools/manifestFromImages.html',
                 controller: 'buildManifestController',
                 resolve: {
                     context: function (Context) {
@@ -32,7 +32,7 @@ rerum.config(['$routeProvider',
                 }
             })
             .when('/validate', {
-                templateUrl: 'tools/validate.html',
+                templateUrl: 'app/tools/validate.html',
                 controller: 'validationController',
                 resolve: {
                     context: function (Context) {

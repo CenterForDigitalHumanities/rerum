@@ -4,7 +4,7 @@ rerum.config(['$routeProvider',
     function ($routeProvider, $locationProvider) {
         $routeProvider
             .when('/essay', {
-                templateUrl: 'tools/essay/essay.html',
+                templateUrl: 'app/tools/essay/essay.html',
                 controller: 'essayController',
                 resolve: {
                     context: function (Context) {
@@ -19,7 +19,7 @@ rerum.config(['$routeProvider',
                 }
             })
             .when('/essay/edit', {
-                templateUrl: 'tools/essay/editEssay.html',
+                templateUrl: 'app/tools/essay/editEssay.html',
                 controller: 'essayController',
                 resolve: {
                     context: function (Context) {

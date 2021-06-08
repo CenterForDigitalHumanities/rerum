@@ -4,7 +4,7 @@ rerum.config(['$routeProvider', '$locationProvider',
     function ($routeProvider, $locationProvider) {
     $routeProvider
         .when('/parse/:canvasID', {
-                templateUrl: 'tools/parse-rect/parsing.html',
+                templateUrl: 'app/tools/parse-rect/parsing.html',
             controller: 'parsingController',
             resolve: {
             currentCanvas: function (config, rerumService, $route, $q, Manifest, Lists) {

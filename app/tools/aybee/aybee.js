@@ -7,7 +7,7 @@ rerum.config(['$routeProvider',
     function ($routeProvider) {
         $routeProvider
             .when('/aybee', {
-                templateUrl: 'tools/aybee/aybee.html',
+                templateUrl: 'app/tools/aybee/aybee.html',
                 controller: 'aybeeController',
                 resolve: {
                     obj: function ($location, $http, rerumService) {

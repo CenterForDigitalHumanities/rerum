@@ -7,7 +7,7 @@ rerum.config(['$routeProvider',
     function ($routeProvider) {
         $routeProvider
             .when('/read', {
-                templateUrl: 'tools/read-manifest/read.html',
+                templateUrl: 'app/tools/read-manifest/read.html',
                 controller: 'readManifestController',
                 resolve: {
                     context: function (Context) {
