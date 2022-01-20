@@ -22,7 +22,7 @@ Originally conceived as a "IIIF Store" (iiif.io), RERUM is designed to act as an
 open node for annotation and references that need to be made in an interoperable
 world of scholarly assertions.
 
-This project is not only access to the existing instance, mainted and hosted by
+This project is not only access to the existing instance, maintained and hosted by
 the Research Computing Group at Saint Louis University, but
 also the complete cut list for making your own. However useful this may be for private
 projects, applications in development, or because of funding requirements, we
