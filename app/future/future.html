@@ -20,18 +20,19 @@
     </p>
     <h3 id="server">Server</h3>
     <p>
-        The server for our public RERUM API service is built on MongoDB/Java
-        (<a href="https://github.com/CenterForDigitalHumanities/rerum_server" target="_blank"><i class="fa fa-github"></i></a>),
+        The server for our public RERUM API service is hosted at SLU on RHEL servers running NodeJS 
+        and connecting to a MongoDB Atlas cluster
+        (<a href="https://github.com/CenterForDigitalHumanities/rerum_server_nodejs" target="_blank"><i class="fa fa-github"></i></a>),
         but nothing prevents the same server APIs from being implemented
         in other configurations so that users may easily initialize their own
         RERUM to which others may connect.
     </p>
     <p>
-        We have toyed with projects (<a href="https://github.com/CenterForDigitalHumanities/rerum-cloud" target="_blank"><i class="fa fa-github"></i></a>, archived)
-        using NodeJS and Google Datastore. Azure, AWS and others may be developed as well.
+        We have toyed with projects using Java, NodeJS and Google Datastore. Azure, AWS and others may be developed as well.
         Database flavors may be changed for different instances to optimize
         the transactions in RERUM or increase its adoption. There are SQL and noSQL
         or even flat file structures that may be best suited to certain resource types.
+        As our community grows, we will look for more popular coverage of stacks and containers.
     </p>
     <p>
         The current authentication implements <a target="_blank" href="https://auth0.com">Auth0</a>
@@ -41,14 +42,14 @@
         about the individual responsibility for each object.
     </p>
     <p>
-        RERUM will pursue functionality as an authenticator for OngCDH
-        applications and open it up for others. In addition to an instance of
+        RERUM functionality as an authenticator has been used for internal and external applications 
+        using the RERUM API and ecosystem tools. In addition to an instance of
         the Auth0 user management, the public user <code>Agent</code> provides a 
         connection between various user profiles and be used as an aggregating value for 
         attribution. It is not a goal of the Rerum ecosystem to ever become a general authenticator.
     </p>
     <p>
-        Finally, packaging of the RERUM software will require attention. Bundlers and builders 
+        Finally, packaging of the RERUM software will require attention. Bundlers  
         may allow for custom configurations or just a simplified build for developers
         who wish to host their own instance. When these installs proliferate as hoped,
         it will also become important to spec out how they may identify each other to
@@ -71,6 +72,13 @@
         for IIIF, Web Annotation, and collections. Version 2, still unimagined, should 
         focus on extending the search capabilities and accommodate interconnected
         RERUM services.
+    </p>
+    <p>
+        Services focusing on specific collections or queries, such as geographic regions, 
+        image resources, or annotation collections will be developed as funded by individual 
+        projects and are not currently scoped or prioritized in any specific order. 
+        Contributors are encouraged to build candidates for Rerum API extensions that serve 
+        scholarly, scientific, and cultural communities.
     </p>
     <a class="u-pull-right top" scrollto="top">
         Top
@@ -113,7 +121,7 @@
         Use cases or requests for new tools can be submitted on the Rerum repository
         as <a href="https://github.com/CenterForDigitalHumanities/rerum/issues?title=Request%3A%20&body=Thanks%20for%20contributing%21">issues
             <i class="fa fa-github"></i></a>.
-        Individual repositories will be generated for each OngCDH tool.
+        Individual repositories will be generated for each tool.
     </p>
     <p>
         Collection tools are designed for users who would curate a set of digital objects
@@ -136,7 +144,7 @@
         audience and encourage the user to make scholarly decisions without technical
         effort or improper encoding. Cropping a <code>Canvas</code> image annotation
         is a very discrete act from marking illustrations, though most of the interactions
-        are similar. Transcription is high on the list (OngCDH's bias), but any image
+        are similar. Transcription is high on the list, but any image
         annotation is supportable. Managing annotations is also a challenge and complete
         interfaces will be required to sensibly aggregate the records within RERUM for
         the users who use them. Traversing relationships and history will be a priority
