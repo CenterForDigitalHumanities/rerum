@@ -3,3 +3,4 @@ META-INF
 WEB-INF
 /dist/
 /build/
+.hintrc
