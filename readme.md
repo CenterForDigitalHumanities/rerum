@@ -45,3 +45,6 @@ This is actually just the Tiny Things web application.  As a registered RERUM ap
 ### [RERUM API](https://store.rerum.io/v1/) <a href='https://github.com/CenterForDigitalHumanities/rerum_server_nodejs'> <img height="25" src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"/></a>
 Think of this like a typical bot.  This bot exists on the web so that registered applications can make requests to it.  The bot itself is a web application that exposes API hooks - it waits for requests to do some action (create - delete - update - find), processes those requests, then responds to the web application that initiated those requests about what happened.  Requests and responses follow RESTful best practices.  The bot interacts with a database to store and query for data.  As such, the public RERUM API application can supplement a web application as the entire "back end" and remain uniquely attributed in the Linked Data graph.  
    
+## 🌟👍 Contributors 👍🌟
+Click on the GitHub icon to go to any of the repos listed above.
+Trying to make a change to this website?  Read the [Contributors Guide](CONTRIBUTING.md)!
