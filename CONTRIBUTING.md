@@ -1,4 +1,4 @@
-# Contribute to the RERUM Geolocator
+# Contribute to the RERUM Website
 
 ## ❤️ Thank You
 
