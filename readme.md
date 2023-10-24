@@ -29,13 +29,19 @@ projects, applications in development, or because of funding requirements, we
 hope that your machine enjoys talking to others and releases its gnats of
 knowledge into the Interwebs.
 
-RERUM Install Information<br>
-To use your own instance RERUM, here are a few things to know:
+### Core Pieces of RERUM
+RERUM's existence as an interactive node on the web requires a software stack, and the pieces of that stack are all open source.
+Where you start to interact with RERUM depends on your specific needs and skills.
 
-   - RERUM is written in Java. 
-   - RERUM supports Java 1.6 and above. 
-   - RERUM uses MongoDB as its database. 
-   - RERUM uses HTTP protocol to do CRUD operations from the client. 
-   - RERUM doesn't support cross domain AJAX call, so the call must be initialized from a registered server. 
-   - HTTP requests must be open on port 80. 
+## RERUM Informational Website <a href='https://github.com/CenterForDigitalHumanities/rerum'><i class="fa fa-github"></i></a>
+YOU ARE HERE.  This is a static web site hosted on GitHub Pages.
+
+## [RERUM Client](https://tiny.rerum.io) <a href='https://github.com/CenterForDigitalHumanities/TinyNode'><i class="fa fa-github"></i></a>
+Formally known as Tiny Things, this is a client web application that is already set up to make requests to the RERUM API.  This client app has a front end and middleware that takes user input and makes requests to RERUM and processes the responses into the UI.  This is an entire web application with a front end and a back end from which you can make your own front end interfaces that work with RERUM.  You can have your own RERUM API powered web application in 10 minutes or less!
+
+## [RERUM Client Sandbox API](https://store.rerum.io/v1/API.html#tldr-i-just-want-to-use-it) <a href='https://github.com/CenterForDigitalHumanities/TinyNode'><i class="fa fa-github"></i></a>
+This is actually just the Tiny Things web application.  As a registered RERUM application Tiny Things exposes its internal API as a publicly available API.  This gives applications the chance to use the RERUM API without signing up as an individual registered RERUM application.  This is most useful when you already have a front end and just want to start using the API right away.  Just have your web application's HTTP requests go to the RERUM Sandbox API!
+
+## [RERUM API](https://store.rerum.io/v1/) <a href='https://github.com/CenterForDigitalHumanities/rerum_server_nodejs'><i class="fa fa-github"></i></a>
+Think of this like a typical bot.  This bot exists on the web so that registered applications can make requests to it.  The bot itself is a web application that exposes API hooks - it waits for requests to do some action (create - delete - update - find), processes those requests, then responds to the web application that initiated those requests about what happened.  Requests and responses follow RESTful best practices.  The bot interacts with a database to store and query for data.  As such, the public RERUM API application can supplement a web application as the entire "back end" and remain uniquely attributed in the Linked Data graph.  
    
