@@ -33,15 +33,15 @@ knowledge into the Interwebs.
 RERUM's existence as an interactive node on the web requires a software stack, and the pieces of that stack are all open source.
 Where you start to interact with RERUM depends on your specific needs and skills.
 
-### RERUM Informational Website <a href='https://github.com/CenterForDigitalHumanities/rerum'> <img style="height: 1.5em; top: 1px; position: relative; top: 0.25em;" src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"/></a>
+### RERUM Informational Website <a href='https://github.com/CenterForDigitalHumanities/rerum'> <img height="25" src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"/></a>
 _YOU ARE HERE_.  This is a static web site hosted on GitHub Pages.
 
-### [RERUM Client](https://tiny.rerum.io) <a href='https://github.com/CenterForDigitalHumanities/TinyNode'> <img style="height: 1.5em; top: 1px; position: relative; top: 0.25em;" src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"/></a>
+### [RERUM Client](https://tiny.rerum.io) <a href='https://github.com/CenterForDigitalHumanities/TinyNode'> <img height="25" src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"/></a>
 Formally known as Tiny Things, this is a client web application that is already set up to make requests to the RERUM API.  This client app has a front end and middleware that takes user input and makes requests to RERUM and processes the responses into the UI.  This is an entire web application with a front end and a back end from which you can make your own front end interfaces that work with RERUM.  You can have your own RERUM API powered web application in 10 minutes or less!
 
-### [RERUM Client Sandbox API](https://store.rerum.io/v1/API.html#tldr-i-just-want-to-use-it) <a href='https://github.com/CenterForDigitalHumanities/TinyNode'> <img style="height: 1.5em; top: 1px; position: relative; top: 0.25em;" src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"/></a>
+### [RERUM Client Sandbox API](https://store.rerum.io/v1/API.html#tldr-i-just-want-to-use-it) <a href='https://github.com/CenterForDigitalHumanities/TinyNode'> <img height="25" src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"/></a>
 This is actually just the Tiny Things web application.  As a registered RERUM application Tiny Things exposes its internal API as a publicly available API.  This gives applications the chance to use the RERUM API without signing up as an individual registered RERUM application.  This is most useful when you already have a front end and just want to start using the API right away.  Just have your web application's HTTP requests go to the RERUM Sandbox API!
 
-### [RERUM API](https://store.rerum.io/v1/) <a href='https://github.com/CenterForDigitalHumanities/rerum_server_nodejs'> <img style="height: 1.5em; top: 1px; position: relative; top: 0.25em;" src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"/></a>
+### [RERUM API](https://store.rerum.io/v1/) <a href='https://github.com/CenterForDigitalHumanities/rerum_server_nodejs'> <img height="25" src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"/></a>
 Think of this like a typical bot.  This bot exists on the web so that registered applications can make requests to it.  The bot itself is a web application that exposes API hooks - it waits for requests to do some action (create - delete - update - find), processes those requests, then responds to the web application that initiated those requests about what happened.  Requests and responses follow RESTful best practices.  The bot interacts with a database to store and query for data.  As such, the public RERUM API application can supplement a web application as the entire "back end" and remain uniquely attributed in the Linked Data graph.  
    
