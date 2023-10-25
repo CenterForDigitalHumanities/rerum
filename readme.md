@@ -43,7 +43,7 @@ Formally known as TinyThings, this is a client web application that is already s
 As a registered RERUM application, TinyThings exposes its internal API as a publicly available API.  This gives applications the chance to use the RERUM API without signing up as an individual registered RERUM application.  This is most useful to a software developer when they already have a front end and just want to start using the API right away.
 
 ### [RERUM API](https://store.rerum.io/v1/) <a href='https://github.com/CenterForDigitalHumanities/rerum_server_nodejs'> <img height="25" src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"/></a>
-Think of this like a typical bot.  This bot exists on the web so that registered applications can make requests to it.  The bot itself is a web application that exposes API hooks - it waits for requests to do some action (create - delete - update - find), processes those requests, then responds to the web application that initiated those requests about what happened.  Back end software developers utilize the programmatic RERUM API for data transfer and storage.
+Think of this like a typical bot.  The bot itself is a web application that exposes API hooks - it waits for requests to do some action (create - delete - update - find), processes those requests, then responds to the web application that initiated those requests about what happened.  Back end software developers utilize the programmatic RERUM API for data transfer and storage.
    
 ## 🌟👍 Contributors 👍🌟
 Click on the GitHub icon to go to any of the repos listed above.
