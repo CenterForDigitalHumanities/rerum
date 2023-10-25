@@ -361,14 +361,14 @@ dd {
     footer {
         position: relative;
     }
-    os-notice{
+    os-statement{
         position: relative !important;
         bottom: 0 !important;
         text-align: center;
     }
 }
 
-os-notice {
+os-statement {
     position: fixed;
     bottom: 4.25em;
     padding: 0.25em 0.45em;
