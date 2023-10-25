@@ -1,3 +1,4 @@
+# Contribute to the RERUM Website
 ```
 ██████╗ ███████╗██████╗ ██╗   ██╗███╗   ███╗
 ██╔══██╗██╔════╝██╔══██╗██║   ██║████╗ ████║
@@ -6,8 +7,6 @@
 ██║  ██║███████╗██║  ██║╚██████╔╝██║ ╚═╝ ██║
 ╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝ ╚═════╝ ╚═╝     ╚═╝
 ```
-# Contribute to the RERUM Website
-
 ## ❤️ Thank You
 
 Thank you for considering a contribution to this site!  The `main` branch is protected and you cannot push to it. 
