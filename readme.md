@@ -46,4 +46,4 @@ Think of this like a typical bot.  The bot itself is a NodeJS Express web applic
    
 ## 🌟👍 Contributors 👍🌟
 Click on the GitHub icon to go to the code repositories of the RERUM cores listed above.
-Trying to make a change to this website?  We appreciate it!  Head to the [Contributors Guide](CONTRIBUTING.md)!
+Trying to make a change to this website?  We appreciate it!  Head to the [Contributors Guide](CONTRIBUTING.md).

@@ -6,8 +6,6 @@
 ██║  ██║███████╗██║  ██║╚██████╔╝██║ ╚═╝ ██║
 ╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝ ╚═════╝ ╚═╝     ╚═╝
 ```
-reconditorium eximium rerum universalium mutabiliumque
-
 # Contribute to the RERUM Website
 
 ## ❤️ Thank You
