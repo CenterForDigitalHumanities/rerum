@@ -1,3 +1,13 @@
+```
+██████╗ ███████╗██████╗ ██╗   ██╗███╗   ███╗
+██╔══██╗██╔════╝██╔══██╗██║   ██║████╗ ████║
+██████╔╝█████╗  ██████╔╝██║   ██║██╔████╔██║
+██╔══██╗██╔══╝  ██╔══██╗██║   ██║██║╚██╔╝██║
+██║  ██║███████╗██║  ██║╚██████╔╝██║ ╚═╝ ██║
+╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝ ╚═════╝ ╚═╝     ╚═╝
+```
+reconditorium eximium rerum universalium mutabiliumque
+
 # Contribute to the RERUM Website
 
 ## ❤️ Thank You
@@ -24,7 +34,7 @@ Now you have main on your local machine and can open the HTML pages!  As you mak
 
 ## 🎉 Ready to Start Contributing!
 
-First, make a new branch through the GitHub Interface or through your shell.  Make sure you 'checkout' that branch.
+First, make a new branch through the [GitHub interface](https://github.com/CenterForDigitalHumanities/rerum/) or through your shell.  Make sure you 'checkout' that branch.
 
 ```shell
 cd /code_folder/rerum_website
