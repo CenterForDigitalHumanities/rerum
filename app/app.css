@@ -361,4 +361,21 @@ dd {
     footer {
         position: relative;
     }
+    os-notice{
+        position: relative !important;
+        bottom: 0 !important;
+        text-align: center;
+    }
+}
+
+os-notice {
+    position: fixed;
+    bottom: 4.25em;
+    padding: 0.25em 0.45em;
+    right: 0;
+    display: block;
+    background-color: #dfdfdf;
+    font-family: monospace;
+    font-size: 10pt;
+    font-weight: bold;
 }
