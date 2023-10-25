@@ -6,6 +6,9 @@ Thank you for considering a contribution to this site!  The `main` branch is pro
 
 You can always contact the developers:
 
+* [Patrick Cuba](https://github.com/orgs/CenterForDigitalHumanities/people/cubap), IT Architect <br>![Github stats](https://github-readme-stats.vercel.app/api?username=cubap&theme=highcontrast&show_icons=true&count_private=true)
+* [Bryan Haberberger](https://github.com/orgs/CenterForDigitalHumanities/people/thehabes), Full-Stack Developer <br>![Github stats](https://github-readme-stats.vercel.app/api?username=thehabes&theme=highcontrast&show_icons=true&count_private=true)
+
 Bryan Haberberger -- bryan.j.haberberger@slu.edu  
 Patrick Cuba -- patrick.m.cuba@slu.edu  
 Research Computing Group at Saint Louis Univsersity -- research.computing@slu.edu  
