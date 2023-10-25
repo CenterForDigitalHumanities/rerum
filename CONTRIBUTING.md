@@ -15,7 +15,7 @@ OK!  This is a static website that can run straight off of your filesystem or fr
 
 Once you know where the website folder will be use Git to clone the website into that folder.
 
-```
+```shell
 cd /code_folder/
 git clone https://github.com/CenterForDigitalHumanities/rerum.git rerum_website
 ```
@@ -26,7 +26,7 @@ Now you have main on your local machine and can open the HTML pages!  As you mak
 
 First, make a new branch through the GitHub Interface or through your shell.  Make sure you 'checkout' that branch.
 
-```
+```shell
 cd /code_folder/rerum_website
 git checkout my_new_branch
 ```
