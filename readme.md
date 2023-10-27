@@ -11,7 +11,7 @@ reconditorium eximium rerum universalium mutabiliumque
 RERUM is a product of the Center for Digital Humanities at Saint Louis
         University and is (currently) completely funded and maintained by the
         fine folks in the Researching Computing Group. RERUM is meant to be used as 
-        as a cost friendly place to encode, store, and present data
+        as a place to encode, store, and present data
         in a public place that is not too expensive.
         
 Our goal is to provide a simple, out-of-the box connection that reduces
@@ -22,8 +22,8 @@ Originally conceived as a "IIIF Store" (iiif.io), RERUM is designed to act as an
         open node for annotation and references that need to be made in an interoperable
         world of scholarly assertions.
 
-Through this site you can gain access to the existing public instance or even
-        get the knowledge and tools to create and host your own instance. However useful this may be for private
+This site will direct you towards the existing public instance and detail how you can
+        create and host your own instance. However useful this may be for private
         projects, applications in development, or because of funding requirements, we
         hope that your machine enjoys talking to others and releases its gnats of
         knowledge into the Interwebs.
