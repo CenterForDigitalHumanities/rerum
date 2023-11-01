@@ -10,7 +10,7 @@ reconditorium eximium rerum universalium mutabiliumque
 
 RERUM is a product of the Center for Digital Humanities at Saint Louis
         University and is (currently) completely funded and maintained by the
-        fine folks in the Researching Computing Group. RERUM is meant to be used as 
+        fine folks in the Researching Computing Group. RERUM is meant to be used 
         as a place to encode, store, and present data
         in a public place that is not too expensive.
         
