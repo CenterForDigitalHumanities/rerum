@@ -7,13 +7,13 @@
     <p>
         To limit the possibility of abuse without putting too many obstacles up,
         writing to the annotation store is restricted to servers (no CORS) who have
-        <a href="http://store.rerum.io">registered themselves</a>. The full plans for RERUM can be found
+        <a href="https://store.rerum.io">registered themselves</a>. The full plans for RERUM can be found
         <a href="#/future">elsewhere on the site</a>.
     </p>
     <p>
         The current public RERUM service is hosted on
-        a virtual server of OngCDH at Saint Louis University.
-        The backend is written in Java and MongoDB, with all requests currently over
+        a virtual server at Saint Louis University and is maintained by the Research Computing Group.
+        It is written in NodeJS and connects to a cloud hosted MongoDB, with all requests currently over
         HTTP.
     </p>
     <p>
@@ -75,7 +75,7 @@
     <h1 id="api">API</h1>
     <section>
         <h2>Version 1</h2> store.rerum.io/v1
-        <a href="https://github.com/CenterForDigitalHumanities/rerum_server/blob/master/API.md">link</a>
+        <a href="https://store.rerum.io/v1/API.html">link</a>
         <p>All the following interactions will take place between
             the server running RERUM and the application server. Direct connection from client script
             to the RERUM server is not allowed. Please note that all
@@ -84,19 +84,19 @@
             tested with the development version.</p>
 
         <p>If you would like to see an example of a web application leveraging the RERUM API visit the
-            testbed at http://tinydev.rerum.io or the <a
-                href="https://github.com/CenterForDigitalHumanities/TinyThings">GitHub codebase for TinyThings</a>.</p>
+            testbed at https://tinydev.rerum.io or the <a
+                href="https://github.com/CenterForDigitalHumanities/TinyNode">GitHub codebase for TinyThings</a>.</p>
 
         <p>To have simple CRUD ability from client script without using a back end proxy, you can
             use our public test endpoints. Note: Your data will be public and could be removed at any time. This is for
             testing only
             and will not be attributed to you in any way.</p>
         <ul>
-            <li>http://tinydev.rerum.io/app/create Uses the rules established by RERUM <a href="#create">create</a></li>
-            <li>http://tinydev.rerum.io/app/update Uses the rules established by RERUM PUT <a href="#update">update</a>
+            <li>https://tinydev.rerum.io/app/create Uses the rules established by RERUM <a href="#create">create</a></li>
+            <li>https://tinydev.rerum.io/app/update Uses the rules established by RERUM PUT <a href="#update">update</a>
             </li>
-            <li>http://tinydev.rerum.io/app/delete Uses the rules established by RERUM <a href="#delete">delete</a></li>
-            <li>http://tinydev.rerum.io/app/query Uses the rules established by RERUM <a href="#custom-query">Custom
+            <li>https://tinydev.rerum.io/app/delete Uses the rules established by RERUM <a href="#delete">delete</a></li>
+            <li>https://tinydev.rerum.io/app/query Uses the rules established by RERUM <a href="#custom-query">Custom
                     Query</a></li>
         </ul>
 
@@ -131,7 +131,7 @@
                 at <code class="language-plaintext highlighter-rouge">_id</code></li>
         </ul>
 
-        <p>Example: http://devstore.rerum.io/v1/id/11111</p>
+        <p>Example: https://devstore.rerum.io/v1/id/11111</p>
 
         <h3 id="history-tree-before-this-version">History tree before this version<a class="anchorjs-link "
                 href="#history-tree-before-this-version" aria-label="Anchor" data-anchorjs-icon=""
@@ -166,7 +166,7 @@
             branch. The objects in the array are listed in inorder traversal but
             ignoring other branches.</p>
 
-        <p>Example: http://devstore.rerum.io/v1/history/11111</p>
+        <p>Example: https://devstore.rerum.io/v1/history/11111</p>
 
         <h3 id="history-tree-since-this-version">History tree since this version<a class="anchorjs-link "
                 href="#history-tree-since-this-version" aria-label="Anchor" data-anchorjs-icon=""
@@ -200,7 +200,7 @@
             a history tree. Requests return all descendants of this object from all branches.<br>
             The objects in the array are listed in preorder traversal.</p>
 
-        <p>Example: http://devstore.rerum.io/v1/since/11111</p>
+        <p>Example: https://devstore.rerum.io/v1/since/11111</p>
 
         <h2 id="post">POST<a class="anchorjs-link " href="#post" aria-label="Anchor" data-anchorjs-icon=""
                 style="font: 1em / 1 anchorjs-icons; padding-left: 0.375em;"></a></h2>
@@ -315,7 +315,7 @@
                     <td><code class="language-plaintext highlighter-rouge">/create.action</code></td>
                     <td><code class="language-plaintext highlighter-rouge">{JSON}</code></td>
                     <td>201 <code
-                            class="language-plaintext highlighter-rouge">Location: http://devstore.rerum.io/v1/id/11111</code>
+                            class="language-plaintext highlighter-rouge">Location: https://devstore.rerum.io/v1/id/11111</code>
                         <code class="language-plaintext highlighter-rouge">{JSON}</code></td>
                 </tr>
             </tbody>
@@ -340,7 +340,7 @@
 
         <ul>
             <li><strong>Header:</strong> <code
-                    class="language-plaintext highlighter-rouge">Location: http://devstore.rerum.io/v1/id/11111</code>
+                    class="language-plaintext highlighter-rouge">Location: https://devstore.rerum.io/v1/id/11111</code>
             </li>
             <li><strong>Body:</strong></li>
         </ul>
@@ -348,13 +348,8 @@
         <pre><code class="language-(json)">{
     "code" : 201,
     "new_obj_state" : {
-    "@id": "http://devstore.rerum.io/v1/id/11111",
+    "@id": "https://devstore.rerum.io/v1/id/11111",
     ...
-    },
-    "iiif_validation" : {
-    "warnings" : ["Array of warnings from IIIF validator"],
-    "error" : "Error for why this object failed validation",
-    "okay" : 1 // 0 or 1 as to whether or not it passed IIIF validation
     }
 }
                 </code></pre>
@@ -458,7 +453,7 @@
                     <td><code class="language-plaintext highlighter-rouge">/patch.action</code></td>
                     <td><code class="language-plaintext highlighter-rouge">{JSON}</code></td>
                     <td>201 <code
-                            class="language-plaintext highlighter-rouge">Location: http://devstore.rerum.io/v1/id/22222</code>
+                            class="language-plaintext highlighter-rouge">Location: https://devstore.rerum.io/v1/id/22222</code>
                         <code class="language-plaintext highlighter-rouge">{JSON}</code></td>
                 </tr>
             </tbody>
@@ -501,29 +496,24 @@
 
         <ul>
             <li><strong>Header:</strong> <code
-                    class="language-plaintext highlighter-rouge">Location: http://devstore.rerum.io/v1/id/22222</code>
+                    class="language-plaintext highlighter-rouge">Location: https://devstore.rerum.io/v1/id/22222</code>
                 <code class="language-plaintext highlighter-rouge">{JSON}</code></li>
             <li><strong>Body:</strong></li>
         </ul>
 
         <pre><code class="language-(json)">{
     "code" : 200,
-    "original_object_id" : "http://devstore.rerum.io/v1/id/11111",
+    "original_object_id" : "https://devstore.rerum.io/v1/id/11111",
     "new_obj_state" : {
-    "@id": "http://devstore.rerum.io/v1/id/22222",
+    "@id": "https://devstore.rerum.io/v1/id/22222",
     "__rerum":{
         "history":{
-            "previous":"http://devstore.rerum.io/v1/id/11111",
+            "previous":"https://devstore.rerum.io/v1/id/11111",
             ...
         }
         ...
     }
     ...
-    },
-    "iiif_validation" : {
-    "warnings" : ["Array of warnings from IIIF validator"],
-    "error" : "Error for why this object failed validation",
-    "okay" : 1 // 0 or 1 as to whether or not it passed IIIF validation
     }
 }
                 </code></pre>
@@ -563,7 +553,7 @@
                     <td><code class="language-plaintext highlighter-rouge">/update.action</code></td>
                     <td><code class="language-plaintext highlighter-rouge">{JSON}</code></td>
                     <td>200 <code
-                            class="language-plaintext highlighter-rouge">Location: http://devstore.rerum.io/v1/id/22222</code>
+                            class="language-plaintext highlighter-rouge">Location: https://devstore.rerum.io/v1/id/22222</code>
                         <code class="language-plaintext highlighter-rouge">{JSON}</code></td>
                 </tr>
             </tbody>
@@ -581,29 +571,24 @@
 
         <ul>
             <li><strong>Header:</strong> <code
-                    class="language-plaintext highlighter-rouge">Location: http://devstore.rerum.io/v1/id/22222</code>
+                    class="language-plaintext highlighter-rouge">Location: https://devstore.rerum.io/v1/id/22222</code>
             </li>
             <li><strong>Body:</strong></li>
         </ul>
 
         <pre><code class="language-(json)">{
     "code" : 200,
-    "original_object_id" : "http://devstore.rerum.io/v1/id/11111",
+    "original_object_id" : "https://devstore.rerum.io/v1/id/11111",
     "new_obj_state" : {
-    "@id": "http://devstore.rerum.io/v1/id/22222",
+    "@id": "https://devstore.rerum.io/v1/id/22222",
     "__rerum":{
         "history":{
-            "previous":"http://devstore.rerum.io/v1/id/11111",
+            "previous":"https://devstore.rerum.io/v1/id/11111",
             ...
         }
         ...
     }
     ...
-    },
-    "iiif_validation" : {
-    "warnings" : ["Array of warnings from IIIF validator"],
-    "error" : "Error for why this object failed validation",
-    "okay" : 1 // 0 or 1 as to whether or not it passed IIIF validation
     }
 }
                 </code></pre>
@@ -625,7 +610,7 @@
                     <td><code class="language-plaintext highlighter-rouge">/batch_update.action</code></td>
                     <td><code class="language-plaintext highlighter-rouge">[{JSON}]</code></td>
                     <td>200 <code
-                            class="language-plaintext highlighter-rouge">Location: http://devstore.rerum.io/v1/id/22222, ...</code>
+                            class="language-plaintext highlighter-rouge">Location: https://devstore.rerum.io/v1/id/22222, ...</code>
                         <code class="language-plaintext highlighter-rouge">[{JSON}]</code></td>
                 </tr>
             </tbody>
@@ -671,7 +656,7 @@
                     <td><code class="language-plaintext highlighter-rouge">/patch.action</code></td>
                     <td><code class="language-plaintext highlighter-rouge">{JSON}</code></td>
                     <td>200 <code
-                            class="language-plaintext highlighter-rouge">Location: http://devstore.rerum.io/v1/id/22222</code>
+                            class="language-plaintext highlighter-rouge">Location: https://devstore.rerum.io/v1/id/22222</code>
                         <code class="language-plaintext highlighter-rouge">{JSON}</code></td>
                 </tr>
             </tbody>
@@ -700,29 +685,24 @@
 
         <ul>
             <li><strong>Header:</strong> <code
-                    class="language-plaintext highlighter-rouge">Location: http://devstore.rerum.io/v1/id/22222</code>
+                    class="language-plaintext highlighter-rouge">Location: https://devstore.rerum.io/v1/id/22222</code>
             </li>
             <li><strong>Body:</strong></li>
         </ul>
 
         <pre><code class="language-(json)">{
     "code" : 200,
-    "original_object_id" : "http://devstore.rerum.io/v1/id/11111",
+    "original_object_id" : "https://devstore.rerum.io/v1/id/11111",
     "new_obj_state" : {
-    "@id": "http://devstore.rerum.io/v1/id/22222",
+    "@id": "https://devstore.rerum.io/v1/id/22222",
     "__rerum":{
         "history":{
-            "previous":"http://devstore.rerum.io/v1/id/11111",
+            "previous":"https://devstore.rerum.io/v1/id/11111",
             ...
         }
         ...
     }
     ...
-    },
-    "iiif_validation" : {
-    "warnings" : ["Array of warnings from IIIF validator"],
-    "error" : "Error for why this object failed validation",
-    "okay" : 1 // 0 or 1 as to whether or not it passed IIIF validation
     }
 }
                 </code></pre>
@@ -743,7 +723,7 @@
                     <td><code class="language-plaintext highlighter-rouge">/set.action</code></td>
                     <td><code class="language-plaintext highlighter-rouge">{JSON}</code></td>
                     <td>200 <code
-                            class="language-plaintext highlighter-rouge">Location: http://devstore.rerum.io/v1/id/22222</code>
+                            class="language-plaintext highlighter-rouge">Location: https://devstore.rerum.io/v1/id/22222</code>
                         <code class="language-plaintext highlighter-rouge">{JSON}</code></td>
                 </tr>
             </tbody>
@@ -777,7 +757,7 @@
                     <td><code class="language-plaintext highlighter-rouge">/unset.action</code></td>
                     <td><code class="language-plaintext highlighter-rouge">{JSON}</code></td>
                     <td>202 <code
-                            class="language-plaintext highlighter-rouge">Location: http://devstore.rerum.io/v1/id/22222</code>
+                            class="language-plaintext highlighter-rouge">Location: https://devstore.rerum.io/v1/id/22222</code>
                         <code class="language-plaintext highlighter-rouge">{JSON}</code></td>
                 </tr>
             </tbody>
@@ -814,7 +794,7 @@
                     <td><code class="language-plaintext highlighter-rouge">String @id</code> or <code
                             class="language-plaintext highlighter-rouge">{JSON}</code></td>
                     <td>200 <code
-                            class="language-plaintext highlighter-rouge">Location: http://devstore.rerum.io/v1/id/11111</code>
+                            class="language-plaintext highlighter-rouge">Location: https://devstore.rerum.io/v1/id/11111</code>
                         <code class="language-plaintext highlighter-rouge">{JSON}</code></td>
                 </tr>
             </tbody>
@@ -844,10 +824,10 @@
         <p>Example Response:</p>
         <pre><code class="language-(json)">{
     "code" : 200,
-    "previously_released_id" : "http://devstore.rerum.io/v1/id/00001",
-    "next_releases_ids" : ["http://devstore.rerum.io/v1/id/11112", ...],
+    "previously_released_id" : "https://devstore.rerum.io/v1/id/00001",
+    "next_releases_ids" : ["https://devstore.rerum.io/v1/id/11112", ...],
     "new_obj_state" : {
-    "@id": "http://devstore.rerum.io/v1/id/11111",
+    "@id": "https://devstore.rerum.io/v1/id/11111",
     "__rerum":{
         "isReleased":Date.now(),
         "releases"{
@@ -856,11 +836,6 @@
         ...
     }
     ...
-    },
-    "iiif_validation" : {
-    "warnings" : ["Array of warnings from IIIF validator"],
-    "error" : "Error for why this object failed validation",
-    "okay" : 1 // 0 or 1 as to whether or not it passed IIIF validation
     }
 }
                 </code></pre>
@@ -909,10 +884,10 @@
         </p>
 
         <pre><code class="language-(json)">{
-    "@id" : "http://devstore.rerum.io/v1/id/11111",
+    "@id" : "https://devstore.rerum.io/v1/id/11111",
     "__deleted" : {
     "object" : {
-        "@id" : "http://devstore.rerum.io/v1/id/11111",
+        "@id" : "https://devstore.rerum.io/v1/id/11111",
         "@type": "sc:Canvas",
         "label": "page 46",
         "width": 730,
@@ -1082,7 +1057,7 @@
             requests do not require this header. As access tokens expire every hour, the applications are responsible
             for requesting and keeping track of valid access tokens. For an example on how to do this, see this example
             from <a
-                href="https://github.com/CenterForDigitalHumanities/TinyThings/blob/master/Source%20Packages/io/rerum/tokens/TinyTokenManager.java">TinyThings</a>.
+                href="https://github.com/CenterForDigitalHumanities/TinyNode/blob/main/tokens.js">TinyThings</a>.
             The API key at Auth0 persists for each application, which may manage its own sessions. Expired
             (unauthorized) sessions receive a <code class="language-plaintext highlighter-rouge">401 Unauthorized</code>
             response with instructions to refresh the session or to register the application.</p>
