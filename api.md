@@ -1,6 +1,7 @@
 ---
 layout: default
 title: API Documentation
+permalink: /api/
 ---
 
 <div class="container">

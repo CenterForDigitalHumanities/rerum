@@ -1,6 +1,7 @@
 ---
 layout: default
 title: The Annotation Story
+permalink: /annotation/
 ---
 
 <div class="container">

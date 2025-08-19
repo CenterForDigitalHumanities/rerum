@@ -1,6 +1,7 @@
 ---
 layout: default
 title: The Future
+permalink: /future/
 ---
 
 <div class="container">

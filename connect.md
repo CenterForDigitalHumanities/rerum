@@ -1,6 +1,7 @@
 ---
 layout: default
 title: Connect to RERUM
+permalink: /connect/
 ---
 
 <div class="container">

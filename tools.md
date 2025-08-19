@@ -1,6 +1,7 @@
 ---
 layout: default
 title: Tools
+permalink: /tools/
 ---
 
 <div class="container">
