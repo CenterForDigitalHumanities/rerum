@@ -1,96 +1,201 @@
-<!DOCTYPE html>
-<html class="body" lang="en" ng-app="rerum">
-    <head>
-        <meta charset="utf-8">
-        <title>RERUM</title>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-        <link href="https://fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
-        <link rel="stylesheet" href="https://cdn.rawgit.com/dhg/Skeleton/master/css/skeleton.css">
-        <link rel="stylesheet" href="app/lib/loading-bar.css" media="screen">
-        <link rel="stylesheet" href="app/lib/hotkeys.min.css" media="screen">
-        <link rel="stylesheet" href="assets/fonts.css" media="screen">
-        <link rel="stylesheet" href="app/app.css" media="screen">
-        <link rel="stylesheet" href="app/tools/parse-rect/parse-rect.css" media="screen">
-        <link rel="stylesheet" href="app/tools/crop-page/crop-page.css" media="screen">
-        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
-        <link rel="apple-touch-icon" sizes="57x57" href="apple-icon-57x57.png">
-        <link rel="apple-touch-icon" sizes="60x60" href="apple-icon-60x60.png">
-        <link rel="apple-touch-icon" sizes="72x72" href="apple-icon-72x72.png">
-        <link rel="apple-touch-icon" sizes="76x76" href="apple-icon-76x76.png">
-        <link rel="apple-touch-icon" sizes="114x114" href="apple-icon-114x114.png">
-        <link rel="apple-touch-icon" sizes="120x120" href="apple-icon-120x120.png">
-        <link rel="apple-touch-icon" sizes="144x144" href="apple-icon-144x144.png">
-        <link rel="apple-touch-icon" sizes="152x152" href="apple-icon-152x152.png">
-        <link rel="apple-touch-icon" sizes="180x180" href="apple-icon-180x180.png">
-        <link rel="icon" type="image/png" sizes="192x192"  href="android-icon-192x192.png">
-        <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
-        <link rel="manifest" href="/manifest.json">
-        <!--        <base href="rerum/">-->
-    </head>
-    <body ng-controller="mainController">
-        <header>
-            <div class="row">
-                <a class="two columns" href="#welcome">
-                    <img src="logo.png" alt="logo" class="u-full-width" />
-                </a>
-                <small class="rerum_shimmer">reconditorium eximium rerum universalium mutabiliumque</small>
-                <h1 class="ten columns ">
-                    <span>rerum</span>
-                </h1>
+---
+layout: default
+title: Home
+---
+
+<div>
+    <style type="text/css">
+        i.fa.fa-3x.u-pull-left {
+            margin: 0 0.125em;
+        }
+        .pane {
+            padding:1rem 0;
+        }
+        .pane:nth-of-type(2n) {
+            background: #b0bec5;
+        }
+    </style>
+<div class="pane">
+        <div class="container">
+            <h3>Free for All</h3>
+            <p>
+                This is an open and free repository for all sorts of digital things. Digital anchors for real world objects and encoded assertions
+                from real people are stored here without prejudice. Our mission is to eliminate the obstacles preventing technological solutions
+                to scholarly questions allowing small institutions or independent researchers to start work with minimal resources.
+                The natural state of digitized knowledge should be interoperable, accessible, encoded, and open.
+            </p>
+            <div class="text-center">
+                <div class="row">
+                    <div class=" column card">
+                        <a href="{{ '/annotation' | relative_url }}" class="button u-full-width">
+                            The Annotation Story
+                            <i class="fa fa-comment-o"></i>
+                        </a>
+                        <p>
+                            <i class="fa fa-comment-o watermark"></i>
+                            Learn more about digitizing the 
+                            <span class="no-break">scholarly conversations.</span>
+                        </p>
+                    </div>
+                    <div class=" column card">
+                        <a href="{{ '/connect' | relative_url }}" class="button u-full-width">
+                            Connect To RERUM
+                            <i class="fa fa-wrench"></i>
+                        </a>
+                        <p>
+                            <i class="fa fa-wrench watermark"></i>
+                            Connect your application to
+                            <span class="no-break">the repository</span>.
+                        </p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="column card">
+                        <a href="{{ '/about' | relative_url }}" class="button u-full-width">
+                            Research Computing Group
+                            <i class="fa fa-map-marker"></i>
+                        </a>
+                        <p>
+                            <i class="fa fa-map-marker watermark"></i>
+                            Meet the team aligning open standards and 
+                            <span class="no-break">idiosyncratic scholarship.</span>
+                        </p>
+                    </div>
+                    <div class="column card">
+                        <a href="{{ '/future' | relative_url }}" class="button u-full-width">
+                            The Future
+                            <i class="fa fa-cubes"></i>
+                        </a>
+                        <p>
+                            <i class="fa fa-cubes watermark"></i>
+                            Preview and suggest
+                            <span class="no-break">what comes next.</span>
+                        </p>
+                    </div>
+                </div>
             </div>
-        </header>
-    <ng-view></ng-view>
-    <div style="height:20rem;width:100%;"></div>
-    <footer>
-        <os-statement>
-                This site is open source.  <a target="_blank" href="https://github.com/CenterForDigitalHumanities/rerum">Improve this page</a>
-        </os-statement>
-        <div class="row">
-            <a href="#welcome" class="button column">
-                Home
-                <i class="fa fa-home"></i>
-            </a>
-            <a href="#annotation" class="button column">
-                The Annotation Story
-                <i class="fa fa-comment-o"></i>
-            </a>
-            <a href="#about" class="button column">
-                Research Computing Group
-            <i class="fa fa-map-marker"></i>
-        </a>
-        <a href="#api" class="button column">
-            Use Rerum API
-            <i class="fa fa-wrench"></i>
-        </a>
-        <a href="#future" class="button column">
-            The Future
-            <i class="fa fa-cubes"></i>
-        </a>
         </div>
-    </footer>
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular-route.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular-animate.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular-sanitize.js"></script>
-    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.14.3/ui-bootstrap.js"></script>
-    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.14.3/ui-bootstrap-tpls.js"></script>
-    <script type="text/javascript" src="app/lib/loading-bar.js"></script>
-    <script type="text/javascript" src="app/lib/hotkeys.min.js"></script>
-    <script type="text/javascript" src="app/app.js"></script>
-    <script type="text/javascript" src="app/utils.js"></script>
-    <script type="text/javascript" src="app/registration/registration.js"></script>
-    <script type="text/javascript" src="app/tools/drawBox.js"></script>
-    <script type="text/javascript" src="app/tools/manifest.js"></script>
-    <script type="text/javascript" src="app/tools/tools.js"></script>
-    <script type="text/javascript" src="app/tools/essay/essay.js"></script>
-    <script type="text/javascript" src="app/api_blackbox/api_handler.js"></script>
-    <script type="text/javascript" src="app/validator_blackbox/validate.js"></script>
-    <script type="text/javascript" src="app/tools/parse-rect/parsing.js"></script>
-    <script type="text/javascript" src="app/tools/crop-page/cropping.js"></script>
-    <script type="text/javascript" src="app/tools/read-manifest/read.js"></script>
-    <script type="text/javascript" src="app/tools/aybee/aybee.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-</body>
-</html>
+    </div>
+    <div class="pane">
+        <div class="container">
+                <h3>The Roots of Rerum</h3>
+            <p>
+                <em>Rerum</em> (Latin: "of things") is a conveniently ambiguous umbrella term we use to identify the
+                <em>things</em> (tools, schemata, databases) that are functional or philosophical kin. The
+                <abbr title="last universal common ancestor">LUCA</abbr>
+                concept for them all is a set of principles that guides the development of this ecosystem:
+            </p>
+            <dl>
+                <dt>
+                    Annotation is everywhere</dt>
+                <dd>
+                    <i class="fa fa-3x u-pull-left fa-globe"></i> Scholarly assertions, descriptive annotations, measurements, and notes often
+                    <a href="https://centerfordigitalhumanities.github.io/blog/identity-through-evidence/" target="_blank" rel="noopener noreferrer">mistaken for metadata</a>
+                    are vertices for standards. These declarations should be stored as atoms, 
+                    especially when they are simple to constellate for user applications.
+                </dd>
+                <dt>
+                    Attribution is essential</dt>
+                <dd>
+                    <i class="fa fa-3x u-pull-left fa-user"></i> Productive communication between researchers requires 
+                    <a href="https://centerfordigitalhumanities.github.io/blog/auth-attribution-of-open-data/" target="_blank" rel="noopener noreferrer">reliable attribution</a>. 
+                    With attributed annotations, collaboration becomes natural, and even complex concerns
+                    such as authorization are just acts of filtering.
+                </dd>
+                <dt>
+                    Format is ephemeral</dt>
+                <dd>
+                    <i class="fa fa-3x u-pull-left fa-floppy-o"></i> No one can predict the Next Great Format, but know some obstacles to migration
+                    can <a href="http://ongcdh.org/posts/development/the-standards-approach/" target="_blank" rel="noopener noreferrer">be avoided</a>. 
+                    The simpler it is to abandon, the more likely a format will remain accessible.
+                </dd>
+                <dt>
+                    Knowledge is controversy</dt>
+                <dd>
+                    <i class="fa fa-3x u-pull-left fa-code-fork"></i> Statements of fact are reference material until challenged. 
+                    The collisions of theories, evidence, and educated conjecture or theses enlivens research. 
+                    <a href="http://ongcdh.org/posts/development/versioning-in-rerum/" target="_blank" rel="noopener noreferrer">Recording both the state and the history</a> 
+                    of the conversation serves knowledge.
+                </dd>
+                <dt>
+                    Research is decentralized</dt>
+                <dd>
+                    <i class="fa fa-3x u-pull-left fa-users"></i> Experts are distributed across institutions. The most influential
+                    investigators move around, as people do. The complex conventions around 
+                    <a href="http://ongcdh.org/posts/development/editing-remote-objects-in-rerum/" target="_blank" rel="noopener noreferrer">citation and rights</a> 
+                    make clear the challenge of maintaining attribution and 
+                    <a href="http://ongcdh.org/posts/development/mirador-and-rerum-inbox-improving-the-ldn-plugin/" target="_blank" rel="noopener noreferrer">encouraging distribution</a>.
+                </dd>
+            </dl>
+        </div>
+    </div>
+    <div class="pane">
+        <div class="container">
+            <h3>The Leaves of Rerum</h3>
+            <p>
+                The Rerum ecosystem includes several distinct categories of tools and services:
+            </p>
+            <dl>
+                <dt>
+                    <abbr title="reconditorium eximium rerum universalium mutabiliumque">RERUM</abbr>
+                </dt>
+                <dd>
+                    <i class="fa fa-3x u-pull-left fa-cubes"></i> is any application instance that runs a repository with the Rerum API.
+                </dd>
+                <dt>Rerum API</dt>
+                <dd>
+                    <i class="fa fa-3x u-pull-left fa-terminal"></i> collects the set of HTTP(S) endpoints used by client servers to run operations within a RERUM service.
+                </dd>
+                <dt>RERUM Server</dt>
+                <dd>
+                    <i class="fa fa-3x u-pull-left fa-server"></i> is a complete web service. Our existing stack is RHEL-MongoDB-NodeJS.
+                </dd>
+                <dt>Rerum Components</dt>
+                <dd>
+                    <i class="fa fa-3x u-pull-left fa-heart"></i> are the applications, tools, and Web Components that are designed for the Rerum API.
+                </dd>
+                <dt>Rerum Inbox</dt>
+                <dd>
+                    <i class="fa fa-3x u-pull-left fa-bell"></i> is the Rerum LDN Inbox announcements reference implementation. 
+                    It does not utilize the same datastore or API as RERUM, but is a functional and philosophical sibling.
+                </dd>
+            </dl>
+        </div>
+    </div>
+    <div class="pane">
+        <div class="container">
+            <h3>Our Subdominions</h3>
+            <p>
+                In support of the ecosystem above, these are the places you will find Rerum:
+            </p>
+            <dl>
+                <dt><i class="fa fa-3x u-pull-left fa-globe"></i> www.rerum.io</dt>
+                <dd>
+                    The main website for all things in the Rerum ecosystem
+                </dd>
+                <dt><a href="https://store.rerum.io" target="_blank" rel="noopener noreferrer"><i class="fa fa-3x u-pull-left fa-cubes"></i> store.rerum.io</a></dt>
+                <dd>
+                    The current release of the RERUM service (v1) with an 
+                    open sandbox for <span class="no-break">developers at 
+                    <a href="https://devstore.rerum.io" target="_blank" rel="noopener noreferrer">devstore.rerum.io</a></span>
+                </dd>
+                <dt><a href="https://tiny.rerum.io" target="_blank" rel="noopener noreferrer"><i class="fa fa-3x u-pull-left fa-cube"></i> tiny.rerum.io</a></dt>
+                <dd>
+                    A minimum RERUM implementation for bootstrapping new applications quickly
+                </dd>
+                <dt><a href="https://deer.rerum.io" target="_blank" rel="noopener noreferrer"><i class="fa fa-3x u-pull-left fa-sitemap"></i> deer.rerum.io</a></dt>
+                <dd>
+                    A framework for designers to use RERUM with simple HTML
+                </dd>
+                <dt><a href="https://geo.rerum.io" target="_blank" rel="noopener noreferrer"><i class="fa fa-3x u-pull-left fa-globe"></i> geo.rerum.io</a></dt>
+                <dd>
+                    A web interface demonstrating GeoJSON-LD annotations in RERUM
+                </dd>
+                <dt><a href="httsp://inbox.rerum.io" target="_blank" rel="noopener noreferrer"><i class="fa fa-3x u-pull-left fa-bell"></i> inbox.rerum.io</a> (<a href="https://inbox-docs.rerum.io" target="_blank" rel="noopener noreferrer">inbox-docs.rerum.io</a>)</dt>
+                <dd>
+                    The habitat for all Rerum LDN Inbox announcements (and its documentation and demos)
+                </dd>
+            </dl>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,54 @@
+---
+layout: default
+title: About
+---
+
+<div class="container">
+    <p>RERUM was born in the <a href="https://www.slu.edu/arts-and-sciences/ong-center/index.php">
+        Walter J. Ong, <small>S.J.</small> Center for Digital Humanities</a> at Saint Louis
+        University and is funded and maintained by the <a href="https://www.slu.edu/research/faculty-resources/research-computing.php">Research Computing Group</a>. 
+        Parts of this site are designed for developers and programmers while 
+        others may be easy to share with researchers and investigators 
+        who need a good place to put some data and insist on openness.</p>
+    <p>Our goal is to raise the quality of and participation in open academic
+        data by lowering the effort and cost of initializing a solution for
+        data storage and management while making interoperability, standards
+        compliance, and attribution automatic.</p>
+    <p>There is no express warranty or license on either the data or these
+        services, but on our word, this site will not die and the locations will
+        not change without notification to participants. Each tool will allow
+        you to walk away with all your data, exactly as stored.</p>
+        <img src="{{ '/assets/sluresearch_logo_spark_bluegray_horizontal_2017v00.png' | relative_url }}" alt="logo" class="columns">
+    <h4>Contact</h4>
+    <div class="row">
+        <p class="columns">
+            <a href="mailto:research.computing@slu.edu">research.computing@slu.edu</a>, 
+            or follow our projects
+            <a href="https://github.com/CenterForDigitalHumanities">
+                <i class="fa fa-github"></i>
+                online</a>.
+            </p>
+    </div>
+
+    <p>
+        We make an effort to stay interesting on <a href="https://centerfordigitalhumanities.github.io/blog/">our blog</a>
+        and invite you to make comments or ask questions there. It is not always about
+        Rerum, but the topics reliably orbit the digital humanities, research software 
+        and architecture, open data, and our work.
+    </p>
+<div class="row">
+    <p class="one-half columns">
+        We're happy to Skype, Chat, Meet, Fuze, GoToMeeting, Messenger, Zoom,
+        Duo, Slack, Jitsi, Imo, Twiddla or whatever flavor you prefer. Visit us in person:
+    </p>
+    <address class="one-half columns">
+        Research Computing Group<br>
+        DuBourg Hall Room 443<br>
+        221 N Grand Blvd,<br>
+        St. Louis, MO 63103 USA<br>
+    </address>
+</div>
+   <p>
+        or catch us <a href="http://iiif.io/event/">at the next conference</a>.
+    </p>
+</div>

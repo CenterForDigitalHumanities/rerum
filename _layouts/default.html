@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html class="body" lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>{% if page.title %}{{ page.title }} - {% endif %}RERUM</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+        <link href="https://fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="https://cdn.rawgit.com/dhg/Skeleton/master/css/skeleton.css">
+        <link rel="stylesheet" href="{{ '/app/lib/loading-bar.css' | relative_url }}" media="screen">
+        <link rel="stylesheet" href="{{ '/app/lib/hotkeys.min.css' | relative_url }}" media="screen">
+        <link rel="stylesheet" href="{{ '/assets/fonts.css' | relative_url }}" media="screen">
+        <link rel="stylesheet" href="{{ '/app/app.css' | relative_url }}" media="screen">
+        <link rel="stylesheet" href="{{ '/app/tools/parse-rect/parse-rect.css' | relative_url }}" media="screen">
+        <link rel="stylesheet" href="{{ '/app/tools/crop-page/crop-page.css' | relative_url }}" media="screen">
+        <link rel="shortcut icon" href="{{ '/favicon.ico' | relative_url }}" type="image/x-icon">
+        <link rel="apple-touch-icon" sizes="57x57" href="{{ '/apple-icon-57x57.png' | relative_url }}">
+        <link rel="apple-touch-icon" sizes="60x60" href="{{ '/apple-icon-60x60.png' | relative_url }}">
+        <link rel="apple-touch-icon" sizes="72x72" href="{{ '/apple-icon-72x72.png' | relative_url }}">
+        <link rel="apple-touch-icon" sizes="76x76" href="{{ '/apple-icon-76x76.png' | relative_url }}">
+        <link rel="apple-touch-icon" sizes="114x114" href="{{ '/apple-icon-114x114.png' | relative_url }}">
+        <link rel="apple-touch-icon" sizes="120x120" href="{{ '/apple-icon-120x120.png' | relative_url }}">
+        <link rel="apple-touch-icon" sizes="144x144" href="{{ '/apple-icon-144x144.png' | relative_url }}">
+        <link rel="apple-touch-icon" sizes="152x152" href="{{ '/apple-icon-152x152.png' | relative_url }}">
+        <link rel="apple-touch-icon" sizes="180x180" href="{{ '/apple-icon-180x180.png' | relative_url }}">
+        <link rel="icon" type="image/png" sizes="192x192"  href="{{ '/android-icon-192x192.png' | relative_url }}">
+        <link rel="icon" type="image/png" sizes="32x32" href="{{ '/favicon-32x32.png' | relative_url }}">
+        <link rel="icon" type="image/png" sizes="96x96" href="{{ '/favicon-96x96.png' | relative_url }}">
+        <link rel="icon" type="image/png" sizes="16x16" href="{{ '/favicon-16x16.png' | relative_url }}">
+        <link rel="manifest" href="{{ '/manifest.json' | relative_url }}">
+    </head>
+    <body>
+        <header>
+            <div class="row">
+                <a class="two columns" href="{{ '/' | relative_url }}">
+                    <img src="{{ '/logo.png' | relative_url }}" alt="logo" class="u-full-width" />
+                </a>
+                <small class="rerum_shimmer">reconditorium eximium rerum universalium mutabiliumque</small>
+                <h1 class="ten columns ">
+                    <span>rerum</span>
+                </h1>
+            </div>
+        </header>
+        
+        {{ content }}
+        
+        <div style="height:20rem;width:100%;"></div>
+        <footer>
+            <os-statement>
+                This site is open source.  <a target="_blank" href="https://github.com/CenterForDigitalHumanities/rerum">Improve this page</a>
+            </os-statement>
+            <div class="row">
+                <a href="{{ '/' | relative_url }}" class="button column">
+                    Home
+                    <i class="fa fa-home"></i>
+                </a>
+                <a href="{{ '/annotation' | relative_url }}" class="button column">
+                    The Annotation Story
+                    <i class="fa fa-comment-o"></i>
+                </a>
+                <a href="{{ '/about' | relative_url }}" class="button column">
+                    Research Computing Group
+                    <i class="fa fa-map-marker"></i>
+                </a>
+                <a href="{{ '/api' | relative_url }}" class="button column">
+                    Use Rerum API
+                    <i class="fa fa-wrench"></i>
+                </a>
+                <a href="{{ '/future' | relative_url }}" class="button column">
+                    The Future
+                    <i class="fa fa-cubes"></i>
+                </a>
+            </div>
+        </footer>
+    </body>
+</html>

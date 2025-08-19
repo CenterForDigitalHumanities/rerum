@@ -1,0 +1,171 @@
+---
+layout: default
+title: The Future
+---
+
+<div class="container">
+    <h1>The Future</h1>
+    <div class="row">
+        <a class="four columns button" href="#server">
+            Server
+        </a>
+        <a class="four columns button" href="#api">
+            API
+        </a>
+        <a class="four columns button" href="#standards">
+            Standards
+        </a>
+        <a class="four columns button" href="#tools">
+            Components
+        </a>
+    </div>
+    <p>
+        The development efforts around RERUM fall into four categories:
+        server, API, standards, and tools.
+    </p>
+    <h3 id="server">Server</h3>
+    <p>
+        The server for our public RERUM API service is hosted at SLU on RHEL servers running NodeJS 
+        and connecting to a MongoDB Atlas cluster
+        (<a href="https://github.com/CenterForDigitalHumanities/rerum_server_nodejs" target="_blank"><i class="fa fa-github"></i></a>),
+        but nothing prevents the same server APIs from being implemented
+        in other configurations so that users may easily initialize their own
+        RERUM to which others may connect.
+    </p>
+    <p>
+        We have toyed with projects using Java, NodeJS and Google Datastore. Azure, AWS and others may be developed as well.
+        Database flavors may be changed for different instances to optimize
+        the transactions in RERUM or increase its adoption. There are SQL and noSQL
+        or even flat file structures that may be best suited to certain resource types.
+        As our community grows, we will look for more popular coverage of stacks and containers.
+    </p>
+    <p>
+        The current authentication implements <a target="_blank" href="https://auth0.com">Auth0</a>
+        service to generate API Keys and public <code>Agent</code>s within
+        RERUM. Further, RERUM currently trusts registered servers and always will. 
+        These server applications will make the appropriate <code>creator</code>-type assertions 
+        about the individual responsibility for each object.
+    </p>
+    <p>
+        RERUM functionality as an authenticator has been used for internal and external applications 
+        using the RERUM API and ecosystem tools. In addition to an instance of
+        the Auth0 user management, the public user <code>Agent</code> provides a 
+        connection between various user profiles and be used as an aggregating value for 
+        attribution. It is not a goal of the Rerum ecosystem to ever become a general authenticator.
+    </p>
+    <p>
+        Finally, packaging of the RERUM software will require attention. Bundlers  
+        may allow for custom configurations or just a simplified build for developers
+        who wish to host their own instance. When these installs proliferate as hoped,
+        it will also become important to spec out how they may identify each other to
+        complete the graph and allow for broader queries and interconnections across
+        the Internet.
+    </p>
+    <a class="u-pull-right top" href="#top">
+        Top
+    </a>
+
+    <h3 id="api">API</h3>
+    <p>
+        All instances of RERUM repositories must allow for at least the core API documented at
+        <a href="https://store.rerum.io/v1/API.html" target="_blank"> https://store.rerum.io/v1/API.html</a>.
+        Version 0 is currently deprecated suffering from several unconventional structures
+        and a somewhat complex object structure. Version 1, currently in open release,
+        standardizes the object structure, establishes versioning, and removes the model 
+        requirement from the objects saved. Also, v1 prefers JSON-LD 1.1 for all transactions. 
+        Designed, but not yet encoded anywhere, are extensions that provide smart services 
+        for IIIF, Web Annotation, and collections. Version 2, still unimagined, should 
+        focus on extending the search capabilities and accommodate interconnected
+        RERUM services.
+    </p>
+    <p>
+        Services focusing on specific collections or queries, such as geographic regions, 
+        image resources, or annotation collections will be developed as funded by individual 
+        projects and are not currently scoped or prioritized in any specific order. 
+        Contributors are encouraged to build candidates for Rerum API extensions that serve 
+        scholarly, scientific, and cultural communities.
+    </p>
+    <a class="u-pull-right top" href="#top">
+        Top
+    </a>
+
+    <h3 id="standards">Standards</h3>
+    <p>
+        RERUM would not be productive without the hard work of the Web Annotation
+        W3C Group and the International Image Interoperability Framework. We
+        believe this is the beginning of the story and the Web Annotation model for annotation
+        as description, connection, attribution, selection, aggregation, and more
+        should be extended to audio, video, text, and other data formats where annotation
+        and selection are improved with the implementation of an abstract digital
+        surrogate. Through the democratization and productive use of annotation,
+        this service intends to encourage the use of existing standards and the careful
+        extension and development for better coverage of new areas of scholarship.
+    </p>
+    <p>
+        While it would be nice for RERUM to automatically know what is new and hot,
+        the real world often requires a lot of refactoring of old data and logical
+        polyfills to allow for the gears of convention to match teeth with the cutting
+        edge. In addition to regularly updating to include equivalents or converters
+        for terms and formats that may rise and fall, the plan is to include many
+        management tools as well for the regular validation, batch editing, and
+        perhaps wholesale conversion of annotations.
+    </p>
+    <a class="u-pull-right top" href="#top">
+        Top
+    </a>
+
+    <h3 id="tools">Components</h3>
+    <p>
+        In service to the mission, tools must be supported and referenced which make
+        object creation easier, more accurate, and with which more encoding is possible
+        than may be the minimum required for the motivating task. Here at rerum.io,
+        we intend to maintain annotated references to external tools as well as producing
+        tools ourselves.
+    </p>
+    <p>
+        Use cases or requests for new tools can be submitted on the Rerum repository
+        as <a href="https://github.com/CenterForDigitalHumanities/rerum/issues?title=Request%3A%20&body=Thanks%20for%20contributing%21">issues
+            <i class="fa fa-github"></i></a>.
+        Individual repositories will be generated for each tool.
+    </p>
+    <p>
+        Collection tools are designed for users who would curate a set of digital objects
+        from a variety of online resources. The goal is to produce a public user interface 
+        that appears cohesive and polished while providing deep investigation and recombination. 
+        Importantly, this must respect intellectual property and be non-destructive.
+    </p>
+    <p>
+        Manifest tools are very important for smaller institutions and individuals.
+        The focus in this area will be to create or reference tools that allow for
+        viewing, creation, editing, and validation of <code>Manifest</code> objects.
+        Our tools are web applications and services, but there is space for contributions of
+        specific scripts shims and plug-ins for other applications. All tools hosted
+        here will include the option to save your objects to RERUM by default.
+    </p>
+    <p>
+        Annotation tools must be included and will become more various and specialized
+        as RERUM matures. The specific challenge of a good annotation tool is not its
+        ability to encode the standard Web Annotation format, but its ability to identify its
+        audience and encourage the user to make scholarly decisions without technical
+        effort or improper encoding. Cropping a <code>Canvas</code> image annotation
+        is a very discrete act from marking illustrations, though most of the interactions
+        are similar. Transcription is high on the list, but any image
+        annotation is supportable. Managing annotations is also a challenge and complete
+        interfaces will be required to sensibly aggregate the records within RERUM for
+        the users who use them. Traversing relationships and history will be a priority
+        after simple queries are well-managed. Finally, viewing annotations out of
+        context can be challenging, so small visualizations as well as code snippets
+        in various front-end languages will be provided.
+    </p>
+    <p>
+        Integration is not really a tool, but will become a list of tools within which
+        resources from RERUM can be imported or referenced. These short links may provide
+        the opportunity to begin a project in FromThePage using the connected Manifest
+        or open an annotation management tool within a Collection at the Wellcome Library. 
+        Eventually, there will be a playground for users to interact with data objects 
+        in a sandbox environment and try out different tools in a shareable way.
+    </p>
+    <a class="u-pull-right top" href="#top">
+        Top
+    </a>
+</div>
