@@ -1,0 +1,30 @@
+---
+layout: default
+title: Connect to RERUM
+permalink: /connect/
+---
+
+<div class="container">
+    <h1>Connecting to RERUM</h1>
+    <!-- Also this copy on api.html -->
+    <p>
+        To limit the possibility of abuse without putting too many obstacles up,
+        writing to the annotation store is restricted to servers (no CORS) who have
+        <a href="https://store.rerum.io">registered themselves</a>. The full plans for RERUM can be found
+        <a href="{{ '/future' | relative_url }}">elsewhere on the site</a>.
+    </p>
+    <p>
+        The current public RERUM service is hosted on
+        a virtual server at Saint Louis University and maintained by the Research Computing Group.
+        It is a NodeJS Express App that connects to a cloud hosted MongoDB, with all requests currently over
+        HTTP.
+    </p>
+    <p>
+        All read requests (GET) are open by default. To write to RERUM, you must register to acquire tokens.  One set of tokens represents one unique application.  You may need to register for multiple sets of tokens if you have multiple unique applications. It may be
+        helpful to see the sample implementation of <a href="https://tiny.rerum.io/">Tiny Things</a>
+        (<a href='https://github.com/CenterForDigitalHumanities/TinyNode'><i class="fa fa-github"></i></a>)
+    </p>
+    <a class="btn btn-info" href="https://store.rerum.io">Register to use RERUM</a>
+    <a class="btn btn-info" href="https://store.rerum.io/v1/API.html">Read the RERUM API</a>
+    <a class="btn btn-info" href="https://github.com/CenterForDigitalHumanities/rerum_server_nodejs#host-your-own">Host your own RERUM</a>
+</div>

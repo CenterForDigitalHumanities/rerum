@@ -1,0 +1,54 @@
+---
+layout: default
+title: The Annotation Story
+permalink: /annotation/
+---
+
+<div class="container">
+    <h3>
+        The Story of Annotation
+    </h3>
+    <p>
+        <img alt="Web Annotation" class="u-pull-right" style="max-width:30vw;"
+             src="https://centerfordigitalhumanities.github.io/rerum-consortium/media/rerumannotationimage.png" />
+        The Open Annotation Collaboration broke important ground on
+        08 February 2013, specifying an interoperable framework
+        for creating associations between related resources, annotations,
+        using a methodology that conforms to the Architecture of the World
+        Wide Web.<sup>
+            <a href="https://www.w3.org/TR/annotation-model/"
+               target="_blank" rel="noopener noreferrer"><i class="fa fa-external-link"></i></a>
+        </sup>
+        The next year, SharedCanvas (now within IIIF), demonstrated
+        how simply <abbr title="Open Annotation Collaboration">OAC</abbr> (now
+        <a href="https://www.w3.org/TR/annotation-vocab/" target="_blank">Web Annotation</a>)
+        could be extended to point to complex objects.
+    </p>
+    <p>
+        Pointing (instead of directly encoding) annotations and
+        <abbr title="comments, edits, links...">annotation-like objects</abbr>
+        provides benefits for scholarship by separating the resource from
+        the annotation, allowing for more granular and irregular resources,
+        and creating a clearer history of the academic conversation.
+        By separating the resource (text, image, etc.) from the
+        annotation, the original digitized resource remains pristine and
+        can be located anywhere in the world. Selectors remove the need
+        for every reference to be to a complete resource while also
+        allowing a scholar to make a very specific annotation on a
+        smaller range of the original resource, whether or not it
+        has native segmentation within it. Finally, every annotation
+        can be individually attributed to the asserting scholar and
+        software, which encourages walking back through the
+        revisions in support of ambiguity, non-destructive reuse, and 
+        controversy.
+    </p>
+    <p>
+        There has been a frenzy in recent years to <a rel="noopener noreferrer" target="_blank" href="https://web.hypothes.is/blog/annotating-ocred-pdfs/">annotate everything</a>—a
+        call to apply Web Annotations to websites, pdfs, and digital images.
+        The <a rel="noopener noreferrer" target="_blank" href="https://iiif.io">International Image Interoperability Framework</a>
+        has magnified the possibilities of annotation by including them as
+        a part of the abstract containers they define as surrogates for real
+        and complex objects. Though Rerum supports all types of annotations,
+        it is these IIIF applications that are our primary motivator.
+    </p>
+</div>
