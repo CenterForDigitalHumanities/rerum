@@ -349,15 +349,15 @@ dd {
 }
 
 os-statement {
-    position: fixed;
-    bottom: 4.25em;
-    padding: 0.25em 0.45em;
-    right: 0;
     display: block;
-    background-color: #dfdfdf;
+    text-align: center;
+    padding: 0.5em 1em;
+    margin-bottom: 0.5em;
+    background-color: transparent;
     font-family: monospace;
-    font-size: 10pt;
-    font-weight: bold;
+    font-size: 9pt;
+    font-weight: normal;
+    color: #666;
 }
 
 /* Larger than phablet */
@@ -374,8 +374,7 @@ os-statement {
         position: relative;
     }
     os-statement{
-        position: relative;
-        bottom: 0;
         text-align: center;
+        padding: 0.5em 1em;
     }
 }
